@@ -1,20 +1,385 @@
 /** Стили для пк **/
-@media (max-width: 1440px) {
-
-}
+@media (max-width: 1440px) {}
 
 /** Сенсорные устройства **/
 /** Стили для планшетов **/
 @media (max-width: 1100px) {
+    .header {
+        padding: 0 30px;
+    }
 
+    .header__nav-list {
+        gap: 2rem;
+    }
+
+    .header__logo {
+        font-size: 28px;
+    }
+
+    .hero__container {
+        padding: 0 30px;
+    }
+
+    .hero__title,
+    .hero__subtitle {
+        font-size: 64px;
+    }
+
+    .hero__description {
+        max-width: 450px;
+    }
+
+    .hero__features {
+        gap: 2rem;
+    }
+
+    .bestsellers .container {
+        padding: 0 30px;
+    }
+    
+    .bestsellers__title {
+        font-size: 28px;
+    }
+    
+    .bestsellers__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .trade-in {
+        padding: 80px 0;
+    }
+    
+    .trade-in__container {
+        padding: 0 30px;
+    }
+    
+    .trade-in__title {
+        font-size: 40px;
+    }
+
+    .brands {
+        padding: 80px 0;
+    }
+    
+    .brands .container {
+        padding: 0 30px;
+    }
+    
+    .brands__content {
+        gap: 40px;
+    }
+    
+    .brands__title {
+        font-size: 40px;
+    }
+    
+    .brands__grid {
+        gap: 12px;
+    }
 }
 
 /** Стили для телефонов **/
 @media (max-width: 800px) {
+    .header {
+        padding: 0 20px;
+    }
 
+    .header__logo {
+        font-size: 24px;
+    }
+
+    .header__nav,
+    .header__icons {
+        display: none;
+    }
+
+    .header__burger {
+        display: block;
+    }
+
+    .header__mobile-menu {
+        display: block;
+    }
+
+    .header__mobile-nav-list {
+        padding: 0 20px;
+    }
+
+    .header__mobile-nav-link {
+        font-size: 16px;
+        padding: 14px 0;
+    }
+
+    .hero {
+        min-height: calc(100vh - 70px);
+    }
+
+    .hero__container {
+        padding: 0 20px;
+        min-height: calc(100vh - 70px);
+        gap: 1.5rem;
+    }
+
+    .hero__label {
+        font-size: 11px;
+        letter-spacing: 1.5px;
+    }
+
+    .hero__title,
+    .hero__subtitle {
+        font-size: 48px;
+    }
+
+    .hero__description {
+        font-size: 15px;
+        max-width: 100%;
+        line-height: 1.5;
+    }
+
+    .hero__buttons {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.75rem;
+        margin-top: 1.5rem;
+    }
+
+    .hero__btn {
+        width: 100%;
+        padding: 14px 24px;
+        text-align: center;
+    }
+
+    .hero__features {
+        gap: 1.5rem;
+        margin-top: 3rem;
+        padding-top: 1.5rem;
+        width: 100%;
+    }
+
+    .feature {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .bestsellers {
+        padding: 60px 0;
+    }
+    
+    .bestsellers .container {
+        padding: 0 20px;
+    }
+    
+    .bestsellers__header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .bestsellers__title {
+        font-size: 24px;
+    }
+    
+    .bestsellers__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .trade-in {
+        padding: 60px 0;
+    }
+    
+    .trade-in__container {
+        padding: 0 20px;
+    }
+    
+    .trade-in__title {
+        font-size: 32px;
+    }
+    
+    .trade-in__description {
+        font-size: 15px;
+    }
+    
+    .trade-in__btn {
+        padding: 14px 32px;
+    }
+
+    .brands {
+        padding: 60px 0;
+    }
+    
+    .brands .container {
+        padding: 0 20px;
+    }
+    
+    .brands__content {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .brands__title {
+        font-size: 32px;
+    }
+    
+    .brands__description {
+        font-size: 15px;
+    }
+    
+    .brands__grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .footer {
+        padding: 30px 0;
+    }
+    
+    .footer .container {
+        padding: 0 20px;
+    }
+    
+    .footer__content {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+    
+    .footer__logo {
+        font-size: 22px;
+    }
+    
+    .footer__copyright,
+    .footer__inn {
+        font-size: 13px;
+    }
 }
 
 /** Стили для очень маленьких телефонов **/
 @media (max-width: 500px) {
+    .header {
+        padding: 0 15px;
+    }
 
+    .header__logo {
+        font-size: 20px;
+    }
+
+    .header__mobile-nav-list {
+        padding: 0 15px;
+    }
+
+    .header__mobile-nav-link {
+        font-size: 15px;
+    }
+
+    .hero {
+        min-height: calc(100vh - 65px);
+    }
+
+    .hero__container {
+        padding: 0 45px;
+        min-height: calc(100vh - 65px);
+        gap: 1rem;
+    }
+
+    .hero__label {
+        font-size: 10px;
+    }
+
+    .hero__title,
+    .hero__subtitle {
+        font-size: 36px;
+    }
+
+    .hero__description {
+        font-size: 14px;
+    }
+
+    .hero__btn {
+        padding: 12px 20px;
+        font-size: 13px;
+    }
+
+    .hero__features {
+        gap: 1rem;
+        margin-top: 2rem;
+        padding-top: 1rem;
+    }
+
+    .feature__icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .feature__title {
+        font-size: 13px;
+    }
+
+    .feature__text {
+        font-size: 11px;
+    }
+
+    .bestsellers {
+        padding: 50px 0;
+    }
+    
+    .bestsellers .container {
+        padding: 0 15px;
+    }
+    
+    .bestsellers__title {
+        font-size: 22px;
+    }
+
+    .trade-in {
+        padding: 50px 0;
+    }
+    
+    .trade-in__container {
+        padding: 0 15px;
+    }
+    
+    .trade-in__title {
+        font-size: 28px;
+    }
+    
+    .trade-in__description {
+        font-size: 14px;
+    }
+    
+    .trade-in__btn {
+        padding: 12px 28px;
+        font-size: 13px;
+    }
+
+    .brands {
+        padding: 50px 0;
+    }
+    
+    .brands .container {
+        padding: 0 15px;
+    }
+    
+    .brands__title {
+        font-size: 28px;
+    }
+    
+    .brands__description {
+        font-size: 14px;
+    }
+    
+    .brands__btn {
+        padding: 14px 32px;
+    }
+    
+    .brand-card {
+        padding: 20px 16px;
+        font-size: 14px;
+    }
+
+    .footer {
+        padding: 24px 0;
+    }
+    
+    .footer__logo {
+        font-size: 20px;
+    }
 }

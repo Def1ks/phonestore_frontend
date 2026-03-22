@@ -1,16 +1,191 @@
 <!DOCTYPE html>
-<html lang = "ru">
+<html lang="ru">
+
 <head>
-    <meta charset = "UTF-8">
-    <meta name = "viewport" content = "width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PhoneStore</title>
-    <link rel = "stylesheet" href = "styles/fonts.css">
-    <link rel = "stylesheet" href = "styles/reset.css">
-    <link rel = "stylesheet" href = "styles/style.css"> 
-    <link rel = "stylesheet" href = "styles/responsive.css"> 
-    <script src = "js/main.js" defer></script> 
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <script src="js/main.js" defer></script>
 </head>
+
 <body>
-  
+    <header class="header">
+        <a href="index.html" class="header__logo">
+            PHONE<span>store</span>
+        </a>
+        <nav class="header__nav">
+            <ul class="header__nav-list">
+                <li><a href="index.html" class="header__nav-link header__nav-link--active">Главная</a></li>
+                <li><a href="catalog.html" class="header__nav-link">Каталог</a></li>
+                <li><a href="about_us.html" class="header__nav-link">О магазине</a></li>
+                <li><a href="reviews.html" class="header__nav-link">Отзывы</a></li>
+            </ul>
+        </nav>
+        <div class="header__icons">
+            <a href="cart.html" class="header__icon">
+                <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <rect height="9.5" width="10.5" y="4.75" x="2.75" />
+                    <path d="m5.75 7.75c0 1.5 1 2.5 2.25 2.5s2.25-1 2.25-2.5m-7.5-3 1.5-3h7.5l1.5 3" />
+                </svg>
+            </a>
+            <a href="profile.html" class="header__icon">
+                <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <circle cx="8" cy="6" r="3.25" />
+                    <path d="m2.75 14.25c0-2.5 2-5 5.25-5s5.25 2.5 5.25 5" />
+                </svg>
+            </a>
+        </div>
+        <button class="header__burger" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="header__mobile-menu">
+            <nav class="header__mobile-nav">
+                <ul class="header__mobile-nav-list">
+                    <li><a href="index.html" class="header__mobile-nav-link header__mobile-nav-link--active">Главная</a>
+                    </li>
+                    <li><a href="catalog.html" class="header__mobile-nav-link">Каталог</a></li>
+                    <li><a href="about_us.html" class="header__mobile-nav-link">О магазине</a></li>
+                    <li><a href="reviews.html" class="header__mobile-nav-link">Отзывы</a></li>
+                    <li><a href="cart.html" class="header__mobile-nav-link">Корзина</a></li>
+                    <li><a href="profile.html" class="header__mobile-nav-link">Профиль</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="hero__container">
+                <span class="hero__label">НОВАЯ КОЛЛЕКЦИЯ 2024</span>
+                <h1 class="hero__title">
+                    Смартфоны
+                    <span class="hero__subtitle">НОВОГО</span>
+                    <span class="hero__subtitle">ПОКОЛЕНИЯ</span>
+                </h1>
+                <p class="hero__description">
+                    Минимум лишнего, максимум технологий.<br>
+                    Официальная гарантия, быстрая доставка.
+                </p>
+                <div class="hero__buttons">
+                    <a href="catalog.html" class="hero__btn hero__btn--primary">
+                        Перейти в каталог
+                    </a>
+                    <a href="about_us.html" class="hero__btn hero__btn--secondary">
+                        О магазине
+                    </a>
+                </div>
+                <div class="hero__features">
+                    <div class="feature">
+                        <svg class="feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                        </svg>
+                        <div class="feature__content">
+                            <span class="feature__title">Официальная</span>
+                            <span class="feature__text">Гарантия</span>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <svg class="feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <rect x="1" y="3" width="15" height="13" />
+                            <polygon points="16 8 20 8 23 11 23 16 16 16 16 8" />
+                            <circle cx="5.5" cy="18.5" r="2.5" />
+                            <circle cx="18.5" cy="18.5" r="2.5" />
+                        </svg>
+                        <div class="feature__content">
+                            <span class="feature__title">1-2 дня</span>
+                            <span class="feature__text">Доставка</span>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <svg class="feature__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M1 4v6h6M23 20v-6h-6" />
+                            <path d="M20.49 9A9 9 0 0 0 5.64 5.64L1 10m22 4l-4.64 4.36A9 9 0 0 1 3.51 15" />
+                        </svg>
+                        <div class="feature__content">
+                            <span class="feature__title">14 дней</span>
+                            <span class="feature__text">Возврат</span>
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section class="bestsellers">
+            <div class="container">
+                <div class="bestsellers__header">
+                    <h2 class="bestsellers__title">Хиты продаж</h2>
+                    <a href="catalog.html" class="bestsellers__link">
+                        Все товары
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                            stroke-width="2">
+                            <path d="M3 8h10M10 5l3 3-3 3" />
+                        </svg>
+                    </a>
+                </div>
+                <div class="bestsellers__grid">
+
+                </div>
+            </div>
+        </section>
+        <section class="trade-in">
+            <div class="trade-in__container">
+                <span class="trade-in__label">TRADE-IN</span>
+                <h2 class="trade-in__title">Сдай старый — возьми новый</h2>
+                <p class="trade-in__description">
+                    Оценим ваш смартфон и вычтем стоимость из цены<br>
+                    нового устройства прямо при оформлении.
+                </p>
+                <a href="catalog.html" class="trade-in__btn">Выбрать смартфон</a>
+            </div>
+        </section>
+        <section class="brands">
+            <div class="container">
+                <div class="brands__content">
+                    <div class="brands__info">
+                        <span class="brands__label">НАШИ БРЕНДЫ</span>
+                        <h2 class="brands__title">Только топовые марки</h2>
+                        <p class="brands__description">
+                            Apple, Samsung, Google, Xiaomi, Honor, OnePlus — весь выбор<br>
+                            лучших производителей в одном месте.
+                        </p>
+                        <a href="catalog.html" class="brands__btn">Смотреть каталог</a>
+                    </div>
+
+                    <div class="brands__grid">
+                        <a href="catalog.html?brand=apple" class="brand-card">Apple</a>
+                        <a href="catalog.html?brand=samsung" class="brand-card">Samsung</a>
+                        <a href="catalog.html?brand=google" class="brand-card">Google</a>
+                        <a href="catalog.html?brand=xiaomi" class="brand-card">Xiaomi</a>
+                        <a href="catalog.html?brand=honor" class="brand-card">Honor</a>
+                        <a href="catalog.html?brand=oneplus" class="brand-card">OnePlus</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__logo">
+                    PHONE<span>store</span>
+                </div>
+                <p class="footer__copyright">
+                    © 2026 Phone Store. Все права защищены.
+                </p>
+                <div class="footer__inn">
+                    ИНН 1234567890
+                </div>
+            </div>
+        </div>
+    </footer>
 </body>
+
 </html>
