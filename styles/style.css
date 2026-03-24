@@ -11,9 +11,11 @@ body {
     transition: all 0.3s ease;
 }
 
-.product-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+@media (hover: hover) {
+    .product-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+    }
 }
 
 .product-card__link {
@@ -940,4 +942,591 @@ body {
     border-color: #07100B;
     transform: translateY(-4px);
     box-shadow: 0 8px 20px rgba(7, 16, 11, 0.2);
+}
+
+/*Страница "О магазине"*/
+/*Блок о нас*/
+.about {
+    padding: 100px 0;
+    background-color: #fff;
+    margin-top: 80px;
+}
+
+.about .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.about__content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about__label {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    letter-spacing: 2px;
+    margin-bottom: 20px;
+}
+
+.about__title {
+    font-family: var(--font-header);
+    font-size: 64px;
+    font-weight: 900;
+    color: #07100B;
+    line-height: 1;
+    margin: 0 0 24px 0;
+}
+
+.about__title span {
+    font-weight: 500;
+    color: #888;
+    font-style: italic;
+}
+
+.about__description {
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.7;
+    margin: 0 0 32px 0;
+    max-width: 480px;
+}
+
+.about__buttons {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.about__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 28px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.about__btn--primary {
+    background: #07100B;
+    color: #fff;
+}
+
+.about__btn--primary:hover {
+    background: #1a252f;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(7, 16, 11, 0.3);
+}
+
+.about__btn--secondary {
+    background: #fff;
+    color: #07100B;
+    border: 1px solid #e0e0e0;
+}
+
+.about__btn--secondary:hover {
+    border-color: #07100B;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.about__btn-icon {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    flex-shrink: 0;
+    transition: stroke 0.3s ease;
+}
+
+.about__stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.stat-card {
+    padding: 20px;
+    border: 1px solid #e8e8e8;
+    transition: all 0.3s ease;
+}
+
+.stat-card__value {
+    font-family: var(--font-header);
+    font-size: 40px;
+    font-weight: 900;
+    color: #07100B;
+    margin-bottom: 8px;
+    line-height: 1;
+}
+
+.stat-card__value span {
+    font-size: 16px;
+    font-weight: 500;
+    color: #888;
+    margin-left: 4px;
+}
+
+.stat-card__label {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/*Карусель*/
+.brands-carousel {
+    padding: 40px 0;
+    background: #fafafa;
+    border-top: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    overflow: hidden;
+}
+
+.carousel {
+    display: flex;
+    overflow: hidden;
+    user-select: none;
+    -webkit-mask: linear-gradient(to right,
+            transparent,
+            #000 10%,
+            #000 90%,
+            transparent);
+    mask: linear-gradient(to right,
+            transparent,
+            #000 10%,
+            #000 90%,
+            transparent);
+}
+
+.carousel__group {
+    display: flex;
+    gap: 60px;
+    padding-right: 60px;
+    animation: scrolling 20s linear infinite;
+    will-change: transform;
+}
+
+.carousel__item {
+    flex-shrink: 0;
+    font-family: var(--font-header);
+    font-size: 20px;
+    font-weight: 700;
+    color: #ccc;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    transition: color 0.3s ease;
+    cursor: default;
+}
+
+.carousel__item:hover {
+    color: #07100B;
+}
+
+@keyframes scrolling {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+/*Блок история*/
+.history {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.history .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.history__label {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 500;
+    color: #888;
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+}
+
+.history__title {
+    font-family: var(--font-header);
+    font-size: 48px;
+    font-weight: 900;
+    color: #07100B;
+    margin: 0 0 60px 0;
+}
+
+.timeline {
+    position: relative;
+    max-width: 900px;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 107px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(180deg, #e0e0e0 0%, #f0f0f0 100%);
+}
+
+.timeline__item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 80px 40px 1fr;
+    gap: 20px;
+    margin-bottom: 60px;
+    align-items: flex-start;
+}
+
+.timeline__item:last-child {
+    margin-bottom: 0;
+}
+
+.timeline__year {
+    font-family: var(--font-header);
+    font-size: 24px;
+    font-weight: 900;
+    color: #07100B;
+    padding-top: 4px;
+}
+
+.timeline__marker {
+    width: 16px;
+    height: 16px;
+    background: #07100B;
+    border: 4px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 0 2px #07100B;
+    flex-shrink: 0;
+    margin-top: 8px;
+    z-index: 1;
+}
+
+.timeline__content {
+    padding-top: 4px;
+}
+
+.timeline__heading {
+    font-family: var(--font-header);
+    font-size: 20px;
+    font-weight: 700;
+    color: #07100B;
+    margin: 0 0 8px 0;
+}
+
+.timeline__text {
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.6;
+    margin: 0;
+    max-width: 600px;
+}
+
+/*Преимущества */
+.advantages {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.advantages .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.advantages__label {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.advantages__title {
+    font-family: var(--font-header);
+    font-size: 48px;
+    font-weight: 900;
+    color: #07100B;
+    margin: 0 0 60px 0;
+}
+
+.advantages__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.advantage-card {
+    padding: 32px;
+    transition: all 0.3s ease;
+}
+
+@media (hover: hover) {
+    .advantage-card:hover {
+        background: #f5f5f5;
+    }
+}
+
+.advantage-card__icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    margin-bottom: 20px;
+    color: #07100B;
+    transition: all 0.3s ease;
+}
+
+.advantage-card__icon svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+.advantage-card__title {
+    font-family: var(--font-header);
+    font-size: 17px;
+    font-weight: 700;
+    color: #07100B;
+    margin: 0 0 10px 0;
+}
+
+.advantage-card__text {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 400;
+    color: #888;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/*Блок FAQ*/
+.faq {
+    padding: 100px 0;
+    background-color: #fff;
+}
+
+.faq .container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.faq__label {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.faq__title {
+    font-family: var(--font-header);
+    font-size: 48px;
+    font-weight: 900;
+    color: #07100B;
+    margin: 0 0 60px 0;
+}
+
+.faq__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.faq__item {
+    border-bottom: 1px solid #e8e8e8;
+    overflow: hidden;
+}
+
+.faq__item:last-child {
+    border-bottom: none;
+}
+
+.faq__question {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 24px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: var(--font-header);
+    font-size: 16px;
+    font-weight: 700;
+    color: #07100B;
+    transition: color 0.3s ease, opacity 0.3s ease;
+}
+
+@media (hover: hover) {
+    .faq__question:hover {
+        color: #07100B;
+        opacity: 0.6;
+    }
+}
+
+.faq__question span {
+    flex: 1;
+}
+
+.faq__icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    stroke: #888;
+    transition: transform 0.3s ease;
+}
+
+.faq__item.is-active .faq__icon {
+    transform: rotate(180deg);
+}
+
+.faq__answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, padding 0.3s ease;
+}
+
+.faq__item.is-active .faq__answer {
+    max-height: 300px;
+    padding-bottom: 24px;
+}
+
+.faq__answer p {
+    margin: 0;
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 400;
+    color: #666;
+    line-height: 1.7;
+}
+
+/*Контакты*/
+.contact-cta {
+    padding: 80px 0;
+    background-color: #07100B;
+}
+
+.contact-cta .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.contact-cta__content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+}
+
+.contact-cta__title {
+    font-family: var(--font-header);
+    font-size: 40px;
+    font-weight: 900;
+    color: #fff;
+    margin: 0 0 16px 0;
+    line-height: 1.2;
+}
+
+.contact-cta__description {
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 400;
+    color: #888;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.contact-cta__buttons {
+    display: flex;
+    gap: 16px;
+    flex-shrink: 0;
+}
+
+.contact-cta__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 28px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.contact-cta__btn svg {
+    width: 16px;
+    height: 16px;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    flex-shrink: 0;
+}
+
+.contact-cta__btn--white {
+    background: #fff;
+    color: #07100B;
+    border: 2px solid #fff;
+}
+
+.contact-cta__btn--white:hover {
+    background: #f5f5f5;
+    border-color: #f5f5f5;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 255, 255, 0.2);
+}
+
+.contact-cta__btn--outline {
+    background: transparent;
+    color: #fff;
+    border: 2px solid #333;
+}
+
+.contact-cta__btn--outline:hover {
+    border-color: #fff;
+    background: rgba(255, 255, 255, 0.05);
+    transform: translateY(-2px);
 }

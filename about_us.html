@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneStore</title>
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html" class="header__logo">
+            PHONE<span>store</span>
+        </a>
+        <nav class="header__nav">
+            <ul class="header__nav-list">
+                <li><a href="index.html" class="header__nav-link">Главная</a></li>
+                <li><a href="catalog.html" class="header__nav-link">Каталог</a></li>
+                <li><a href="about_us.html" class="header__nav-link header__nav-link--active">О магазине</a></li>
+                <li><a href="reviews.html" class="header__nav-link">Отзывы</a></li>
+            </ul>
+        </nav>
+        <div class="header__icons">
+            <a href="cart.html" class="header__icon">
+                <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <rect height="9.5" width="10.5" y="4.75" x="2.75" />
+                    <path d="m5.75 7.75c0 1.5 1 2.5 2.25 2.5s2.25-1 2.25-2.5m-7.5-3 1.5-3h7.5l1.5 3" />
+                </svg>
+            </a>
+            <a href="profile.html" class="header__icon">
+                <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <circle cx="8" cy="6" r="3.25" />
+                    <path d="m2.75 14.25c0-2.5 2-5 5.25-5s5.25 2.5 5.25 5" />
+                </svg>
+            </a>
+        </div>
+        <button class="header__burger" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="header__mobile-menu">
+            <nav class="header__mobile-nav">
+                <ul class="header__mobile-nav-list">
+                    <li><a href="index.html" class="header__mobile-nav-link">Главная</a>
+                    </li>
+                    <li><a href="catalog.html" class="header__mobile-nav-link">Каталог</a></li>
+                    <li><a href="about_us.html" class="header__mobile-nav-link header__mobile-nav-link--active">О
+                            магазине</a></li>
+                    <li><a href="reviews.html" class="header__mobile-nav-link">Отзывы</a></li>
+                    <li><a href="cart.html" class="header__mobile-nav-link">Корзина</a></li>
+                    <li><a href="profile.html" class="header__mobile-nav-link">Профиль</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="about">
+            <div class="container">
+                <div class="about__content">
+                    <div class="about__info">
+                        <span class="about__label">О МАГАЗИНЕ</span>
+                        <h1 class="about__title">Phone<br><span>Store</span></h1>
+                        <p class="about__description">
+                            С 2018 года помогаем найти идеальный смартфон. Без воды, накруток и лишней суеты — только
+                            честные цены и официальная гарантия.
+                        </p>
+                        <div class="about__buttons">
+                            <a href="#contact" class="about__btn about__btn--primary">
+                                <svg class="about__btn-icon" viewBox="0 0 16 16" fill="none">
+                                    <path d="M10.75 11.75h-6.5v-6.5m7.5-1-7.5 7.5" />
+                                </svg>
+                                Написать нам
+                            </a>
+                            <a href="tel:+79999999999" class="about__btn about__btn--secondary">
+                                <svg class="about__btn-icon" viewBox="0 0 16 16" fill="none">
+                                    <path
+                                        d="M1.75 1.75c0 8.5 4 12.5 12.5 12.5v-4l-3.5-1-1 1.5c-2 0-4.5-2.5-4.5-4.5l1.5-1-1-3.5z" />
+                                    <path />
+                                </svg>
+                                Позвонить
+                            </a>
+                        </div>
+                    </div>
+                    <div class="about__stats">
+                        <div class="stat-card">
+                            <div class="stat-card__value">6<span>лет</span></div>
+                            <div class="stat-card__label">НА РЫНКЕ</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__value">15K+</div>
+                            <div class="stat-card__label">ДОВОЛЬНЫХ КЛИЕНТОВ</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__value">500+</div>
+                            <div class="stat-card__label">МОДЕЛЕЙ СМАРТФОНОВ</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-card__value">1-2<span>дня</span></div>
+                            <div class="stat-card__label">ДОСТАВКА ПО РОССИИ</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="brands-carousel">
+            <div class="carousel">
+                <div class="carousel__group">
+                    <div class="carousel__item">SAMSUNG</div>
+                    <div class="carousel__item">GOOGLE</div>
+                    <div class="carousel__item">XIAOMI</div>
+                    <div class="carousel__item">ONEPLUS</div>
+                    <div class="carousel__item">OPPO</div>
+                    <div class="carousel__item">REALME</div>
+                    <div class="carousel__item">NOTHING</div>
+                    <div class="carousel__item">APPLE</div>
+                </div>
+                <div class="carousel__group" aria-hidden="true">
+                    <div class="carousel__item">SAMSUNG</div>
+                    <div class="carousel__item">GOOGLE</div>
+                    <div class="carousel__item">XIAOMI</div>
+                    <div class="carousel__item">ONEPLUS</div>
+                    <div class="carousel__item">OPPO</div>
+                    <div class="carousel__item">REALME</div>
+                    <div class="carousel__item">NOTHING</div>
+                    <div class="carousel__item">APPLE</div>
+                </div>
+            </div>
+        </section>
+        <section class="history">
+            <div class="container">
+                <span class="history__label">ИСТОРИЯ</span>
+                <h2 class="history__title">Как мы росли</h2>
+                <div class="timeline">
+                    <div class="timeline__item">
+                        <div class="timeline__year">2018</div>
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <h3 class="timeline__heading">Открытие</h3>
+                            <p class="timeline__text">
+                                Начали с небольшого шоурума в центре Москвы и 50 моделей в каталоге.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline__item">
+                        <div class="timeline__year">2020</div>
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <h3 class="timeline__heading">Онлайн-магазин</h3>
+                            <p class="timeline__text">
+                                Запустили сайт — первый месяц принёс 300 заказов. Стало ясно: это работает.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline__item">
+                        <div class="timeline__year">2022</div>
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <h3 class="timeline__heading">Масштабирование</h3>
+                            <p class="timeline__text">
+                                Подключили доставку по всей России, открыли склад и расширили каталог до 300+ моделей.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="timeline__item">
+                        <div class="timeline__year">2024</div>
+                        <div class="timeline__marker"></div>
+                        <div class="timeline__content">
+                            <h3 class="timeline__heading">Сегодня</h3>
+                            <p class="timeline__text">
+                                15 000 довольных клиентов, 500+ моделей и новый сайт, который вы сейчас читаете.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="advantages">
+            <div class="container">
+                <span class="advantages__label">ПОЧЕМУ МЫ</span>
+                <h2 class="advantages__title">Наши преимущества</h2>
+                <div class="advantages__grid">
+                    <div class="advantage-card">
+                        <div class="advantage-card__icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                            </svg>
+                        </div>
+                        <h3 class="advantage-card__title">Официальная гарантия</h3>
+                        <p class="advantage-card__text">
+                            Все устройства с гарантией производителя от 1 года. Никаких серых схем.
+                        </p>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-card__icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M13 10V3L4 14h7v7l9-11h-7z" />
+                            </svg>
+                        </div>
+                        <h3 class="advantage-card__title">Быстрая доставка</h3>
+                        <p class="advantage-card__text">
+                            Курьером или в пункт выдачи за 1-2 рабочих дня по всей России.
+                        </p>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-card__icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                            </svg>
+                        </div>
+                        <h3 class="advantage-card__title">Честные цены</h3>
+                        <p class="advantage-card__text">
+                            Цена на сайте — финальная. Никаких скрытых платежей и комиссий.
+                        </p>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-card__icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path
+                                    d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                            </svg>
+                        </div>
+                        <h3 class="advantage-card__title">Возврат 14 дней</h3>
+                        <p class="advantage-card__text">
+                            Не подошло — вернём деньги без лишних вопросов и бюрократии.
+                        </p>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-card__icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z" />
+                            </svg>
+                        </div>
+                        <h3 class="advantage-card__title">Поддержка 24/7</h3>
+                        <p class="advantage-card__text">
+                            Всегда на связи: поможем выбрать и решим любой вопрос.
+                        </p>
+                    </div>
+                    <div class="advantage-card">
+                        <div class="advantage-card__icon">
+                            <svg viewBox="0 0 24 24" fill="none">
+                                <path d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                            </svg>
+                        </div>
+                        <h3 class="advantage-card__title">Trade-in</h3>
+                        <p class="advantage-card__text">
+                            Сдайте старый смартфон и получите скидку на новый при оформлении.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="faq">
+            <div class="container">
+                <span class="faq__label">ЧАСТЫЕ ВОПРОСЫ</span>
+                <h2 class="faq__title">FAQ</h2>
+                <div class="faq__list">
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Как убедиться, что телефон оригинальный?</span>
+                            <svg class="faq__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M2 8L8 14L14 8M2 8L8 2L14 8" />
+                            </svg>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Все устройства поставляются напрямую от официальных дистрибьюторов. К каждому товару
+                                прилагается чек и гарантийный талон производителя.</p>
+                        </div>
+                    </div>
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Можно ли вернуть телефон, если не понравился?</span>
+                            <svg class="faq__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M2 8L8 14L14 8M2 8L8 2L14 8" />
+                            </svg>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Да, вы можете вернуть устройство в течение 14 дней с момента покупки. Телефон должен быть
+                                в оригинальной упаковке и без следов использования.</p>
+                        </div>
+                    </div>
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Как работает Trade-in?</span>
+                            <svg class="faq__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M2 8L8 14L14 8M2 8L8 2L14 8" />
+                            </svg>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Принесите ваш старый смартфон, мы оценим его состояние и предложим скидку на новый.
+                                Оценка занимает 10-15 минут.</p>
+                        </div>
+                    </div>
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Есть ли рассрочка?</span>
+                            <svg class="faq__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M2 8L8 14L14 8M2 8L8 2L14 8" />
+                            </svg>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Да, мы сотрудничаем с банками-партнерами. Рассрочка доступна на 3, 6 или 12 месяцев.
+                                Решение принимается за 15 минут.</p>
+                        </div>
+                    </div>
+                    <div class="faq__item">
+                        <button class="faq__question" aria-expanded="false">
+                            <span>Как быстро отвечает поддержка?</span>
+                            <svg class="faq__icon" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                stroke="currentColor" stroke-width="2">
+                                <path d="M2 8L8 14L14 8M2 8L8 2L14 8" />
+                            </svg>
+                        </button>
+                        <div class="faq__answer">
+                            <p>Наша поддержка работает 24/7. Среднее время ответа — 5-10 минут в рабочее время
+                                (10:00-20:00), до 30 минут в ночное время.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section class="contact-cta">
+    <div class="container">
+        <div class="contact-cta__content">
+            <div class="contact-cta__text">
+                <h2 class="contact-cta__title">Остались вопросы?</h2>
+                <p class="contact-cta__description">
+                    Ответим в течение 15 минут в рабочее время.<br>
+                    Поможем выбрать, оформить и доставить.
+                </p>
+            </div>
+            
+            <div class="contact-cta__buttons">
+                <a href="https://t.me/phonestore" class="contact-cta__btn contact-cta__btn--white" target="_blank">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M13.442 1.406L1.938 5.844c-.782.315-.778.751-.144.946l2.944.918 6.818-4.302c.322-.193.616-.088.374.125l-5.522 4.983-.202 3.021c.296 0 .426-.136.59-.296l1.42-1.378 2.952 2.18c.544.298.934.145 1.07-.504l1.94-9.136c.198-.792-.304-1.154-.82-.914z"/>
+                    </svg>
+                    Telegram
+                </a>
+                
+                <a href="tel:88001234567" class="contact-cta__btn contact-cta__btn--outline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M14.625 11.063l-2.5-1.25-.445-.222-.438.078c-.266.047-.65.156-1.031.539l-.259.258c-.078.078-.219.094-.32.031-.875-.531-1.875-1.531-2.406-2.406-.063-.109-.047-.242.031-.32l.258-.258c.383-.383.492-.766.539-1.031l.078-.438-.222-.445-1.25-2.5C6.5 2.812 6.312 2.75 6.125 2.75h-.25c-.187 0-.5.062-.812.312-.313.25-.625.625-.813 1.125-.187.5-.25 1.062-.125 1.625.125.562.375 1.125.75 1.625 1.25 1.75 2.812 3.312 4.562 4.562.5.375 1.063.625 1.625.75.563.125 1.125.062 1.625-.125.5-.188.875-.5 1.125-.812.312-.313.375-.625.375-.813v-.25c0-.187-.062-.375-.25-.5z"/>
+                    </svg>
+                    8 800 123-45-67
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__logo">
+                    PHONE<span>store</span>
+                </div>
+                <p class="footer__copyright">
+                    © 2026 Phone Store. Все права защищены.
+                </p>
+                <div class="footer__inn">
+                    ИНН 1234567890
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
