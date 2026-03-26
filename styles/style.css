@@ -1530,3 +1530,430 @@ body {
     background: rgba(255, 255, 255, 0.05);
     transform: translateY(-2px);
 }
+
+/** ПЕРЕДЕЛАТЬ ПРИ ПОДКЛЮЧЕНИЕ К БД (НАЧАЛО)**/
+/*Стили страницы отзывы*/
+.reviews {
+    padding: 100px 0;
+    background-color: #fff;
+    margin-top: 80px;
+}
+
+.reviews .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 50px;
+}
+
+.reviews__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 60px;
+    gap: 40px;
+}
+
+.reviews__label {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    font-weight: 600;
+    color: #888;
+    letter-spacing: 3px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+}
+
+.reviews__title {
+    font-family: var(--font-header);
+    font-size: 48px;
+    font-weight: 900;
+    color: #07100B;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.reviews__rating {
+    text-align: right;
+    flex-shrink: 0;
+}
+
+.reviews__rating-value {
+    font-family: var(--font-header);
+    font-size: 64px;
+    font-weight: 900;
+    color: #07100B;
+    line-height: 1;
+}
+
+.reviews__rating-stars {
+    font-size: 20px;
+    color: #FFB800;
+    letter-spacing: 2px;
+    margin: 8px 0 4px 0;
+}
+
+.reviews__rating-count {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    color: #888;
+}
+
+.reviews__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+}
+
+.review-card {
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    padding: 28px;
+}
+.review-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 16px;
+    gap: 16px;
+}
+
+.review-card__user {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.review-card__avatar {
+    width: 44px;
+    height: 44px;
+    background: #07100B;
+    color: #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-ui);
+    font-size: 13px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.review-card__user-info {
+    flex: 1;
+}
+
+.review-card__name {
+    font-family: var(--font-header);
+    font-size: 15px;
+    font-weight: 700;
+    color: #07100B;
+    margin-bottom: 2px;
+}
+
+.review-card__date {
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: #888;
+}
+
+.review-card__rating {
+    font-size: 16px;
+    color: #FFB800;
+    letter-spacing: 2px;
+    flex-shrink: 0;
+}
+
+.review-card__text {
+    font-family: var(--font-ui);
+    font-size: 14px;
+    color: #333;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/*КНОПКА "ЗАГРУЗИТЬ ЕЩЁ"*/
+.reviews__load-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 48px;
+}
+
+.reviews__btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 40px;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    font-weight: 600;
+    color: #07100B;
+    background: transparent;
+    border: 1px solid #333;
+    border-radius: 0; 
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.reviews__btn:hover {
+    background: #07100B;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(7, 16, 11, 0.2);
+}
+
+.reviews__btn:active {
+    transform: translateY(0);
+}
+
+.reviews__btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+.reviews__btn--loading {
+    position: relative;
+    color: transparent;
+    pointer-events: none;
+}
+
+.reviews__btn--loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #07100B;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Скрываем кнопку если отзывов нет */
+.reviews__load-more--hidden {
+    display: none;
+}
+
+/*АДАПТИВ ДЛЯ КНОПКИ*/
+@media (max-width: 500px) {
+    .reviews__load-more {
+        margin-top: 36px;
+    }
+    
+    .reviews__btn {
+        width: 100%;
+        padding: 14px 40px;
+        font-size: 13px;
+    }
+}
+
+/*ФОРМА ОСТАВЛЕНИЯ ОТЗЫВА*/
+.review-form {
+    padding: 60px 0;
+}
+
+.review-form__container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 32px;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+}
+
+.review-form__title {
+    font-family: var(--font-header);
+    font-size: 22px; 
+    font-weight: 900;
+    color: #07100B;
+    margin: 0 0 24px 0; 
+}
+
+.review-form__group {
+    margin-bottom: 20px;
+}
+
+.review-form__label {
+    display: block;
+    font-family: var(--font-ui);
+    font-size: 11px;
+    font-weight: 600;
+    color: #07100B;
+    margin-bottom: 6px; 
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/*РЕЙТИНГ СО ЗВЁЗДАМИ */
+.review-form__rating {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 6px; 
+    justify-content: flex-end;
+}
+
+.review-form__star-input {
+    display: none;
+}
+
+.review-form__star {
+    font-size: 24px; 
+    color: #e0e0e0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    user-select: none;
+}
+
+.review-form__star:hover,
+.review-form__star:hover ~ .review-form__star {
+    color: #FFB800;
+}
+
+.review-form__star-input:checked ~ .review-form__star {
+    color: #FFB800;
+}
+
+/*ПОЛЯ ВВОДА*/
+.review-form__input,
+.review-form__textarea {
+    width: 100%;
+    padding: 10px 12px; 
+    font-family: var(--font-ui);
+    font-size: 14px; 
+    color: #07100B;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 0;
+    transition: all 0.3s ease;
+    box-sizing: border-box;
+}
+
+.review-form__input:focus,
+.review-form__textarea:focus {
+    outline: none;
+    border-color: #07100B;
+    box-shadow: 0 0 0 3px rgba(7, 16, 11, 0.1);
+}
+
+.review-form__input::placeholder,
+.review-form__textarea::placeholder {
+    color: #aaa;
+}
+
+.review-form__textarea {
+    resize: vertical;
+    min-height: 80px; 
+}
+
+/*КНОПКА ОТПРАВКИ */
+.review-form__submit {
+    width: 100%;
+    padding: 12px 24px;
+    font-family: var(--font-ui);
+    font-size: 13px; 
+    font-weight: 600;
+    color: #fff;
+    background: #07100B;
+    border: 2px solid #07100B;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.review-form__submit:hover {
+    background: transparent;
+    color: #07100B;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(7, 16, 11, 0.2);
+}
+
+.review-form__submit:active {
+    transform: translateY(0);
+}
+
+/*КНОПКА В СОСТОЯНИИ ЗАГРУЗКИ */
+.review-form__submit--loading {
+    position: relative;
+    color: transparent !important;
+    pointer-events: none;
+}
+
+.review-form__submit--loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #fff;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/*АДАПТИВ */
+@media (max-width: 800px) {
+    .review-form {
+        padding: 40px 0; 
+    }
+    
+    .review-form__container {
+        padding: 24px; 
+    }
+    
+    .review-form__title {
+        font-size: 20px; 
+    }
+    
+    .review-form__star {
+        font-size: 22px; 
+    }
+}
+
+@media (max-width: 500px) {
+    .review-form {
+        padding: 30px 0; 
+    }
+    
+    .review-form__container {
+        padding: 20px; 
+    }
+    
+    .review-form__title {
+        font-size: 18px; 
+        margin-bottom: 20px;
+    }
+    
+    .review-form__star {
+        font-size: 20px; 
+    }
+    
+    .review-form__input,
+    .review-form__textarea {
+        font-size: 13px;
+        padding: 9px 11px;
+    }
+    
+    .review-form__textarea {
+        min-height: 70px; 
+    }
+    
+    .review-form__submit {
+        padding: 11px 20px;
+        font-size: 12px;
+    }
+}
+
+/** ПЕРЕДЕЛАТЬ ПРИ ПОДКЛЮЧЕНИЕ К БД (КОНЕЦ)**/

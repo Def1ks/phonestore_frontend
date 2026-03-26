@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneStore</title>
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <script src="js/main.js" defer></script>
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html" class="header__logo">
+            PHONE<span>store</span>
+        </a>
+        <nav class="header__nav">
+            <ul class="header__nav-list">
+                <li><a href="index.html" class="header__nav-link">Главная</a></li>
+                <li><a href="catalog.html" class="header__nav-link">Каталог</a></li>
+                <li><a href="about_us.html" class="header__nav-link">О магазине</a></li>
+                <li><a href="reviews.html" class="header__nav-link header__nav-link--active">Отзывы</a></li>
+            </ul>
+        </nav>
+        <div class="header__icons">
+            <a href="cart.html" class="header__icon">
+                <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <rect height="9.5" width="10.5" y="4.75" x="2.75" />
+                    <path d="m5.75 7.75c0 1.5 1 2.5 2.25 2.5s2.25-1 2.25-2.5m-7.5-3 1.5-3h7.5l1.5 3" />
+                </svg>
+            </a>
+            <a href="profile.html" class="header__icon">
+                <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <circle cx="8" cy="6" r="3.25" />
+                    <path d="m2.75 14.25c0-2.5 2-5 5.25-5s5.25 2.5 5.25 5" />
+                </svg>
+            </a>
+        </div>
+        <button class="header__burger" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="header__mobile-menu">
+            <nav class="header__mobile-nav">
+                <ul class="header__mobile-nav-list">
+                    <li><a href="index.html" class="header__mobile-nav-link">Главная</a>
+                    </li>
+                    <li><a href="catalog.html" class="header__mobile-nav-link">Каталог</a></li>
+                    <li><a href="about_us.html" class="header__mobile-nav-link">О магазине</a></li>
+                    <li><a href="reviews.html"
+                            class="header__mobile-nav-link header__mobile-nav-link--active">Отзывы</a></li>
+                    <li><a href="cart.html" class="header__mobile-nav-link">Корзина</a></li>
+                    <li><a href="profile.html" class="header__mobile-nav-link">Профиль</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="reviews">
+            <div class="container">
+                <div class="reviews__header">
+                    <div class="reviews__title-block">
+                        <span class="reviews__label">ОТЗЫВЫ</span>
+                        <h1 class="reviews__title">Что говорят покупатели</h1>
+                    </div>
+
+                    <div class="reviews__rating">
+                        <div class="reviews__rating-value">4.7</div>
+                        <div class="reviews__rating-stars">
+                            ★★★★★
+                        </div>
+                        <div class="reviews__rating-count">6 отзывов</div>
+                    </div>
+                </div>
+                <div class="reviews__grid">
+                    <!-- ЗАГЛУШКИ ПОТОМ УБРАТЬ -->
+                    <!-- Review 1 -->
+                    <div class="review-card">
+                        <div class="review-card__header">
+                            <div class="review-card__user">
+                                <div class="review-card__avatar">АК</div>
+                                <div class="review-card__user-info">
+                                    <div class="review-card__name">Алексей К.</div>
+                                    <div class="review-card__date">12 фев 2024</div>
+                                </div>
+                            </div>
+                            <div class="review-card__rating">★★★★★</div>
+                        </div>
+                        <div class="review-card__text">
+                            Отличный магазин! Заказал телефон, пришёл за 2 дня. Упаковка идеальная, всё оригинальное.
+                            Консультант помог выбрать нужную модель. Буду рекомендовать друзьям!
+                        </div>
+                    </div>
+                    <!-- Review 2 -->
+                    <div class="review-card">
+                        <div class="review-card__header">
+                            <div class="review-card__user">
+                                <div class="review-card__avatar">МС</div>
+                                <div class="review-card__user-info">
+                                    <div class="review-card__name">Марина Соколова</div>
+                                    <div class="review-card__date">3 янв 2024</div>
+                                </div>
+                            </div>
+                            <div class="review-card__rating">★★★★★</div>
+                        </div>
+                        <div class="review-card__text">
+                            Отличный магазин! Цены ниже, чем в официальных салонах. Телефон пришёл в полной комплектации
+                            с гарантийным талоном. Оформление заняло 5 минут.
+                        </div>
+                    </div>
+                    <!-- Review 3 -->
+                    <div class="review-card">
+                        <div class="review-card__header">
+                            <div class="review-card__user">
+                                <div class="review-card__avatar">ДП</div>
+                                <div class="review-card__user-info">
+                                    <div class="review-card__name">Дмитрий П.</div>
+                                    <div class="review-card__date">28 дек 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-card__rating">★★★★☆</div>
+                        </div>
+                        <div class="review-card__text">
+                            Телефон отличный, доставка быстрая. Единственный минус — не было подарочной коробки, но это
+                            мелочь. В целом очень доволен обслуживанием.
+                        </div>
+                    </div>
+                    <!-- Review 4 -->
+                    <div class="review-card">
+                        <div class="review-card__header">
+                            <div class="review-card__user">
+                                <div class="review-card__avatar">СВ</div>
+                                <div class="review-card__user-info">
+                                    <div class="review-card__name">Светлана Ворон.</div>
+                                    <div class="review-card__date">15 дек 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-card__rating">★★★★★</div>
+                        </div>
+                        <div class="review-card__text">
+                            Покупала в подарок мужу. Сначала сомневалась — заказывать онлайн или идти в магазин. Решила
+                            попробовать. Не пожалела! Всё пришло быстро и в отличном состоянии.
+                        </div>
+                    </div>
+                    <!-- Review 5 -->
+                    <div class="review-card">
+                        <div class="review-card__header">
+                            <div class="review-card__user">
+                                <div class="review-card__avatar">ИМ</div>
+                                <div class="review-card__user-info">
+                                    <div class="review-card__name">Игорь Максимов</div>
+                                    <div class="review-card__date">5 дек 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-card__rating">★★★★★</div>
+                        </div>
+                        <div class="review-card__text">
+                            Сдал старый телефон по Trade-in — получил хорошую скидку. Процедура простая, оценка честная.
+                            Новый телефон летает! Очень доволен сервисом.
+                        </div>
+                    </div>
+                    <!-- Review 6 -->
+                    <div class="review-card">
+                        <div class="review-card__header">
+                            <div class="review-card__user">
+                                <div class="review-card__avatar">ОТ</div>
+                                <div class="review-card__user-info">
+                                    <div class="review-card__name">Ольга Тарасова</div>
+                                    <div class="review-card__date">21 ноя 2023</div>
+                                </div>
+                            </div>
+                            <div class="review-card__rating">★★★★☆</div>
+                        </div>
+                        <div class="review-card__text">
+                            Хороший магазин с адекватными ценами. Доставили вовремя, телефон рабочий, гарантия
+                            официальная. Рекомендую!
+                        </div>
+                    </div>
+                </div>
+                <!-- Кнопка загрузки -->
+                <div class="reviews__load-more">
+                    <button class="reviews__btn" id="loadMoreBtn">
+                        Загрузить еще отзывы
+                    </button>
+                </div>
+                <!-- Форма оставления отзыва -->
+                <div class="review-form">
+                    <div class="review-form__container">
+                        <h2 class="review-form__title">Оставить отзыв</h2>
+
+                        <form class="review-form__form" id="reviewForm">
+                            <!-- Рейтинг -->
+                            <div class="review-form__group">
+                                <label class="review-form__label">Ваша оценка</label>
+                                <div class="review-form__rating" id="starRating">
+                                    <input type="radio" name="rating" value="1" id="star1"
+                                        class="review-form__star-input">
+                                    <label for="star1" class="review-form__star" title="1 звезда">★</label>
+
+                                    <input type="radio" name="rating" value="2" id="star2"
+                                        class="review-form__star-input">
+                                    <label for="star2" class="review-form__star" title="2 звезды">★</label>
+
+                                    <input type="radio" name="rating" value="3" id="star3"
+                                        class="review-form__star-input">
+                                    <label for="star3" class="review-form__star" title="3 звезды">★</label>
+
+                                    <input type="radio" name="rating" value="4" id="star4"
+                                        class="review-form__star-input">
+                                    <label for="star4" class="review-form__star" title="4 звезды">★</label>
+
+                                    <input type="radio" name="rating" value="5" id="star5"
+                                        class="review-form__star-input">
+                                    <label for="star5" class="review-form__star" title="5 звезд">★</label>
+                                </div>
+                            </div>
+
+                            <!-- Имя -->
+                            <div class="review-form__group">
+                                <label class="review-form__label" for="userName">Ваше имя</label>
+                                <input type="text" id="userName" name="userName" class="review-form__input"
+                                    placeholder="Иван Иванов" required>
+                            </div>
+
+                            <!-- Отзыв -->
+                            <div class="review-form__group">
+                                <label class="review-form__label" for="userReview">Ваш отзыв</label>
+                                <textarea id="userReview" name="userReview" class="review-form__textarea"
+                                    placeholder="Расскажите о вашем опыте покупок..." rows="5" required></textarea>
+                            </div>
+
+                            <!-- Кнопка -->
+                            <button type="submit" class="review-form__submit">
+                                Отправить отзыв
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__logo">
+                    PHONE<span>store</span>
+                </div>
+                <p class="footer__copyright">
+                    © 2026 Phone Store. Все права защищены.
+                </p>
+                <div class="footer__inn">
+                    ИНН 1234567890
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
