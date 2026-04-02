@@ -550,6 +550,46 @@ body {
 }
 
 /*Основной контент*/
+/* Кнопка с хитами */
+.bestsellers__error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+}
+
+.bestsellers__error p {
+    font-family: var(--font-ui);
+    color: #e74c3c;
+    margin: 0 0 16px;
+}
+
+/* Кнопка повтора */
+.bestsellers__retry {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background: #07100B;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    transition: opacity 0.2s ease;
+}
+
+.bestsellers__retry:hover {
+    opacity: 0.9;
+}
+
+.bestsellers__retry:active {
+    opacity: 0.8;
+}
+
+.bestsellers__retry:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 /*Hero-блок*/
 .hero {
     width: 100%;
@@ -1979,32 +2019,92 @@ body {
     }
 }
 
-/** ПЕРЕДЕЛАТЬ ПРИ ПОДКЛЮЧЕНИЕ К БД (КОНЕЦ)**/
-
-
-/** ПЕРЕДЕЛАТЬ ПРИ ПОДКЛЮЧЕНИЕ К БД (НАЧАЛО)**/
-/* ========================================
-   СТРАНИЦА КАТАЛОГА - ОСНОВНЫЕ СТИЛИ
-   ======================================== */
-
-/* Основной контейнер страницы каталога */
-.catalog {
-    padding: 40px 0 80px;
-    margin-top: 80px; /* Отступ для фиксированной шапки сайта */
+/* СТРАНИЦА КАТАЛОГА - ОСНОВНЫЕ СТИЛИ */
+.catalog__empty {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
 }
 
-/* Ограничитель ширины контента */
+.catalog__empty p {
+    font-family: var(--font-ui);
+    color: #666;
+    margin: 0;
+}
+/*Ошибка загрузки каталога*/
+.catalog__error {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+}
+
+.catalog__error p {
+    font-family: var(--font-ui);
+    color: #e74c3c;
+    margin: 0 0 16px;
+}
+
+.catalog__retry-btn {
+    margin-top: 16px;
+    padding: 10px 20px;
+    background: #07100B;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: var(--font-ui);
+    font-size: 14px;
+    transition: opacity 0.2s ease;
+}
+
+.catalog__retry-btn:hover {
+    opacity: 0.9;
+}
+
+.catalog__retry-btn:active {
+    opacity: 0.8;
+}
+
+/*Анимация загрузки каталога*/
+.catalog__loading {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 40px;
+}
+
+.catalog__loading .spinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-top-color: #07100B;
+    border-radius: 50%;
+    animation: spinner-rotate 0.6s linear infinite;
+    margin: 0 auto 16px;
+}
+
+.catalog__loading p {
+    font-family: var(--font-ui);
+    color: #666;
+    margin: 0;
+}
+
+@keyframes spinner-rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.catalog {
+    padding: 40px 0 80px;
+    margin-top: 80px; 
+}
+
 .catalog__container {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 20px;
 }
 
-/* ========================================
-   ЗАГОЛОВОК КАТАЛОГА
-   ======================================== */
-
-/* Верхняя часть: заголовок + кнопка фильтров */
 .catalog__header {
     display: flex;
     justify-content: space-between;
@@ -2012,14 +2112,12 @@ body {
     margin-bottom: 30px;
 }
 
-/* Блок с заголовком и количеством товаров */
 .catalog__title-block {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
 
-/* Заголовок "Каталог" */
 .catalog__title {
     font-family: var(--font-header);
     font-size: 32px;
@@ -2029,7 +2127,6 @@ body {
     color: #07100B;
 }
 
-/* Количество товаров (например, "8 товаров") */
 .catalog__count {
     font-family: var(--font-ui);
     font-size: 14px;
@@ -2037,7 +2134,6 @@ body {
     margin: 0;
 }
 
-/* Кнопка открытия фильтров */
 .catalog__filters-toggle {
     display: flex;
     align-items: center;
@@ -2068,26 +2164,19 @@ body {
     font-weight: 500;
 }
 
-/* ========================================
-   ПАНЕЛЬ ФИЛЬТРОВ
-   ======================================== */
-
-/* Скрытая панель фильтров (по умолчанию) */
 .catalog__filters {
     display: none;
     margin-bottom: 30px;
     padding: 30px;
     background: #fff;
     border: 1px solid #e0e0e0;
-    position: relative; /* Для позиционирования крестика */
+    position: relative; 
 }
 
-/* Активное состояние — панель видна */
 .catalog__filters.is-active {
     display: block;
 }
 
-/* Кнопка закрытия фильтров (крестик) — скрыта на ПК */
 .catalog__filters-close {
     display: none;
     position: absolute;
@@ -2114,11 +2203,6 @@ body {
     transform: rotate(90deg);
 }
 
-/* ========================================
-   ГРУППЫ ФИЛЬТРОВ
-   ======================================== */
-
-/* Отдельная группа фильтров (категория, бренд, память, цена) */
 .filters__group {
     margin-bottom: 30px;
 }
@@ -2127,7 +2211,6 @@ body {
     margin-bottom: 0;
 }
 
-/* Заголовок группы (например, "БРЕНД") */
 .filters__title {
     font-family: var(--font-ui);
     font-size: 12px;
@@ -2138,14 +2221,12 @@ body {
     letter-spacing: 0.5px;
 }
 
-/* Контейнер для тегов-кнопок */
 .filters__tags {
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
 }
 
-/* Отдельный тег-кнопка (Apple, Samsung и т.д.) */
 .filters__tag {
     padding: 8px 16px;
     background: #fff;
@@ -2161,24 +2242,17 @@ body {
     border-color: #07100B;
 }
 
-/* Активный тег (выбранный фильтр) */
 .filters__tag.is-active {
     background: #07100B;
     color: #fff;
     border-color: #07100B;
 }
 
-/* ========================================
-   ФИЛЬТР ПО ЦЕНЕ
-   ======================================== */
-
-/* Контейнер для двух полей ввода (от и до) */
 .filters__price-inputs {
     display: flex;
     gap: 12px;
 }
 
-/* Одно поле ввода цены */
 .filters__price-field {
     flex: 1;
 }
@@ -2206,10 +2280,6 @@ body {
     border-color: #07100B;
 }
 
-/* ========================================
-   КНОПКА ПРИМЕНЕНИЯ ФИЛЬТРОВ
-   ======================================== */
-
 .filters__actions {
     margin-top: 30px;
     padding-top: 30px;
@@ -2236,10 +2306,6 @@ body {
 .filters__apply-btn:active {
     transform: translateY(0);
 }
-
-/* ========================================
-   СОРТИРОВКА ТОВАРОВ
-   ======================================== */
 
 .catalog__sort {
     margin-bottom: 30px;
@@ -2271,9 +2337,6 @@ body {
     border-color: #07100B;
 }
 
-/* ========================================
-   СЕТКА ТОВАРОВ
-   ======================================== */
 .catalog__grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -2286,10 +2349,6 @@ body {
         box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
     }
 }
-
-/* ========================================
-   АДАПТИВНЫЕ СТИЛИ
-   ======================================== */
 
 /* ----- ПЛАНШЕТЫ (до 1100px) ----- */
 @media (max-width: 1100px) {
