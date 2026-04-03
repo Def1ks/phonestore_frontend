@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/responsive.css">
     <script src="js/main.js" defer></script>
+    <script src="js/reviews.js" defer type="module"></script>
 </head>
 
 <body>
@@ -69,119 +70,15 @@
                         <span class="reviews__label">ОТЗЫВЫ</span>
                         <h1 class="reviews__title">Что говорят покупатели</h1>
                     </div>
-
                     <div class="reviews__rating">
-                        <div class="reviews__rating-value">4.7</div>
+                        <div class="reviews__rating-value">0.0</div>
                         <div class="reviews__rating-stars">
                             ★★★★★
                         </div>
-                        <div class="reviews__rating-count">6 отзывов</div>
+                        <div class="reviews__rating-count">0 отзывов</div>
                     </div>
                 </div>
-                <div class="reviews__grid">
-                    <!-- ЗАГЛУШКИ ПОТОМ УБРАТЬ -->
-                    <!-- Review 1 -->
-                    <div class="review-card">
-                        <div class="review-card__header">
-                            <div class="review-card__user">
-                                <div class="review-card__avatar">АК</div>
-                                <div class="review-card__user-info">
-                                    <div class="review-card__name">Алексей К.</div>
-                                    <div class="review-card__date">12 фев 2024</div>
-                                </div>
-                            </div>
-                            <div class="review-card__rating">★★★★★</div>
-                        </div>
-                        <div class="review-card__text">
-                            Отличный магазин! Заказал телефон, пришёл за 2 дня. Упаковка идеальная, всё оригинальное.
-                            Консультант помог выбрать нужную модель. Буду рекомендовать друзьям!
-                        </div>
-                    </div>
-                    <!-- Review 2 -->
-                    <div class="review-card">
-                        <div class="review-card__header">
-                            <div class="review-card__user">
-                                <div class="review-card__avatar">МС</div>
-                                <div class="review-card__user-info">
-                                    <div class="review-card__name">Марина Соколова</div>
-                                    <div class="review-card__date">3 янв 2024</div>
-                                </div>
-                            </div>
-                            <div class="review-card__rating">★★★★★</div>
-                        </div>
-                        <div class="review-card__text">
-                            Отличный магазин! Цены ниже, чем в официальных салонах. Телефон пришёл в полной комплектации
-                            с гарантийным талоном. Оформление заняло 5 минут.
-                        </div>
-                    </div>
-                    <!-- Review 3 -->
-                    <div class="review-card">
-                        <div class="review-card__header">
-                            <div class="review-card__user">
-                                <div class="review-card__avatar">ДП</div>
-                                <div class="review-card__user-info">
-                                    <div class="review-card__name">Дмитрий П.</div>
-                                    <div class="review-card__date">28 дек 2023</div>
-                                </div>
-                            </div>
-                            <div class="review-card__rating">★★★★☆</div>
-                        </div>
-                        <div class="review-card__text">
-                            Телефон отличный, доставка быстрая. Единственный минус — не было подарочной коробки, но это
-                            мелочь. В целом очень доволен обслуживанием.
-                        </div>
-                    </div>
-                    <!-- Review 4 -->
-                    <div class="review-card">
-                        <div class="review-card__header">
-                            <div class="review-card__user">
-                                <div class="review-card__avatar">СВ</div>
-                                <div class="review-card__user-info">
-                                    <div class="review-card__name">Светлана Ворон.</div>
-                                    <div class="review-card__date">15 дек 2023</div>
-                                </div>
-                            </div>
-                            <div class="review-card__rating">★★★★★</div>
-                        </div>
-                        <div class="review-card__text">
-                            Покупала в подарок мужу. Сначала сомневалась — заказывать онлайн или идти в магазин. Решила
-                            попробовать. Не пожалела! Всё пришло быстро и в отличном состоянии.
-                        </div>
-                    </div>
-                    <!-- Review 5 -->
-                    <div class="review-card">
-                        <div class="review-card__header">
-                            <div class="review-card__user">
-                                <div class="review-card__avatar">ИМ</div>
-                                <div class="review-card__user-info">
-                                    <div class="review-card__name">Игорь Максимов</div>
-                                    <div class="review-card__date">5 дек 2023</div>
-                                </div>
-                            </div>
-                            <div class="review-card__rating">★★★★★</div>
-                        </div>
-                        <div class="review-card__text">
-                            Сдал старый телефон по Trade-in — получил хорошую скидку. Процедура простая, оценка честная.
-                            Новый телефон летает! Очень доволен сервисом.
-                        </div>
-                    </div>
-                    <!-- Review 6 -->
-                    <div class="review-card">
-                        <div class="review-card__header">
-                            <div class="review-card__user">
-                                <div class="review-card__avatar">ОТ</div>
-                                <div class="review-card__user-info">
-                                    <div class="review-card__name">Ольга Тарасова</div>
-                                    <div class="review-card__date">21 ноя 2023</div>
-                                </div>
-                            </div>
-                            <div class="review-card__rating">★★★★☆</div>
-                        </div>
-                        <div class="review-card__text">
-                            Хороший магазин с адекватными ценами. Доставили вовремя, телефон рабочий, гарантия
-                            официальная. Рекомендую!
-                        </div>
-                    </div>
+                <div class="reviews__grid">   
                 </div>
                 <!-- Кнопка загрузки -->
                 <div class="reviews__load-more">
@@ -189,6 +86,7 @@
                         Загрузить еще отзывы
                     </button>
                 </div>
+
                 <!-- Форма оставления отзыва -->
                 <div class="review-form">
                     <div class="review-form__container">
