@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Оформление заказа | PhoneStore</title>
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/checkout.js" defer type ="module"></script>
+    <style>
+        
+    </style>
+</head>
+
+<body>
+    <main class="checkout">
+        <h1 class="checkout__title">Оформление заказа</h1>
+
+        <div class="checkout__error-banner" id="error-banner">
+            Пожалуйста, заполните все обязательные поля и исправьте ошибки
+        </div>
+
+        <div class="checkout__container">
+            <div class="checkout__main">
+                <section class="checkout__section">
+                    <div class="checkout__section-header">
+                        <span class="checkout__section-number">1</span>
+                        <h2 class="checkout__section-title">Данные покупателя</h2>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" class="form-group__input" id="input-phone" placeholder="Телефон"
+                            maxlength="18">
+                        <div class="form-group__error-text" id="error-phone">Введите корректный номер телефона</div>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" class="form-group__input" id="input-email"
+                            placeholder="E-mail (необязательно)">
+                        <div class="form-group__error-text" id="error-email">Введите корректный e-mail</div>
+                    </div>
+                </section>
+                <section class="checkout__section">
+                    <div class="checkout__section-header">
+                        <span class="checkout__section-number">2</span>
+                        <h2 class="checkout__section-title">Выберите способ получения</h2>
+                    </div>
+
+                    <div class="delivery-methods" data-toggle="delivery">
+                        <button class="delivery-method__btn delivery-method__btn--active"
+                            data-target="pickup">Самовывоз</button>
+                        <button class="delivery-method__btn" data-target="delivery">Доставка</button>
+                    </div>
+                    <div class="delivery-content" id="pickup-content">
+                        <div class="pickup-list" id="pickup-list">
+                            <div class="pickup-item pickup-item--active" data-pickup data-name="ТЦ «Иремель»">
+                                <div class="pickup-item__name">ТЦ «Иремель», ул. Комарова, 3</div>
+                                <div class="pickup-item__info">Ежедневно с 10:00 до 21:00</div>
+                            </div>
+                            <div class="pickup-item" data-pickup data-name="ТЦ «Планета»">
+                                <div class="pickup-item__name">ТЦ «Планета», Инорс, ул. 50-летия Октября, 29</div>
+                                <div class="pickup-item__info">Ежедневно с 10:00 до 22:00</div>
+                            </div>
+                            <div class="pickup-item" data-pickup data-name="ТЦ «Гостиный двор»">
+                                <div class="pickup-item__name">ТЦ «Гостиный двор», ул. Ленина, 42</div>
+                                <div class="pickup-item__info">Пн-Вс с 10:00 до 20:00</div>
+                            </div>
+                        </div>
+                        <div class="form-group__error-text" id="error-pickup">Выберите пункт выдачи</div>
+                    </div>
+                    <div class="delivery-content" id="delivery-content" style="display: none;">
+                        <div class="form-group">
+                            <label class="form-group__label">Город</label>
+                            <input type="text" class="form-group__input" id="input-city" placeholder="Уфа" value="Уфа">
+                            <div class="form-group__error-text" id="error-city">Введите город</div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">Улица</label>
+                            <input type="text" class="form-group__input" id="input-street"
+                                placeholder="Например: Пушкина">
+                            <div class="form-group__error-text" id="error-street">Введите улицу</div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-group__label">Дом</label>
+                                <input type="text" class="form-group__input" id="input-house" placeholder="10">
+                                <div class="form-group__error-text" id="error-house">Введите номер дома</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">Квартира/Офис</label>
+                                <input type="text" class="form-group__input" id="input-flat" placeholder="25">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">Индекс</label>
+                            <input type="text" class="form-group__input" id="input-zip" placeholder="450000"
+                                maxlength="6">
+                            <div class="form-group__error-text" id="error-zip">Введите корректный индекс</div>
+                        </div>
+                    </div>
+                </section>
+                <section class="checkout__section">
+                    <div class="checkout__section-header">
+                        <span class="checkout__section-number">3</span>
+                        <h2 class="checkout__section-title">Выберите способ оплаты</h2>
+                    </div>
+
+                    <div class="delivery-methods" data-toggle="payment">
+                        <button class="delivery-method__btn delivery-method__btn--active"
+                            data-target="online">Онлайн</button>
+                        <button class="delivery-method__btn" data-target="receive">При получении</button>
+                    </div>
+
+                    <div class="card-form card-form--visible" id="card-form">
+                        <div class="form-group">
+                            <label class="form-group__label">Номер карты</label>
+                            <input type="text" class="form-group__input" id="input-card"
+                                placeholder="0000 0000 0000 0000" maxlength="19">
+                            <div class="form-group__error-text" id="error-card">Введите корректный номер карты</div>
+                        </div>
+                        <div class="card-form__row">
+                            <div class="form-group">
+                                <label class="form-group__label">Срок действия</label>
+                                <input type="text" class="form-group__input" id="input-expiry" placeholder="MM / ГГ"
+                                    maxlength="7">
+                                <div class="form-group__error-text" id="error-expiry">Введите срок действия</div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-group__label">CVC</label>
+                                <input type="password" class="form-group__input" id="input-cvc" placeholder="•••"
+                                    maxlength="3">
+                                <div class="form-group__error-text" id="error-cvc">Введите CVC</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-group__label">Имя владельца карты</label>
+                            <input type="text" class="form-group__input" id="input-cardholder"
+                                placeholder="IVAN IVANOV">
+                            <div class="form-group__error-text" id="error-cardholder">Введите имя владельца</div>
+                        </div>
+                    </div>
+                    <div class="checkbox-group">
+                        <label class="checkbox">
+                            <input type="checkbox" class="checkbox__input" id="checkbox-agree" checked>
+                            <span class="checkbox__label">
+                                Подтверждая заказ, Вы даёте согласие на обработку персональных данных в соответствии с
+                                <a href="#" class="checkbox__link">Политикой</a>, а также соглашаетесь с
+                                <a href="#" class="checkbox__link">Правилами продаж</a>
+                            </span>
+                        </label>
+                        <div class="checkbox__error" id="error-agree">Необходимо дать согласие на обработку данных</div>
+                    </div>
+                    <button class="checkout__submit" id="submit-order">Подтвердить заказ</button>
+                </section>
+            </div>
+            <aside class="cart__summary">
+                <h2 class="cart__summary-title">Итого</h2>
+                <div class="cart__summary-list">
+                </div>
+                <div class="cart__summary-total">
+                    <span class="cart__summary-total-label">Итого</span>
+                    <span class="cart__summary-total-price"></span>
+                </div>
+                <div class="cart__summary-info">
+                    <div class="cart__summary-info-item">
+                        Бесплатная доставка от 30 000 ₽
+                    </div>
+                    <div class="cart__summary-info-item">
+                        Официальная гарантия
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+</body>
+
+</html>

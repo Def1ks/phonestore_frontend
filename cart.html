@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneStore</title>
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/cart.js" defer type="module"></script>
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html" class="header__logo">
+            PHONE<span>store</span>
+        </a>
+        <nav class="header__nav">
+            <ul class="header__nav-list">
+                <li><a href="index.html" class="header__nav-link">Главная</a></li>
+                <li><a href="catalog.html" class="header__nav-link">Каталог</a></li>
+                <li><a href="about_us.html" class="header__nav-link">О магазине</a></li>
+                <li><a href="reviews.html" class="header__nav-link">Отзывы</a></li>
+            </ul>
+        </nav>
+        <div class="header__icons">
+            <a href="cart.html" class="header__icon">
+                <svg class="header__icon-image header__mobile-nav-link--active" viewBox="0 0 16 16" fill="none"
+                    stroke="currentColor" stroke-width="1.5">
+                    <rect height="9.5" width="10.5" y="4.75" x="2.75" />
+                    <path d="m5.75 7.75c0 1.5 1 2.5 2.25 2.5s2.25-1 2.25-2.5m-7.5-3 1.5-3h7.5l1.5 3" />
+                </svg>
+            </a>
+            <a href="profile.html" class="header__icon">
+                <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <circle cx="8" cy="6" r="3.25" />
+                    <path d="m2.75 14.25c0-2.5 2-5 5.25-5s5.25 2.5 5.25 5" />
+                </svg>
+            </a>
+        </div>
+        <button class="header__burger" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="header__mobile-menu">
+            <nav class="header__mobile-nav">
+                <ul class="header__mobile-nav-list">
+                    <li><a href="index.html" class="header__mobile-nav-link">Главная</a>
+                    </li>
+                    <li><a href="catalog.html" class="header__mobile-nav-link">Каталог</a></li>
+                    <li><a href="about_us.html" class="header__mobile-nav-link">О магазине</a></li>
+                    <li><a href="reviews.html" class="header__mobile-nav-link">Отзывы</a></li>
+                    <li><a href="cart.html" class="header__mobile-nav-link header__mobile-nav-link--active">Корзина</a>
+                    </li>
+                    <li><a href="profile.html" class="header__mobile-nav-link">Профиль</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <div class="cart-empty">
+            <svg class="cart-empty__icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect height="9.5" width="10.5" y="4.75" x="2.75" />
+                <path d="m5.75 7.75c0 1.5 1 2.5 2.25 2.5s2.25-1 2.25-2.5m-7.5-3 1.5-3h7.5l1.5 3" />
+            </svg>
+            <h2 class="cart-empty__title">Корзина пуста</h2>
+            <p class="cart-empty__text">Добавьте товары из каталога</p>
+            <a href="catalog.html" class="cart-empty__btn">
+                Перейти в каталог
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 8h10M10 5l3 3-3 3" />
+                </svg>
+            </a>
+        </div>
+        <div class="cart">
+            <h2 class="cart__title">Корзина</h2>
+            <div class="cart__container">
+                <div class="cart__items">
+                </div>
+                <!-- Итого -->
+                <aside class="cart__summary">
+                    <h2 class="cart__summary-title">Итого</h2>
+                    <div class="cart__summary-list">
+                    </div>
+                    <div class="cart__summary-total">
+                        <span class="cart__summary-total-label">Итого</span>
+                        <span class="cart__summary-total-price"></span>
+                    </div>
+                    <div class="cart__summary-info">
+                        <div class="cart__summary-info-item">
+                            Бесплатная доставка от 30 000 ₽
+                        </div>
+                        <div class="cart__summary-info-item">
+                            Официальная гарантия
+                        </div>
+                    </div>
+                    <a href="checkout.html" class="cart__button">Оформить заказ</a>
+                </aside>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__logo">
+                    PHONE<span>store</span>
+                </div>
+                <p class="footer__copyright">
+                    © 2026 Phone Store. Все права защищены.
+                </p>
+                <div class="footer__inn">
+                    ИНН 1234567890
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>
