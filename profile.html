@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneStore</title>
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <script src="js/main.js" defer></script>
+    <script src="js/profile.js" defer type="module"></script>
+</head>
+<body>
+    <div class="page-wrapper">
+        <header class="header">
+            <a href="index.html" class="header__logo">PHONE<span>store</span></a>
+            <nav class="header__nav">
+                <ul class="header__nav-list">
+                    <li><a href="index.html" class="header__nav-link">Главная</a></li>
+                    <li><a href="catalog.html" class="header__nav-link">Каталог</a></li>
+                    <li><a href="about_us.html" class="header__nav-link">О магазине</a></li>
+                    <li><a href="reviews.html" class="header__nav-link">Отзывы</a></li>
+                </ul>
+            </nav>
+            <div class="header__icons">
+                <a href="cart.html" class="header__icon">
+                    <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                        stroke-width="1.5">
+                        <rect height="9.5" width="10.5" y="4.75" x="2.75" />
+                        <path d="m5.75 7.75c0 1.5 1 2.5 2.25 2.5s2.25-1 2.25-2.5m-7.5-3 1.5-3h7.5l1.5 3" />
+                    </svg>
+                </a>
+                <a href="profile.html" class="header__icon">
+                    <svg class="header__icon-image header__mobile-nav-link--active" viewBox="0 0 16 16" fill="none"
+                        stroke="currentColor" stroke-width="1.5">
+                        <circle cx="8" cy="6" r="3.25" />
+                        <path d="m2.75 14.25c0-2.5 2-5 5.25-5s5.25 2.5 5.25 5" />
+                    </svg>
+                </a>
+            </div>
+            <button class="header__burger" aria-label="Меню"><span></span><span></span><span></span></button>
+            <div class="header__mobile-menu">
+                <nav class="header__mobile-nav">
+                    <ul class="header__mobile-nav-list">
+                        <li><a href="index.html" class="header__mobile-nav-link">Главная</a></li>
+                        <li><a href="catalog.html" class="header__mobile-nav-link">Каталог</a></li>
+                        <li><a href="about_us.html" class="header__mobile-nav-link">О магазине</a></li>
+                        <li><a href="reviews.html" class="header__mobile-nav-link">Отзывы</a></li>
+                        <li><a href="cart.html" class="header__mobile-nav-link">Корзина</a></li>
+                        <li><a href="profile.html"
+                                class="header__mobile-nav-link header__mobile-nav-link--active">Профиль</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <!-- === AUTH VIEW === -->
+            <section class="auth" id="auth-view">
+                <div class="auth__container">
+                    <div class="auth__tabs">
+                        <button class="auth__tab auth__tab--active" data-tab="login">Войти</button>
+                        <button class="auth__tab" data-tab="register">Регистрация</button>
+                    </div>
+
+                    <form class="auth__form auth__form--active" id="login-form">
+                        <h1 class="auth__title">Добро пожаловать</h1>
+                        <p class="auth__subtitle">Войдите в свой аккаунт</p>
+                        <div class="auth__field">
+                            <label class="auth__label" for="login-email">EMAIL</label>
+                            <input type="email" class="auth__input" id="login-email" placeholder="your@email.com"
+                                required>
+                        </div>
+                        <div class="auth__field">
+                            <label class="auth__label" for="login-password">ПАРОЛЬ</label>
+                            <input type="password" class="auth__input" id="login-password" placeholder="••••••••"
+                                required>
+                        </div>
+                        <button type="submit" class="auth__submit">Войти</button>
+                        <div class="auth__footer">
+                            <p class="auth__text">Нет аккаунта? <button type="button" class="auth__link"
+                                    data-switch="register">Зарегистрироваться</button></p>
+                        </div>
+                    </form>
+
+                    <form class="auth__form" id="register-form">
+                        <h1 class="auth__title">Создать аккаунт</h1>
+                        <p class="auth__subtitle">Присоединяйтесь к Phone Store</p>
+                        <div class="auth__field">
+                            <label class="auth__label" for="register-name">ИМЯ</label>
+                            <input type="text" class="auth__input" id="register-name" placeholder="Ваше имя" required>
+                        </div>
+                        <div class="auth__field">
+                            <label class="auth__label" for="register-email">EMAIL</label>
+                            <input type="email" class="auth__input" id="register-email" placeholder="your@email.com"
+                                required>
+                        </div>
+                        <div class="auth__field">
+                            <label class="auth__label" for="register-password">ПАРОЛЬ</label>
+                            <input type="password" class="auth__input" id="register-password"
+                                placeholder="Минимум 6 символов" minlength="6" required>
+                        </div>
+                        <button type="submit" class="auth__submit">Зарегистрироваться</button>
+                        <div class="auth__footer">
+                            <p class="auth__text">Уже есть аккаунт? <button type="button" class="auth__link"
+                                    data-switch="login">Войти</button></p>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- === PROFILE VIEW === -->
+            <section class="profile profile--hidden" id="profile-view">
+                <div class="profile__container">
+                    <!-- Profile Header -->
+                    <div class="profile__header">
+                        <div class="profile__user">
+                            <div class="profile__avatar" id="user-avatar">ИИ</div>
+                            <div class="profile__info">
+                                <h1 id="user-name">Иван Иванов</h1>
+                                <p class="profile__email" id="user-email">ivan.test@example.com</p>
+                            </div>
+                            <button class="profile__logout" id="logout-btn-header">Выйти</button>
+                        </div>
+                    </div>
+
+                    <!-- Tabs -->
+                    <div class="profile__tabs">
+                        <button class="profile__tab profile__tab--active" data-tab="orders">Заказы</button>
+                        <button class="profile__tab" data-tab="personal">Данные профиля</button>
+                        <button class="profile__tab" data-tab="settings">Настройки</button>
+                    </div>
+
+                    <!-- Content -->
+                    <div class="profile__content">
+                        <!-- Заказы -->
+                        <section class="profile__section profile__section--active" id="orders-section">
+                            <h2 class="section-title">История заказов</h2>
+
+                            <!-- Stats -->
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-card__label">Всего заказов</div>
+                                    <div class="stat-card__value" id="stat-total-orders">0</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-card__label">На сумму</div>
+                                    <div class="stat-card__value" id="stat-total-sum">0 ₽</div>
+                                </div>
+                            </div>
+
+                            <!-- Контейнер для заказов (заполняется динамически) -->
+                            <div class="orders-list" id="orders-list"></div>
+                        </section>
+
+                        <!-- Данные профиля -->
+                        <section class="profile__section" id="personal-section">
+                            <h2 class="section-title">Личные данные</h2>
+                            <form class="profile-form" id="personal-form">
+                                <div class="profile-form__field">
+                                    <label class="profile-form__label">Имя</label>
+                                    <input type="text" class="profile-form__input" id="input-firstname" value="Иван">
+                                </div>
+                                <div class="profile-form__field">
+                                    <label class="profile-form__label">Фамилия</label>
+                                    <input type="text" class="profile-form__input" id="input-lastname" value="Иванов">
+                                </div>
+                                <div class="profile-form__field">
+                                    <label class="profile-form__label">Email</label>
+                                    <input type="email" class="profile-form__input" value="ivan@example.com" readonly>
+                                </div>
+                                <div class="profile-form__field">
+                                    <label class="profile-form__label">Телефон</label>
+                                    <input type="tel" class="profile-form__input" id="input-phone"
+                                        value="+7 900 123 45 67">
+                                </div>
+                                <div class="profile-form__actions">
+                                    <button type="submit" class="btn btn--primary">Сохранить изменения</button>
+                                    <button type="button" class="btn btn--secondary">Отмена</button>
+                                </div>
+                            </form>
+                        </section>
+
+                        <!-- Настройки -->
+                        <section class="profile__section" id="settings-section">
+                            <h2 class="section-title">Настройки аккаунта</h2>
+
+                            <div class="settings-group">
+                                <h3 class="settings-group__title">Безопасность</h3>
+                                <form id="settings-form">
+                                    <div class="profile-form__field">
+                                        <label class="profile-form__label">Текущий пароль</label>
+                                        <input type="password" class="profile-form__input" id="input-current-password">
+                                    </div>
+                                    <div class="profile-form__field">
+                                        <label class="profile-form__label">Новый пароль</label>
+                                        <input type="password" class="profile-form__input" id="input-new-password">
+                                    </div>
+                                    <div class="profile-form__field">
+                                        <label class="profile-form__label">Подтвердите новый пароль</label>
+                                        <input type="password" class="profile-form__input" id="input-confirm-password">
+                                    </div>
+                                    <div class="profile-form__actions">
+                                        <button type="submit" class="btn btn--primary">Изменить пароль</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__content">
+                    <div class="footer__logo">PHONE<span>store</span></div>
+                    <p class="footer__copyright">© 2026 Phone Store. Все права защищены.</p>
+                    <div class="footer__inn">ИНН 1234567890</div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+
+    </script>
+</body>
+
+</html>
