@@ -76,27 +76,27 @@
     .about {
         padding: 80px 0;
     }
-    
+
     .about .container {
         padding: 0 30px;
     }
-    
+
     .about__content {
         gap: 40px;
     }
-    
+
     .about__title {
         font-size: 56px;
     }
-    
+
     .about__stats {
         gap: 16px;
     }
-    
+
     .stat-card {
         padding: 24px;
     }
-    
+
     .stat-card__value {
         font-size: 36px;
     }
@@ -104,20 +104,20 @@
     .advantages {
         padding: 80px 0;
     }
-    
+
     .advantages .container {
         padding: 0 30px;
     }
-    
+
     .advantages__title {
         font-size: 40px;
         margin-bottom: 50px;
     }
-    
+
     .advantages__grid {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .advantage-card {
         padding: 28px;
     }
@@ -155,6 +155,16 @@
     .catalog__select {
         width: 100%;
         max-width: 300px;
+    }
+
+    .product-info {
+        grid-template-columns: 1fr;
+        gap: 24px;
+    }
+
+    .product-page {
+        padding-bottom: 40px;
+        max-width: 600px;
     }
 }
 
@@ -377,29 +387,29 @@
     .about {
         padding: 60px 0;
     }
-    
+
     .about .container {
         padding: 0 20px;
     }
-    
+
     .about__content {
         grid-template-columns: 1fr;
         gap: 40px;
     }
-    
+
     .about__title {
         font-size: 48px;
     }
-    
+
     .about__description {
         font-size: 15px;
         max-width: none;
     }
-    
+
     .about__stats {
         grid-template-columns: repeat(2, 1fr);
     }
-    
+
     .stat-card__value {
         font-size: 32px;
     }
@@ -407,13 +417,13 @@
     .brands-carousel {
         padding: 30px 0;
     }
-    
+
     .carousel__group {
         gap: 40px;
         padding-right: 40px;
-        animation-duration: 15s; 
+        animation-duration: 15s;
     }
-    
+
     .carousel__item {
         font-size: 16px;
         letter-spacing: 1px;
@@ -422,63 +432,63 @@
     .history {
         padding: 80px 0;
     }
-    
+
     .history .container {
         padding: 0 30px;
     }
-    
+
     .history__title {
         font-size: 40px;
         margin-bottom: 50px;
     }
-    
+
     .timeline::before {
         left: 50px;
     }
-    
+
     .timeline__item {
         grid-template-columns: 70px 32px 1fr;
         gap: 16px;
         margin-bottom: 50px;
     }
-    
+
     .timeline__year {
         font-size: 20px;
     }
-    
+
     .timeline__marker {
         width: 14px;
         height: 14px;
         margin-top: 6px;
     }
-    
+
     .timeline__heading {
         font-size: 18px;
     }
-    
+
     .timeline__text {
         font-size: 14px;
     }
 
     .timeline::before {
-        left: 92px; 
+        left: 92px;
     }
 
     .advantages__title {
         font-size: 36px;
         margin-bottom: 40px;
     }
-    
+
     .advantage-card__icon {
         width: 44px;
         height: 44px;
         margin-bottom: 16px;
     }
-    
+
     .advantage-card__title {
         font-size: 16px;
     }
-    
+
     .advantage-card__text {
         font-size: 13px;
     }
@@ -510,12 +520,12 @@
         align-items: flex-start;
         gap: 32px;
     }
-    
+
     .contact-cta__buttons {
         width: 100%;
         flex-direction: column;
     }
-    
+
     .contact-cta__btn {
         width: 100%;
         justify-content: center;
@@ -524,15 +534,15 @@
     .contact-cta {
         padding: 60px 0;
     }
-    
+
     .contact-cta .container {
         padding: 0 30px;
     }
-    
+
     .contact-cta__title {
         font-size: 36px;
     }
-    
+
     .contact-cta__description {
         font-size: 14px;
     }
@@ -540,7 +550,7 @@
     .reviews {
         padding: 80px 0;
     }
-    
+
     .reviews .container {
         padding: 0 30px;
     }
@@ -549,40 +559,40 @@
         grid-template-columns: 1fr;
         gap: 20px;
     }
-    
+
     .reviews__header {
         flex-direction: column;
         align-items: flex-start;
         gap: 30px;
         margin-bottom: 50px;
     }
-    
+
     .reviews__title {
         font-size: 40px;
     }
-    
+
     .reviews__rating {
         text-align: left;
     }
-    
+
     .reviews__rating-value {
         font-size: 56px;
     }
 
     .review-form {
-        padding: 40px 0; 
+        padding: 40px 0;
     }
-    
+
     .review-form__container {
-        padding: 24px; 
+        padding: 24px;
     }
-    
+
     .review-form__title {
-        font-size: 20px; 
+        font-size: 20px;
     }
-    
+
     .review-form__star {
-        font-size: 22px; 
+        font-size: 22px;
     }
 
     .catalog {
@@ -634,6 +644,7 @@
             opacity: 0;
             transform: translateY(-20px);
         }
+
         to {
             opacity: 1;
             transform: translateY(0);
@@ -801,6 +812,245 @@
     .stats-grid {
         grid-template-columns: 1fr;
     }
+
+    /* === ОБЩИЕ ОТСТУПЫ === */
+    .product-page {
+        padding-top: 90px;
+        padding-bottom: 20px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .product-page__back {
+        font-size: 13px;
+        margin-bottom: 16px;
+    }
+
+    /* === ИЗОБРАЖЕНИЕ ТОВАРА === */
+    .product-info {
+        gap: 16px;
+        margin-bottom: 32px;
+    }
+
+    .product-info__image-wrapper {
+        margin-bottom: 0;
+    }
+
+    .product-info__badge {
+        top: 12px;
+        left: 12px;
+        padding: 4px 8px;
+        font-size: 10px;
+    }
+
+    /* === КОНТЕНТ === */
+    .product-info__content {
+        gap: 6px;
+    }
+
+    .product-info__brand {
+        font-size: 11px;
+    }
+
+    .product-info__title {
+        font-size: 24px;
+        margin: 0 0 4px 0;
+    }
+
+    .product-info__rating {
+        font-size: 13px;
+        margin: 0 0 8px 0;
+    }
+
+    .product-info__rating-value {
+        font-size: 15px;
+    }
+
+    .product-info__rating-count {
+        font-size: 12px;
+    }
+
+    .product-info__tags {
+        gap: 6px;
+        margin-bottom: 10px;
+    }
+
+    .product-info__tag {
+        padding: 5px 10px;
+        font-size: 12px;
+    }
+
+    .product-info__price {
+        font-size: 24px;
+        margin: 6px 0 14px 0;
+    }
+
+    /* === ПРЕИМУЩЕСТВА === */
+    .product-info__features {
+        gap: 6px;
+        margin-bottom: 16px;
+    }
+
+    .product-info__feature {
+        font-size: 13px;
+        gap: 8px;
+    }
+
+    .product-info__feature svg {
+        width: 14px;
+        height: 14px;
+    }
+
+    /* === КНОПКА КОРЗИНЫ === */
+    .product-info__actions {
+        position: sticky;
+        bottom: 16px;
+        margin-top: 8px;
+        padding: 0;
+        background: #fff;
+        z-index: 100;
+    }
+
+    .product-info__btn--cart {
+        height: 48px;
+        padding: 0 16px;
+        width: 100%;
+        font-size: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    /* === ОПИСАНИЕ === */
+    .product-specs__description {
+        font-size: 14px;
+        line-height: 1.6;
+        margin-bottom: 24px;
+    }
+
+    /* === ХАРАКТЕРИСТИКИ === */
+    .product-specs {
+        margin-bottom: 40px;
+    }
+
+    .product-specs__title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .product-specs__label,
+    .product-specs__value {
+        padding: 10px 0;
+        font-size: 13px;
+    }
+
+    .product-specs__label {
+        width: 40%;
+    }
+
+    /* === ОТЗЫВЫ === */
+    .product-reviews {
+        margin-bottom: 40px;
+    }
+
+    .product-reviews__title {
+        font-size: 20px;
+        margin-bottom: 24px;
+    }
+
+    .product-reviews__summary {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 16px;
+        margin-bottom: 24px;
+    }
+
+    .product-reviews__average {
+        text-align: center;
+    }
+
+    .product-reviews__score {
+        font-size: 48px;
+    }
+
+    .product-reviews__stars {
+        font-size: 20px;
+    }
+
+    .product-reviews__distribution {
+        gap: 8px;
+    }
+
+    .product-reviews__bar {
+        grid-template-columns: 28px 1fr 28px;
+        font-size: 12px;
+    }
+
+    .product-reviews__progress {
+        height: 4px;
+    }
+
+    .product-reviews__list {
+        gap: 16px;
+    }
+
+    /* Карточка отзыва */
+    .review-card {
+        padding: 14px;
+        margin-bottom: 12px;
+    }
+
+    .review-card__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        gap: 12px;
+        margin-bottom: 10px;
+    }
+
+    .review-card__user {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .review-card__avatar {
+        width: 36px;
+        height: 36px;
+        font-size: 12px;
+    }
+
+    .review-card__name {
+        font-size: 15px;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    .review-card__date {
+        font-size: 12px;
+        color: #888;
+        margin-top: 2px;
+    }
+
+    .review-card__rating {
+        font-size: 14px;
+        flex-shrink: 0;
+    }
+
+    .review-card__title {
+        font-size: 15px;
+        margin: 10px 0 8px 0;
+    }
+
+    .review-card__text {
+        font-size: 13px;
+        line-height: 1.5;
+        color: #444;
+    }
+
+    .product-reviews__load-more {
+        max-width: 100%;
+        padding: 12px 24px;
+        font-size: 13px;
+    }
 }
 
 /** Стили для очень маленьких телефонов **/
@@ -962,59 +1212,59 @@
     .about {
         padding: 40px 0;
     }
-    
+
     .about .container {
         padding: 0 15px;
     }
-    
+
     .about__title {
         font-size: 36px;
         margin-bottom: 16px;
     }
-    
+
     .about__description {
         font-size: 14px;
         margin-bottom: 24px;
     }
-    
+
     .about__buttons {
         gap: 10px;
         margin-bottom: 30px;
     }
-    
+
     .about__btn {
-        width: 100%; 
-        justify-content: center; 
+        width: 100%;
+        justify-content: center;
         padding: 12px 20px;
         font-size: 13px;
         gap: 6px;
     }
-    
+
     .about__btn-icon {
-        width: 14px; 
+        width: 14px;
         height: 14px;
     }
-    
+
     .about__stats {
-        gap: 10px; 
+        gap: 10px;
     }
-    
+
     .stat-card {
         padding: 14px 12px;
     }
-    
+
     .stat-card__value {
-        font-size: 20px; 
+        font-size: 20px;
         margin-bottom: 4px;
     }
-    
+
     .stat-card__value span {
-        font-size: 12px; 
+        font-size: 12px;
         margin-left: 2px;
     }
-    
+
     .stat-card__label {
-        font-size: 9px; 
+        font-size: 9px;
         letter-spacing: 0.3px;
         line-height: 1.3;
     }
@@ -1022,9 +1272,9 @@
     .carousel__group {
         gap: 30px;
         padding-right: 30px;
-        animation-duration: 12s; 
+        animation-duration: 12s;
     }
-    
+
     .carousel__item {
         font-size: 14px;
     }
@@ -1032,82 +1282,82 @@
     .history {
         padding: 60px 0;
     }
-    
+
     .history .container {
         padding: 0 20px;
     }
-    
+
     .history__title {
         font-size: 32px;
         margin-bottom: 40px;
     }
-    
+
     .timeline::before {
         left: 40px;
     }
-    
+
     .timeline__item {
         grid-template-columns: 60px 28px 1fr;
         gap: 14px;
         margin-bottom: 40px;
     }
-    
+
     .timeline__year {
         font-size: 18px;
         padding-top: 2px;
     }
-    
+
     .timeline__marker {
         width: 12px;
         height: 12px;
         margin-top: 4px;
         box-shadow: 0 0 0 2px #07100B;
     }
-    
+
     .timeline__heading {
         font-size: 16px;
         margin-bottom: 6px;
     }
-    
+
     .timeline__text {
         font-size: 13px;
         line-height: 1.5;
     }
 
     .timeline::before {
-        left: 79px; 
+        left: 79px;
     }
 
     .advantages {
         padding: 60px 0;
     }
-    
+
     .advantages .container {
         padding: 0 20px;
     }
-    
+
     .advantages__title {
         font-size: 32px;
         margin-bottom: 36px;
     }
-    
+
     .advantages__grid {
         grid-template-columns: 1fr;
     }
-    
+
     .advantage-card:last-child {
         margin-bottom: 0;
     }
-    
+
     .advantage-card__icon {
         width: 42px;
         height: 42px;
     }
-    
+
     .advantage-card__title {
         font-size: 16px;
     }
-    
+
     .advantage-card__text {
         font-size: 13px;
     }
@@ -1139,19 +1389,19 @@
     .contact-cta {
         padding: 50px 0;
     }
-    
+
     .contact-cta .container {
         padding: 0 20px;
     }
-    
+
     .contact-cta__title {
         font-size: 32px;
     }
-    
+
     .contact-cta__description {
         font-size: 13px;
     }
-    
+
     .contact-cta__btn {
         padding: 12px 24px;
         font-size: 13px;
@@ -1160,33 +1410,33 @@
     .reviews {
         padding: 60px 0;
     }
-    
+
     .reviews .container {
         padding: 0 20px;
     }
-    
+
     .reviews__title {
         font-size: 32px;
     }
-    
+
     .reviews__rating-value {
         font-size: 48px;
     }
-    
+
     .review-card {
         padding: 24px;
     }
-    
+
     .review-card__avatar {
         width: 40px;
         height: 40px;
         font-size: 12px;
     }
-    
+
     .review-card__name {
         font-size: 14px;
     }
-    
+
     .review-card__text {
         font-size: 13px;
     }
@@ -1194,7 +1444,7 @@
     .reviews__load-more {
         margin-top: 36px;
     }
-    
+
     .reviews__btn {
         width: 100%;
         padding: 14px 40px;
@@ -1202,32 +1452,32 @@
     }
 
     .review-form {
-        padding: 30px 0; 
+        padding: 30px 0;
     }
-    
+
     .review-form__container {
-        padding: 20px; 
+        padding: 20px;
     }
-    
+
     .review-form__title {
-        font-size: 18px; 
+        font-size: 18px;
         margin-bottom: 20px;
     }
-    
+
     .review-form__star {
-        font-size: 20px; 
+        font-size: 20px;
     }
-    
+
     .review-form__input,
     .review-form__textarea {
         font-size: 13px;
         padding: 9px 11px;
     }
-    
+
     .review-form__textarea {
-        min-height: 70px; 
+        min-height: 70px;
     }
-    
+
     .review-form__submit {
         padding: 11px 20px;
         font-size: 12px;
@@ -1267,16 +1517,16 @@
     }
 
     .checkout__section {
-        padding: 16px; 
+        padding: 16px;
     }
 
     .checkout__section-title {
-        font-size: 16px; 
+        font-size: 16px;
         margin-bottom: 0;
     }
 
     .checkout__section-header {
-        margin-bottom: 12px; 
+        margin-bottom: 12px;
     }
 
     .checkout__section-number {
@@ -1287,17 +1537,17 @@
     }
 
     .form-group {
-        margin-bottom: 12px; 
+        margin-bottom: 12px;
     }
 
     .form-group__label {
-        font-size: 11px; 
+        font-size: 11px;
         margin-bottom: 4px;
     }
 
     .form-group__input {
-        padding: 10px 12px; 
-        font-size: 14px;    
+        padding: 10px 12px;
+        font-size: 14px;
     }
 
     .delivery-methods {
@@ -1317,6 +1567,7 @@
         margin-top: 12px;
         padding-top: 12px;
     }
+
     .card-form__row {
         gap: 10px;
     }
@@ -1325,13 +1576,14 @@
         margin-top: 12px;
         margin-bottom: 16px;
     }
+
     .checkbox__label {
-        font-size: 12px; 
+        font-size: 12px;
         line-height: 1.3;
     }
 
     .checkout__submit {
-        padding: 14px; 
+        padding: 14px;
         font-size: 15px;
     }
 
@@ -1354,5 +1606,37 @@
 
     .btn {
         width: 100%;
+    }
+
+    .product-info__title {
+        font-size: 22px;
+    }
+
+    .product-info__price {
+        font-size: 22px;
+    }
+
+    .product-info__tag {
+        padding: 4px 8px;
+        font-size: 11px;
+    }
+
+    .product-specs__label,
+    .product-specs__value {
+        font-size: 12px;
+    }
+
+    .product-specs__description {
+        font-size: 13px;
+        line-height: 1.5;
+        margin-bottom: 20px;
+    }
+
+    .review-card__name {
+        font-size: 14px;
+    }
+
+    .review-card__text {
+        font-size: 12px;
     }
 }

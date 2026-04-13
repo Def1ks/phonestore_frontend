@@ -1,47 +1,60 @@
-import { addToCartAPI } from "./api.js"
+import { addToCartAPI } from "./api.js";
 
 export function initCartButtons() {
-    document.querySelectorAll('.product-card__btn').forEach(btn => {
-        const newBtn = btn.cloneNode(true);
-        btn.parentNode.replaceChild(newBtn, btn);
-        
-        newBtn.addEventListener('click', async (e) => {
-            e.preventDefault();
-            e.stopPropagation();
+    const selectors = ['.product-card__btn', '.product-info__btn--cart'];
+    
+    selectors.forEach(selector => {
+        document.querySelectorAll(selector).forEach(btn => {
+            const newBtn = btn.cloneNode(true);
+            btn.parentNode.replaceChild(newBtn, btn);
             
-            const card = newBtn.closest('.product-card');
-            const productId = card?.dataset.id;
-            const productName = card?.querySelector('.product-card__title')?.textContent?.trim();
-            
-            if (!productId) {
-                showNotification('Ошибка: товар не идентифицирован', 'error');
-                return;
-            }
-            
-            try {
-                // Состояние загрузки
-                newBtn.classList.add('product-card__btn--loading');
-                newBtn.disabled = true;
+            newBtn.addEventListener('click', async (e) => {
+                e.preventDefault();
+                e.stopPropagation();
                 
-                // Вызов API
-                await addToCartAPI(productId);
+                let productId, variantId, productName;
                 
-                showNotification(`${productName} добавлен в корзину`, 'success');
+                if (newBtn.classList.contains('product-info__btn--cart')) {
+                    productId = newBtn.dataset.id;
+                    variantId = newBtn.dataset.variant;
+                    productName = newBtn.dataset.productName || 'Товар';
+                } else {
+                    const card = newBtn.closest('.product-card');
+                    productId = card?.dataset.id;
+                    variantId = null; // На бэке возьмется дефолтный variant
+                    productName = card?.querySelector('.product-card__title')?.textContent?.trim();
+                }
                 
-            } catch (error) {
-                console.error('Ошибка добавления в корзину:', error);
+                if (!productId) {
+                    showNotification('Ошибка: товар не идентифицирован', 'error');
+                    return;
+                }
                 
-                newBtn.classList.add('product-card__btn--error');
-                
-                setTimeout(() => {
-                    newBtn.classList.remove('product-card__btn--error');
-                }, 1000);
-                
-                showNotification(error.message || 'Не удалось добавить товар', 'error');
-            } finally {
-                newBtn.classList.remove('product-card__btn--loading');
-                newBtn.disabled = false;
-            }
+                try {
+                    newBtn.classList.add('product-card__btn--loading');
+                    newBtn.disabled = true;
+                    
+                    await addToCartAPI(productId, {
+                        variantId: variantId,
+                        quantity: 1
+                    });
+                    
+                    showNotification(`${productName} добавлен в корзину`, 'success');
+                    
+                } catch (error) {
+                    console.error('Ошибка добавления в корзину:', error);
+                    newBtn.classList.add('product-card__btn--error');
+                    
+                    setTimeout(() => {
+                        newBtn.classList.remove('product-card__btn--error');
+                    }, 1000);
+                    
+                    showNotification(error.message || 'Не удалось добавить товар', 'error');
+                } finally {
+                    newBtn.classList.remove('product-card__btn--loading');
+                    newBtn.disabled = false;
+                }
+            });
         });
     });
 }

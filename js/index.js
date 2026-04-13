@@ -1,6 +1,6 @@
 // Подключить APi запросы
 import { initCartButtons } from './cart-buttons.js';
-import { renderProductsToGrid } from './product-renderer.js';
+import { renderProductsToGrid } from './product-render.js';
 
 async function loadHitsProducts() {
     const grid = document.querySelector('.bestsellers__grid');

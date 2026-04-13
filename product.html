@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhoneStore</title>
+    <link rel="stylesheet" href="styles/fonts.css">
+    <link rel="stylesheet" href="styles/reset.css">
+    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/responsive.css">
+    <script src="js/main.js" defer></script>
+    <script type="module" src="js/product.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <a href="index.html" class="header__logo">
+            PHONE<span>store</span>
+        </a>
+        <nav class="header__nav">
+            <ul class="header__nav-list">
+                <li><a href="index.html" class="header__nav-link">Главная</a></li>
+                <li><a href="catalog.html" class="header__nav-link header__nav-link--active">Каталог</a></li>
+                <li><a href="about_us.html" class="header__nav-link">О магазине</a></li>
+                <li><a href="reviews.html" class="header__nav-link">Отзывы</a></li>
+            </ul>
+        </nav>
+        <div class="header__icons">
+            <a href="cart.html" class="header__icon">
+                <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <rect height="9.5" width="10.5" y="4.75" x="2.75" />
+                    <path d="m5.75 7.75c0 1.5 1 2.5 2.25 2.5s2.25-1 2.25-2.5m-7.5-3 1.5-3h7.5l1.5 3" />
+                </svg>
+            </a>
+            <a href="profile.html" class="header__icon">
+                <svg class="header__icon-image" viewBox="0 0 16 16" fill="none" stroke="currentColor"
+                    stroke-width="1.5">
+                    <circle cx="8" cy="6" r="3.25" />
+                    <path d="m2.75 14.25c0-2.5 2-5 5.25-5s5.25 2.5 5.25 5" />
+                </svg>
+            </a>
+        </div>
+        <button class="header__burger" aria-label="Меню">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="header__mobile-menu">
+            <nav class="header__mobile-nav">
+                <ul class="header__mobile-nav-list">
+                    <li><a href="index.html" class="header__mobile-nav-link">Главная</a></li>
+                    <li><a href="catalog.html"
+                            class="header__mobile-nav-link header__mobile-nav-link--active">Каталог</a></li>
+                    <li><a href="about_us.html" class="header__mobile-nav-link">О магазине</a></li>
+                    <li><a href="reviews.html" class="header__mobile-nav-link">Отзывы</a></li>
+                    <li><a href="cart.html" class="header__mobile-nav-link">Корзина</a></li>
+                    <li><a href="profile.html" class="header__mobile-nav-link">Профиль</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="product-page">
+        <div class="container">
+            <!-- Навигация -->
+            <div class="product-page__breadcrumb">
+                <a href="catalog.html" class="product-page__back">← Назад</a>
+            </div>
+            <!-- Основная информация о товаре -->
+            <div class="product-info">
+                <!-- Галерея -->
+                <div class="product-info__image-wrapper">
+                </div>
+                <!-- Информация -->
+                <div class="product-info__content">
+                    <div class="product-info__rating">
+                    </div>
+                    <div class="product-info__tags">
+                    </div>
+                    <div class="product-info__price">
+                    </div>
+                </div>
+            </div>
+            <section class="product-specs">
+                <h2 class="product-specs__title">Описание</h2>
+            </section>
+            <!-- Характеристики -->
+            <section class="product-specs">
+                <h2 class="product-specs__title">Характеристики</h2>
+                <table class="product-specs__table">
+                </table>
+            </section>
+            <!-- Отзывы -->
+            <section class="product-reviews">
+                <h2 class="product-reviews__title">Отзывы покупателей</h2>
+                <div class="product-reviews__summary">
+                </div>
+                <div class="product-reviews__list">
+                </div>
+                <button class="product-reviews__load-more">Загрузить ещё отзывы</button>
+            </section>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer__content">
+                <div class="footer__logo">
+                    PHONE<span>store</span>
+                </div>
+                <p class="footer__copyright">
+                    © 2026 Phone Store. Все права защищены.
+                </p>
+                <div class="footer__inn">
+                    ИНН 1234567890
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+
+</html>

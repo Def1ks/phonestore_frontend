@@ -1,6 +1,6 @@
 // Подключить APi запросы
 import { initCartButtons } from './cart-buttons.js';
-import { renderProductCard, getPluralForm } from './product-renderer.js';
+import { renderProductCard, getPluralForm } from './product-render.js';
 
 function initFilters() {
     const filtersToggle = document.querySelector('.catalog__filters-toggle');
