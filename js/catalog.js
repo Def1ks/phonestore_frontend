@@ -1,4 +1,5 @@
-// Подключить APi запросы
+// Подключить API запросы
+import { getProducts } from './api.js';
 import { initCartButtons } from './cart-buttons.js';
 import { renderProductCard, getPluralForm } from './product-render.js';
 
@@ -30,7 +31,6 @@ function initFilters() {
         filtersToggle.setAttribute('aria-expanded', isActive);
         toggleBodyScroll(isActive);
     };
-
 
     // Открытие/закрытие по кнопке
     filtersToggle.addEventListener('click', togglePanel);
@@ -98,72 +98,36 @@ async function loadInitialProducts() {
 
     if (grid) {
         grid.innerHTML = `
-        <div class="catalog__loading">
-            <div class="spinner"></div>
-            <p>Загрузка товаров...</p>
-        </div>
-    `;
+            <div class="catalog__loading">
+                <div class="spinner"></div>
+                <p>Загрузка товаров...</p>
+            </div>
+        `;
     }
 
     try {
-        // === ЗАГЛУШКА (заменить на API) ===
-        await new Promise(resolve => setTimeout(resolve, 500));
-        const data = {
-            products: [
-                {
-                    id: 1,
-                    name: 'iPhone 15 Pro',
-                    brand: 'Apple · 256GB',
-                    price: 109990,
-                    image: 'img/iphone-15-pro.png',
-                    rating: 4.9,
-                    reviews: 214,
-                    badge: 'new',
-                    badgeText: 'НОВИНКА'
-                },
-                {
-                    id: 2,
-                    name: 'iPhone 14',
-                    brand: 'Apple · 128GB',
-                    price: 79990,
-                    oldPrice: 89990,
-                    image: 'img/iphone-15-pro.png',
-                    rating: 4.7,
-                    reviews: 389,
-                    badge: 'sale',
-                    badgeText: 'СКИДКА'
-                },
-                {
-                    id: 3,
-                    name: 'Samsung Galaxy S24 Ultra',
-                    brand: 'Samsung · 512GB',
-                    price: 119990,
-                    image: 'img/iphone-15-pro.png',
-                    rating: 4.8,
-                    reviews: 176,
-                    badge: 'hit',
-                    badgeText: 'ХИТ'
-                }
-            ],
-            total: 3
-        };
-        // =====================================
-
+        // === РЕАЛЬНЫЙ API ЗАПРОС ===
+        const data = await getProducts();
+        
         updateProductGrid(data.products);
         updateProductsCount(data.total);
-
+        
     } catch (error) {
         console.error('Ошибка загрузки:', error);
+        
         if (grid) {
             grid.innerHTML = `
-        <div class="catalog__error">
-            <p>Не удалось загрузить товары</p>
-            <button class="catalog__retry-btn" type="button">
-                Попробовать снова
-            </button>
-        </div>
-    `;
-            grid.querySelector('.catalog__retry-btn')?.addEventListener('click', loadInitialProducts);
+                <div class="catalog__error">
+                    <p>Не удалось загрузить товары</p>
+                    <p style="font-size: 12px; color: #999; margin-top: 8px;">${error.message}</p>
+                    <button class="catalog__retry-btn" type="button">
+                        Попробовать снова
+                    </button>
+                </div>
+            `;
+            grid.querySelector('.catalog__retry-btn')?.addEventListener('click', () => {
+                loadInitialProducts();
+            });
         }
     }
 }
@@ -192,7 +156,9 @@ function collectFilterParams() {
     });
 
     const sortSelect = document.querySelector('.catalog__select');
-    if (sortSelect) filters.sort = sortSelect.value;
+    if (sortSelect) {
+        filters.sort = sortSelect.value;
+    }
 
     return filters;
 }
@@ -204,16 +170,19 @@ function updateProductGrid(products) {
 
     if (!products || products.length === 0) {
         grid.innerHTML = `
-        <div class="catalog__empty">
-            <p>По вашему запросу ничего не найдено</p>
-        </div>
-    `;
+            <div class="catalog__empty">
+                <p>По вашему запросу ничего не найдено</p>
+            </div>
+        `;
         return;
     }
 
-    grid.innerHTML = products.map(renderProductCard).join('');
-
-    initCartButtons();
+    try {
+        grid.innerHTML = products.map(renderProductCard).join('');
+        initCartButtons();
+    } catch (error) {
+        console.error('Ошибка при рендеринге:', error);
+    }
 }
 
 // Обновление счётчика 
@@ -231,43 +200,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Обработчик кнопки "Применить фильтры"
     const applyFiltersBtn = document.querySelector('.filters__apply-btn');
+    
     if (applyFiltersBtn) {
         applyFiltersBtn.addEventListener('click', async () => {
             const filters = collectFilterParams();
-
+            
             applyFiltersBtn.disabled = true;
             applyFiltersBtn.textContent = 'Загрузка...';
-
+            
             try {
-                // === ЗАГЛУШКА (заменить на реальный API) ===
-                await new Promise(resolve => setTimeout(resolve, 1000));
-                const data = {
-                    products: [{
-                        id: 1,
-                        name: 'iPhone 15 Pro',
-                        brand: 'Apple · 256GB',
-                        price: 109990,
-                        image: 'img/iphone-15-pro.png',
-                        rating: 4.9,
-                        reviews: 214,
-                        badge: 'new',
-                        badgeText: 'НОВИНКА'
-                    }],
-                    total: 1
-                };
-                // ============================================
-
+                // === РЕАЛЬНЫЙ API ЗАПРОС С ФИЛЬТРАМИ ===
+                const data = await getProducts(filters);
+                
                 updateProductGrid(data.products);
                 updateProductsCount(data.total);
-
+                
                 if (typeof showNotification === 'function') {
                     showNotification('Фильтры применены', 'success');
                 }
-
+                
                 if (window.innerWidth <= 800) {
                     document.querySelector('.catalog__filters')?.classList.remove('is-active');
                 }
-
+                
             } catch (error) {
                 console.error('Ошибка фильтрации:', error);
                 if (typeof showNotification === 'function') {

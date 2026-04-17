@@ -1,27 +1,79 @@
-// Дописать api запрос после написания бека
-export async function addToCartAPI(productId) {
+// api.js
+const API_BASE_URL = 'http://localhost:3000/api';
 
-    try {
-        const response = await fetch('/api/cart/add', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ productId, quantity: 1 })
-        });
-
-        if (!response.ok) {
-            throw new Error('Ошибка при добавление товара');
-        }
-
-        return await response.json();
-    } catch (err) {
-        if (err.name === 'TypeError' && err.message === 'Failed to fetch') {
-            throw new Error('Нет соединения с сервером');
-        }
-        throw new Error(err.message || 'Ошибка при добавлении товара');
+/**
+ * Получить список товаров
+ * @param {Object} params - Параметры запроса (фильтры, пагинация)
+ * @returns {Promise<Object>} - Объект с товарами и общей суммой
+ */
+export async function getProducts(params = {}) {
+    const queryParams = new URLSearchParams(params).toString();
+    const url = `${API_BASE_URL}/products${queryParams ? `?${queryParams}` : ''}`;
+    
+    const response = await fetch(url);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
     }
+    
+    return await response.json();
 }
 
-// Дописать API-запрос после написания бэка
+/**
+ * Получить товар по ID
+ * @param {number|string} id - ID товара
+ * @returns {Promise<Object>} - Данные товара
+ */
+export async function getProductById(id) {
+    const response = await fetch(`${API_BASE_URL}/products/${id}`);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
+}
+
+/**
+ * Добавить товар в корзину
+ * @param {number|string} productId - ID товара
+ * @param {Object} data - Данные для добавления (variantId, quantity)
+ * @returns {Promise<Object>} - Ответ сервера
+ */
+export async function addToCartAPI(productId, data = {}) {
+    const response = await fetch(`${API_BASE_URL}/cart`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            productId,
+            ...data
+        })
+    });
+    
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.message || 'Не удалось добавить в корзину');
+    }
+    
+    return await response.json();
+}
+
+/**
+ * Получить корзину
+ * @returns {Promise<Object>} - Данные корзины
+ */
+export async function getCart() {
+    const response = await fetch(`${API_BASE_URL}/cart`);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
+}
+
 export async function submitReviewAPI(review) {
     try {
         const response = await fetch('/api/reviews', {
@@ -65,3 +117,4 @@ export async function submitReviewAPI(review) {
         throw new Error(err.message || 'Не удалось отправить отзыв');
     }
 }
+
