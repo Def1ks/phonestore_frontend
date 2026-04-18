@@ -7,48 +7,9 @@ async function loadHitsProducts() {
     if (!grid) return;
 
     try {
-        // === ЗАГЛУШКА заменить на реальный API ===
-        await new Promise(resolve => setTimeout(resolve, 500));
-
-        const hits = [
-            {
-                id: 1,
-                name: 'iPhone 15 Pro',
-                brand: 'Apple · 256GB',
-                price: 109990,
-                image: 'img/iphone-15-pro.png',
-                rating: 4.9,
-                reviews: 214,
-                badge: 'new',
-                badgeText: 'НОВИНКА'
-            },
-            {
-                id: 2,
-                name: 'iPhone 14',
-                brand: 'Apple · 128GB',
-                price: 79990,
-                oldPrice: 89990,
-                image: 'img/iphone-15-pro.png',
-                rating: 4.7,
-                reviews: 389,
-                badge: 'sale',
-                badgeText: 'СКИДКА'
-            },
-            {
-                id: 3,
-                name: 'Samsung Galaxy S24 Ultra',
-                brand: 'Samsung · 512GB',
-                price: 119990,
-                image: 'img/iphone-15-pro.png',
-                rating: 4.8,
-                reviews: 176,
-                badge: 'hit',
-                badgeText: 'ХИТ'
-            }
-        ];
-        // ===========================================
-
-        renderProductsToGrid(hits, '.bestsellers__grid');
+        const response = await fetch('http://localhost:3000/api/products/hits?limit=3');
+        const { products } = await response.json();
+        renderProductsToGrid(products, '.bestsellers__grid');
         initCartButtons();
 
     } catch (error) {
