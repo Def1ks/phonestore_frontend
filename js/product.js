@@ -4,55 +4,18 @@ import { getBadgeHTML, getPriceHTML, getPluralForm } from './product-render.js';
 
 let loadedReviewsCount = 3;
 let allReviewsData = [];
-let isLoadingReviews = false; // Флаг загрузки отзывов
+let isLoadingReviews = false;
 
-async function fetchProductData(productId) {
+// js/product.js
 
+async function fetchProductData(variantId) {
+  const response = await fetch(`http://localhost:3000/api/products/variant/${variantId}`);
 
-  return {
-    id: productId,
-    brand: { name: 'APPLE' },
-    name: 'iPhone 15 Pro',
-    description: 'iPhone 15 Pro — первый смартфон с титановым корпусом аэрокосмического класса. Оснащён самым мощным чипом A17 Pro, профессиональной камерой 48 МП и удобной кнопкой Action Button.',
-    specs: {
-      display: '6.1" Super Retina XDR, 2556×1179, 460 ppi',
-      processor: 'Apple A17 Pro, 6 ядер',
-      camera: '48 МП + 12 МП + 12 МП (телефото)',
-      battery: '3274 мАч, до 23 ч видео',
-      memory: '256 ГБ NVMe',
-      os: 'iOS 17',
-      protection: 'IP68 (6 м, 30 мин)',
-      color: 'Натуральный титан'
-    },
-    variant: {
-      id: 1,
-      color: { name: 'Натуральный титан' },
-      storage: { size_gb: 256 },
-      price: 109990,
-      old_price: 129999,
-      image_url: 'img/iphone-15-pro.png',
-      badge_type: 'sale'
-    },
-    reviews: {
-      average: 4.2,
-      total: 214,
-      distribution: [
-        { stars: 5, count: 182 },
-        { stars: 4, count: 21 },
-        { stars: 3, count: 6 },
-        { stars: 2, count: 3 },
-        { stars: 1, count: 2 }
-      ],
-      items: [
-        { user: { first_name: 'Александр', last_name: 'К.' }, rating: 5, comment: 'Пользуюсь уже месяц, очень доволен. Камера просто потрясающая, особенно в ночном режиме.', created_at: '2026-03-15' },
-        { user: { first_name: 'Мария', last_name: 'С.' }, rating: 5, comment: 'Перешла с iPhone 12. Разница ощутимая во всём: скорость, камера, автономность.', created_at: '2026-03-10' },
-        { user: { first_name: 'Дмитрий', last_name: 'П.' }, rating: 4, comment: 'Телефон отличный, но цена кусается. За эти деньги можно было бы и зарядку в комплекте положить.', created_at: '2026-03-05' },
-        { user: { first_name: 'Елена', last_name: 'В.' }, rating: 5, comment: 'Долго выбирала, не пожалела. Титан реально крутой.', created_at: '2026-03-01' },
-        { user: { first_name: 'Сергей', last_name: 'Б.' }, rating: 5, comment: 'Лучший телефон на данный момент, без вопросов.', created_at: '2026-02-25' },
-        { user: { first_name: 'Ольга', last_name: 'М.' }, rating: 4, comment: 'Хороший, но iOS 17 еще сыровата.', created_at: '2026-02-20' }
-      ]
-    }
-  };
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  return await response.json();
 }
 
 // ================= РЕНДЕРИНГ СЕКЦИЙ =================
@@ -259,26 +222,47 @@ async function initProductPage() {
 
     const specsBlocks = document.querySelectorAll('.product-specs');
     if (specsBlocks[0]) specsBlocks[0].innerHTML = `<h2 class="product-specs__title">Описание</h2>${renderDescription(description)}`;
-    if (specsBlocks[1]) specsBlocks[1].innerHTML = `<h2 class="product-specs__title">Характеристики</h2>${renderSpecsTable(specs)}`;
+    if (specsBlocks[1]) {
+      const specsTableHTML = renderSpecsTable(specs);
+      specsBlocks[1].innerHTML = `
+    <h2 class="product-specs__title">Характеристики</h2>
+    ${specsTableHTML}
+  `;
+    }
 
     const reviewsSection = document.querySelector('.product-reviews');
     if (reviewsSection) {
+      // Если отзывов нет вообще
+      if (reviews.total === 0) {
+        reviewsSection.innerHTML = `
+      <h2 class="product-reviews__title">Отзывы покупателей</h2>
+      <div class="product-reviews__empty">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+        </svg>
+        <p>Отзывов пока нет</p>
+      </div>
+    `;
+        return; 
+      }
+
+      // Если отзывы есть — рендерим как сейчас
       const plural = getPluralForm(reviews.total, ['отзыв', 'отзыва', 'отзывов']);
       const avgStars = '★'.repeat(Math.round(reviews.average)) + '☆'.repeat(5 - Math.round(reviews.average));
       const distributionHTML = renderReviewsDistribution(reviews.distribution, reviews.total);
 
       reviewsSection.innerHTML = `
-                <h2 class="product-reviews__title">Отзывы покупателей</h2>
-                <div class="product-reviews__summary">
-                  <div class="product-reviews__average">
-                    <div class="product-reviews__score">${reviews.average}</div>
-                    <div class="product-reviews__stars">${avgStars}</div>
-                    <div class="product-reviews__total">${reviews.total} ${plural}</div>
-                  </div>
-                  <div class="product-reviews__distribution">${distributionHTML}</div>
-                </div>
-                <div class="product-reviews__list"></div>
-            `;
+    <h2 class="product-reviews__title">Отзывы покупателей</h2>
+    <div class="product-reviews__summary">
+      <div class="product-reviews__average">
+        <div class="product-reviews__score">${reviews.average}</div>
+        <div class="product-reviews__stars">${avgStars}</div>
+        <div class="product-reviews__total">${reviews.total} ${plural}</div>
+      </div>
+      <div class="product-reviews__distribution">${distributionHTML}</div>
+    </div>
+    <div class="product-reviews__list"></div>
+  `;
 
       renderReviewsPage(reviews);
     }
