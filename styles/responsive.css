@@ -579,22 +579,6 @@
         font-size: 56px;
     }
 
-    .review-form {
-        padding: 40px 0;
-    }
-
-    .review-form__container {
-        padding: 24px;
-    }
-
-    .review-form__title {
-        font-size: 20px;
-    }
-
-    .review-form__star {
-        font-size: 22px;
-    }
-
     .catalog {
         padding: 20px 0 60px;
     }
@@ -1446,37 +1430,6 @@
         font-size: 13px;
     }
 
-    .review-form {
-        padding: 30px 0;
-    }
-
-    .review-form__container {
-        padding: 20px;
-    }
-
-    .review-form__title {
-        font-size: 18px;
-        margin-bottom: 20px;
-    }
-
-    .review-form__star {
-        font-size: 20px;
-    }
-
-    .review-form__input,
-    .review-form__textarea {
-        font-size: 13px;
-        padding: 9px 11px;
-    }
-
-    .review-form__textarea {
-        min-height: 70px;
-    }
-
-    .review-form__submit {
-        padding: 11px 20px;
-        font-size: 12px;
-    }
 
     .catalog__grid {
         grid-template-columns: 1fr;
