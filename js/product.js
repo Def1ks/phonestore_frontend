@@ -107,7 +107,6 @@ function generateReviewHTML(review) {
         </div>
         <div class="review-card__rating">${rStars}</div>
       </div>
-      <h3 class="review-card__title">Отзыв о товаре</h3>
       <p class="review-card__text">${review.comment}</p>
     </article>`;
 }
