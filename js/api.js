@@ -1,5 +1,6 @@
 const API_BASE_URL = 'http://localhost:3000/api';
 
+// ТОВАРЫ
 export async function getProducts(params = {}) {
     const queryParams = new URLSearchParams(params).toString();
     const url = `${API_BASE_URL}/products${queryParams ? `?${queryParams}` : ''}`;
@@ -23,6 +24,28 @@ export async function getProductById(id) {
     return await response.json();
 }
 
+export async function getProductByVariantId(variantId) {
+    const response = await fetch(`${API_BASE_URL}/products/variant/${variantId}`);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
+}
+
+export async function getHitsProducts(limit = 3) {
+    const response = await fetch(`${API_BASE_URL}/products/hits?limit=${limit}`);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data.products || [];
+}
+
+// КОРЗИНА
 export async function addToCartAPI(productId, data = {}) {
     const response = await fetch(`${API_BASE_URL}/cart`, {
         method: 'POST',
@@ -53,9 +76,13 @@ export async function getCart() {
     return await response.json();
 }
 
-//  ОТЗЫВЫ О МАГАЗИНЕ 
+// ОТЗЫВЫ О МАГАЗИНЕ
 export async function getAllShopReviews() {
     const response = await fetch(`${API_BASE_URL}/shop-reviews`);
-    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
     return await response.json();
 }

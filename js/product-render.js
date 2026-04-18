@@ -1,7 +1,5 @@
-// product-render.js
-// ==================== ОСНОВНОЙ РЕНДЕР ====================
+//  ОСНОВНОЙ РЕНДЕР 
 export function renderProductCard(product) {
-    // Нормализуем данные: берём из разных возможных полей
     const data = normalizeProductData(product);
     
     return `
@@ -33,7 +31,7 @@ export function renderProductCard(product) {
     `;
 }
 
-// ==================== НОРМАЛИЗАЦИЯ ДАННЫХ ====================
+//  НОРМАЛИЗАЦИЯ ДАННЫХ 
 function normalizeProductData(product) {
     if (!product) return {};
     const brandValue = product.brandName || product.brand;
@@ -64,7 +62,7 @@ function normalizeProductData(product) {
     };
 }
 
-// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
+//  ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ 
 
 export function getBadgeHTML(product) {
     const badge = product.badge || product.badge_type;
@@ -111,7 +109,6 @@ export function getRatingHTML(product) {
 }
 
 export function getPriceHTML(product) {
-    // Если цена не валидна — показываем заглушку
     if (!product.price || product.price <= 0) {
         return `<div class="product-card__price"><span class="product-card__price-current">—</span></div>`;
     }
@@ -131,7 +128,7 @@ export function getPriceHTML(product) {
     return `<div class="product-card__price"><span class="product-card__price-current">${currentPrice}</span></div>`;
 }
 
-// Форматирование цены: 89990 → "89 990 ₽"
+// Форматирование цены
 function formatPrice(price) {
     if (typeof price !== 'number' || isNaN(price)) return '—';
     return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';
@@ -142,7 +139,7 @@ export function getPluralForm(number, titles) {
     return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
 }
 
-// ==================== МАССОВЫЙ РЕНДЕР ====================
+//  МАССОВЫЙ РЕНДЕР 
 export function renderProductsToGrid(products, gridSelector, initCart = true) {
     const grid = document.querySelector(gridSelector);
     if (!grid) {

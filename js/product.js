@@ -1,24 +1,12 @@
-// js/product.js
 import { initCartButtons } from './cart-buttons.js';
 import { getBadgeHTML, getPriceHTML, getPluralForm } from './product-render.js';
+import { getProductByVariantId } from './api.js';
 
 let loadedReviewsCount = 3;
 let allReviewsData = [];
 let isLoadingReviews = false;
 
-// js/product.js
-
-async function fetchProductData(variantId) {
-  const response = await fetch(`http://localhost:3000/api/products/variant/${variantId}`);
-
-  if (!response.ok) {
-    throw new Error(`HTTP error! status: ${response.status}`);
-  }
-
-  return await response.json();
-}
-
-// ================= РЕНДЕРИНГ СЕКЦИЙ =================
+//  РЕНДЕРИНГ СЕКЦИЙ 
 
 function renderImageBlock(product, variant) {
   const badgeHTML = getBadgeHTML({ badge: variant.badge_type, oldPrice: variant.old_price });
@@ -125,7 +113,7 @@ function renderReviewsDistribution(distribution, total) {
   }).join('');
 }
 
-// ================= ЛОГИКА ОТЗЫВОВ С ЗАГРУЗКОЙ =================
+//  ЛОГИКА ОТЗЫВОВ С ЗАГРУЗКОЙ 
 
 async function fetchMoreReviews(productId, offset, limit) {
   const allItems = allReviewsData.items;
@@ -159,7 +147,6 @@ function renderReviewsPage(reviews, isLoading = false) {
   const listContainer = document.querySelector('.product-reviews__list');
   if (listContainer) listContainer.innerHTML = reviewsHTML;
 
-  // Обновляем кнопку
   const loadMoreBtn = document.getElementById('loadMoreReviewsBtn');
   if (loadMoreBtn) loadMoreBtn.remove();
 
@@ -167,12 +154,11 @@ function renderReviewsPage(reviews, isLoading = false) {
   if (reviewsSection && loadMoreButtonHTML) {
     reviewsSection.insertAdjacentHTML('beforeend', loadMoreButtonHTML);
 
-    // Обработчик клика с async загрузкой
     document.getElementById('loadMoreReviewsBtn')?.addEventListener('click', async () => {
-      if (isLoadingReviews) return; // Защита от повторных кликов
+      if (isLoadingReviews) return;
 
       isLoadingReviews = true;
-      renderReviewsPage(reviews, true); // Перерисовываем с состоянием загрузки
+      renderReviewsPage(reviews, true);
 
       try {
         const response = await fetchMoreReviews(
@@ -185,12 +171,12 @@ function renderReviewsPage(reviews, isLoading = false) {
         }
 
         loadedReviewsCount += 3;
-        renderReviewsPage(reviews, false); // Перерисовываем с новыми данными
+        renderReviewsPage(reviews, false);
 
       } catch (error) {
         console.error('Ошибка загрузки отзывов:', error);
         showNotification('Не удалось загрузить отзывы', 'error');
-        renderReviewsPage(reviews, false); // Возвращаем кнопку в исходное состояние
+        renderReviewsPage(reviews, false);
       } finally {
         isLoadingReviews = false;
       }
@@ -201,14 +187,14 @@ function renderReviewsPage(reviews, isLoading = false) {
   }
 }
 
-// ================= ИНИЦИАЛИЗАЦИЯ =================
+//  ИНИЦИАЛИЗАЦИЯ 
 
 async function initProductPage() {
   const params = new URLSearchParams(window.location.search);
   const productId = params.get('id') || '1';
 
   try {
-    const data = await fetchProductData(productId);
+    const data = await getProductByVariantId(productId);
     const { id, brand, name, description, specs, variant, reviews } = data;
 
     allReviewsData = reviews;
@@ -242,10 +228,9 @@ async function initProductPage() {
         <p>Отзывов пока нет</p>
       </div>
     `;
-        return; 
+        return;
       }
 
-      // Если отзывы есть — рендерим как сейчас
       const plural = getPluralForm(reviews.total, ['отзыв', 'отзыва', 'отзывов']);
       const avgStars = '★'.repeat(Math.round(reviews.average)) + '☆'.repeat(5 - Math.round(reviews.average));
       const distributionHTML = renderReviewsDistribution(reviews.distribution, reviews.total);
