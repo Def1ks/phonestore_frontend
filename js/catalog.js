@@ -1,9 +1,8 @@
-// js/catalog.js
 import { getProducts, getFilterOptions } from './api.js';
 import { initCartButtons } from './cart-buttons.js';
 import { renderProductCard, getPluralForm } from './product-render.js';
 
-// ================= СОСТОЯНИЕ =================
+//  СОСТОЯНИЕ 
 const state = {
     filters: {
         page: 1,
@@ -25,14 +24,14 @@ const state = {
     }
 };
 
-// ================= ИНИЦИАЛИЗАЦИЯ =================
+//  ИНИЦИАЛИЗАЦИЯ 
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadFilterOptions();      // 1. Загружаем опции фильтров
-    initFiltersUI();                // 2. Навешиваем обработчики
-    loadProducts();                 // 3. Загружаем товары
+    await loadFilterOptions();      
+    initFiltersUI();                
+    loadProducts();                 
 });
 
-// ================= ЗАГРУЗКА ОПЦИЙ ФИЛЬТРОВ =================
+//  ЗАГРУЗКА ОПЦИЙ ФИЛЬТРОВ 
 async function loadFilterOptions() {
     try {
         const options = await getFilterOptions();
@@ -42,10 +41,10 @@ async function loadFilterOptions() {
         renderFilterTags('ram', options.ram, 'id_ram', 'size_gb', ' ГБ');
         renderFilterTags('storage', options.storage, 'id_storage', 'size_gb', ' ГБ');
         renderFilterTags('color', options.colors, 'id_color', 'name');
-        
+
+        applyFiltersFromURL();
     } catch (error) {
         console.warn('Не удалось загрузить опции фильтров:', error);
-        // Опционально: показать заглушку или оставить хардкод
     }
 }
 
@@ -65,7 +64,7 @@ function renderFilterTags(type, items, idField, labelField, suffix = '') {
     `).join('');
 }
 
-// ================= UI: ОБРАБОТЧИКИ =================
+//  UI: ОБРАБОТЧИКИ 
 function initFiltersUI() {
     // --- Панель фильтров (мобилка) ---
     const filtersToggle = document.querySelector('.catalog__filters-toggle');
@@ -168,7 +167,7 @@ function initFiltersUI() {
     });
 }
 
-// ================= ПРИМЕНЕНИЕ ФИЛЬТРОВ =================
+//  ПРИМЕНЕНИЕ ФИЛЬТРОВ 
 function applyFilters() {
     state.filters.page = 1;
     loadProducts();
@@ -178,7 +177,7 @@ function getSelectedFilterIds(type) {
     const activeTags = document.querySelectorAll(`.filters__tag[data-type="${type}"].is-active`);
     return Array.from(activeTags).map(tag => tag.dataset.id);
 }
-// ================= ЗАГРУЗКА ТОВАРОВ =================
+//  ЗАГРУЗКА ТОВАРОВ 
 async function loadProducts() {
     const grid = document.querySelector('.catalog__grid');
     if (grid) {
@@ -236,5 +235,28 @@ function updateProductsCount(count) {
     if (counter) {
         const word = getPluralForm(count, ['товар', 'товара', 'товаров']);
         counter.textContent = `${count} ${word}`;
+    }
+}
+
+// Вызывается внутри loadFilterOptions() после рендера тегов
+function applyFiltersFromURL() {
+    const params = new URLSearchParams(window.location.search);
+    
+    const filterTypes = ['brand', 'ram', 'storage', 'color'];
+    let hasFilters = false;
+
+    filterTypes.forEach(type => {
+        const id = params.get(type);
+        if (id) {
+            const tag = document.querySelector(`.filters__tag[data-type="${type}"][data-id="${id}"]`);
+            if (tag) {
+                tag.classList.add('is-active');
+                hasFilters = true;
+            }
+        }
+    });
+
+    if (hasFilters) {
+        loadProducts();
     }
 }
