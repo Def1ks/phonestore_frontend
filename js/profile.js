@@ -1,10 +1,20 @@
-// ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+// js/profile.js
+import { 
+    registerUser, 
+    loginUser, 
+    logoutUser, 
+    getCurrentUser, 
+    updateProfile, 
+    changePassword,
+    apiRequest 
+} from './api.js';
+import { initCartButtons } from './cart-buttons.js';
+import { renderProductCard, getPluralForm } from './product-render.js';
 
-// Текущий авторизованный пользователь (заполняется после входа)
+//  ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ 
 let currentUser = null;
 
-// Массив заказов (МОК-данные для разработки)
-// В будущем этот массив будет заменён на ответ от API: fetch('/api/orders')
+// Мок-данные заказов (пока нет реального API)
 const ORDERS_DATA = [
     {
         id: '12345',
@@ -49,17 +59,17 @@ const ORDERS_DATA = [
     }
 ];
 
-// ==================== ИНИЦИАЛИЗАЦИЯ ====================
-
-document.addEventListener('DOMContentLoaded', () => {
-    checkAuth();              // Проверяем, авторизован ли пользователь
-    initAuthTabs();           // Настраиваем переключение вкладок входа/регистрации
-    initProfileTabs();        // Настраиваем переключение вкладок профиля
-    initForms();              // Инициализируем формы (заглушка для будущей логики)
-    renderOrdersStats();      // Рендерим статистику по заказам
-    renderOrdersList();       // Рендерим список заказов из массива ORDERS_DATA
+//  ИНИЦИАЛИЗАЦИЯ 
+document.addEventListener('DOMContentLoaded', async () => {
+    await checkAuth();              // Проверяем авторизацию (с запросом к серверу)
+    initAuthTabs();                 // Переключение вкладок входа/регистрации
+    initProfileTabs();              // Переключение вкладок профиля
+    initForms();                    // Обработчики форм
+    renderOrdersStats();            // Статистика заказов
+    renderOrdersList();             // Список заказов (мок)
 });
 
+// Обработчик деталей заказа
 document.getElementById('orders-list')?.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-order-btn]');
     if (btn) {
@@ -68,43 +78,70 @@ document.getElementById('orders-list')?.addEventListener('click', (e) => {
     }
 });
 
-// ==================== АВТОРИЗАЦИЯ ====================
+//  АВТОРИЗАЦИЯ 
 
-// Проверяем, есть ли данные пользователя в localStorage
-function checkAuth() {
-    const stored = localStorage.getItem('currentUser');
-    currentUser = stored ? JSON.parse(stored) : null;
-
-    if (currentUser) {
-        showProfile();        // Показываем профиль, если пользователь авторизован
-    } else {
-        showAuth();           // Показываем форму входа, если нет
+// Проверка авторизации с запросом к серверу
+async function checkAuth() {
+    const token = localStorage.getItem('authToken');
+    const storedUser = localStorage.getItem('currentUser');
+    
+    // Если есть токен, проверяем его на сервере
+    if (token) {
+        try {
+            const response = await getCurrentUser();
+            currentUser = response.user;
+            // Обновляем данные в localStorage
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            showProfile();
+        } catch (error) {
+            console.warn('Токен невалиден, выходим:', error.message);
+            logout();
+        }
+    } 
+    // Если нет токена, но есть данные в localStorage (после регистрации/входа)
+    else if (storedUser) {
+        currentUser = JSON.parse(storedUser);
+        showProfile();
+    } 
+    else {
+        showAuth();
     }
 }
 
-// Показываем форму авторизации, скрываем профиль
 function showAuth() {
-    document.getElementById('auth-view').classList.remove('auth--hidden');
-    document.getElementById('profile-view').classList.add('profile--hidden');
+    document.getElementById('auth-view')?.classList.remove('auth--hidden');
+    document.getElementById('profile-view')?.classList.add('profile--hidden');
 }
 
-// Показываем профиль, скрываем форму авторизации
 function showProfile() {
-    document.getElementById('auth-view').classList.add('auth--hidden');
-    document.getElementById('profile-view').classList.remove('profile--hidden');
-
-    // Заполняем данные пользователя в шапке профиля
+    document.getElementById('auth-view')?.classList.add('auth--hidden');
+    document.getElementById('profile-view')?.classList.remove('profile--hidden');
+    
     if (currentUser) {
-        const initials = `${currentUser.firstName?.[0] || ''}${currentUser.lastName?.[0] || ''}`.toUpperCase();
-        document.getElementById('user-avatar').textContent = initials || 'П';
-        document.getElementById('user-name').textContent = `${currentUser.firstName || ''} ${currentUser.lastName || ''}`.trim();
-        document.getElementById('user-email').textContent = currentUser.email || '';
+        updateProfileUI(currentUser);
     }
 }
 
-// ==================== ВКЛАДКИ АВТОРИЗАЦИИ ====================
+// Обновление UI профиля
+function updateProfileUI(user) {
+    const initials = `${user.first_name?.[0] || ''}${user.last_name?.[0] || ''}`.toUpperCase();
+    document.getElementById('user-avatar').textContent = initials || 'П';
+    document.getElementById('user-name').textContent = `${user.first_name || ''} ${user.last_name || ''}`.trim();
+    document.getElementById('user-email').textContent = user.email || '';
+    
+    // Заполняем форму личных данных
+    const fnameInput = document.getElementById('input-firstname');
+    const lnameInput = document.getElementById('input-lastname');
+    const phoneInput = document.getElementById('input-phone');
+    const emailInput = document.querySelector('#personal-form input[type="email"]');
+    
+    if (fnameInput) fnameInput.value = user.first_name || '';
+    if (lnameInput) lnameInput.value = user.last_name || '';
+    if (phoneInput && user.phone) phoneInput.value = user.phone;
+    if (emailInput) emailInput.value = user.email || '';
+}
 
-// Настраиваем переключение между формами "Войти" и "Регистрация"
+//  ВКЛАДКИ АВТОРИЗАЦИИ 
 function initAuthTabs() {
     const tabs = document.querySelectorAll('.auth__tab');
     const forms = document.querySelectorAll('.auth__form');
@@ -112,34 +149,25 @@ function initAuthTabs() {
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const target = tab.dataset.tab;
-
-            // Убираем активный класс со всех вкладок и форм
             tabs.forEach(t => t.classList.remove('auth__tab--active'));
             forms.forEach(f => f.classList.remove('auth__form--active'));
-
-            // Добавляем активный класс к выбранной вкладке и форме
             tab.classList.add('auth__tab--active');
-            document.getElementById(`${target}-form`).classList.add('auth__form--active');
+            document.getElementById(`${target}-form`)?.classList.add('auth__form--active');
         });
     });
 
-    // Обработчик для ссылок "Зарегистрироваться"/"Войти" в футере форм
     document.querySelectorAll('[data-switch]').forEach(link => {
         link.addEventListener('click', () => {
             const target = link.dataset.switch;
-
             tabs.forEach(t => t.classList.remove('auth__tab--active'));
             forms.forEach(f => f.classList.remove('auth__form--active'));
-
-            document.querySelector(`[data-tab="${target}"]`).classList.add('auth__tab--active');
-            document.getElementById(`${target}-form`).classList.add('auth__form--active');
+            document.querySelector(`[data-tab="${target}"]`)?.classList.add('auth__tab--active');
+            document.getElementById(`${target}-form`)?.classList.add('auth__form--active');
         });
     });
 }
 
-// ==================== ВКЛАДКИ ПРОФИЛЯ ====================
-
-// Настраиваем переключение между разделами профиля (Заказы, Данные, Настройки)
+//  ВКЛАДКИ ПРОФИЛЯ 
 function initProfileTabs() {
     const tabs = document.querySelectorAll('.profile__tab');
     const sections = document.querySelectorAll('.profile__section');
@@ -147,185 +175,221 @@ function initProfileTabs() {
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const target = tab.dataset.tab;
-
-            // Убираем активный класс со всех вкладок и секций
             tabs.forEach(t => t.classList.remove('profile__tab--active'));
             sections.forEach(s => s.classList.remove('profile__section--active'));
-
-            // Добавляем активный класс к выбранной вкладке и секции
             tab.classList.add('profile__tab--active');
-            document.getElementById(`${target}-section`).classList.add('profile__section--active');
+            document.getElementById(`${target}-section`)?.classList.add('profile__section--active');
         });
     });
 }
 
-// ==================== ФОРМЫ ====================
-
-// Заглушка для будущей логики инициализации форм
-// Сюда можно добавить валидацию, маски ввода, кастомные обработчики
+//  ФОРМЫ 
 function initForms() {
-
+    initLoginForm();
+    initRegisterForm();
+    initPersonalForm();
+    initSettingsForm();
+    initLogout();
 }
 
-// ==================== ОБРАБОТКА ВХОДА ====================
+//  ВХОД 
+function initLoginForm() {
+    const form = document.getElementById('login-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const email = document.getElementById('login-email').value;
+        const password = document.getElementById('login-password').value;
+        const submitBtn = form.querySelector('.auth__submit');
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Вход...';
+        
+        try {
+            const result = await loginUser({ email, password });
+            
+            if (typeof showNotification === 'function') {
+                showNotification('Добро пожаловать!', 'success');
+            }
+            
+            currentUser = result.user;
+            showProfile();
+            
+        } catch (error) {
+            console.error('Ошибка входа:', error);
+            if (typeof showNotification === 'function') {
+                showNotification(error.message || 'Неверный логин или пароль', 'error');
+            }
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Войти';
+        }
+    });
+}
 
-document.getElementById('login-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault(); // Предотвращаем стандартную отправку формы
+//  РЕГИСТРАЦИЯ 
+function initRegisterForm() {
+    const form = document.getElementById('register-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const first_name = document.getElementById('register-name').value;
+        const email = document.getElementById('register-email').value;
+        const password = document.getElementById('register-password').value;
+        const submitBtn = form.querySelector('.auth__submit');
+        
+        // Валидация
+        if (password.length < 6) {
+            if (typeof showNotification === 'function') {
+                showNotification('Пароль должен содержать минимум 6 символов', 'error');
+            }
+            return;
+        }
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Регистрация...';
+        
+        try {
+            const result = await registerUser({ 
+                email, 
+                password, 
+                first_name,
+                last_name: '' 
+            });
+            
+            if (typeof showNotification === 'function') {
+                showNotification('Аккаунт создан! Добро пожаловать.', 'success');
+            }
+            
+            currentUser = result.user;
+            showProfile();
+            
+        } catch (error) {
+            console.error('Ошибка регистрации:', error);
+            if (typeof showNotification === 'function') {
+                showNotification(error.message || 'Ошибка регистрации', 'error');
+            }
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Зарегистрироваться';
+        }
+    });
+}
 
-    const email = document.getElementById('login-email').value;
-    const password = document.getElementById('login-password').value;
-    const submitBtn = e.target.querySelector('.auth__submit');
+//  ЛИЧНЫЕ ДАННЫЕ 
+function initPersonalForm() {
+    const form = document.getElementById('personal-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('.btn--primary');
+        const originalText = submitBtn.textContent;
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Сохранение...';
+        
+        try {
+            const data = {
+                first_name: document.getElementById('input-firstname').value,
+                last_name: document.getElementById('input-lastname').value
+            };
+            
+            const result = await updateProfile(data);
+            
+            // Обновляем данные в localStorage и UI
+            currentUser = { ...currentUser, ...result.user };
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            updateProfileUI(currentUser);
+            
+            if (typeof showNotification === 'function') {
+                showNotification('Данные успешно сохранены', 'success');
+            }
+        } catch (error) {
+            console.error('Ошибка сохранения:', error);
+            if (typeof showNotification === 'function') {
+                showNotification(error.message || 'Не удалось сохранить данные', 'error');
+            }
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalText;
+        }
+    });
+}
 
-    // Блокируем кнопку на время запроса, чтобы избежать повторных кликов
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Вход...';
+//  СМЕНА ПАРОЛЯ 
+function initSettingsForm() {
+    const form = document.getElementById('settings-form');
+    if (!form) return;
+    
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const submitBtn = form.querySelector('.btn--primary');
+        
+        const currentPassword = document.getElementById('input-current-password').value;
+        const newPassword = document.getElementById('input-new-password').value;
+        const confirmPassword = document.getElementById('input-confirm-password').value;
+        
+        if (newPassword !== confirmPassword) {
+            if (typeof showNotification === 'function') {
+                showNotification('Пароли не совпадают', 'error');
+            }
+            return;
+        }
+        if (newPassword.length < 6) {
+            if (typeof showNotification === 'function') {
+                showNotification('Пароль должен содержать минимум 6 символов', 'error');
+            }
+            return;
+        }
+        
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Изменение...';
+        
+        try {
+            await changePassword({ currentPassword, newPassword });
+            
+            if (typeof showNotification === 'function') {
+                showNotification('Пароль успешно изменён', 'success');
+            }
+            form.reset();
+        } catch (error) {
+            console.error('Ошибка смены пароля:', error);
+            if (typeof showNotification === 'function') {
+                showNotification(error.message || 'Ошибка при смене пароля', 'error');
+            }
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Изменить пароль';
+        }
+    });
+}
 
-    try {
-        // Имитация задержки сети (удалить при подключении реального API)
-        await new Promise(r => setTimeout(r, 800));
-
-        // Сохраняем данные пользователя (в реальности придут от сервера)
-        currentUser = { firstName: 'Иван', lastName: 'Иванов', email, phone: '+7 900 123 45 67' };
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-        showNotification('Добро пожаловать!', 'success');
-        showProfile();
-
-    } catch (error) {
-        console.error('Ошибка входа:', error);
-        showNotification('Неверный логин или пароль', 'error');
-    } finally {
-        // Разблокируем кнопку в любом случае
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Войти';
-    }
-});
-
-// ==================== ОБРАБОТКА РЕГИСТРАЦИИ ====================
-
-document.getElementById('register-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const name = document.getElementById('register-name').value;
-    const email = document.getElementById('register-email').value;
-    const password = document.getElementById('register-password').value;
-    const submitBtn = e.target.querySelector('.auth__submit');
-
-    // Простая валидация пароля
-    if (password.length < 6) {
-        showNotification('Пароль должен содержать минимум 6 символов', 'error');
-        return;
-    }
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Регистрация...';
-
-    try {
-        // Имитация задержки сети
-        await new Promise(r => setTimeout(r, 800));
-
-        // Сохраняем данные нового пользователя
-        currentUser = { firstName: name, lastName: '', email, phone: '' };
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-        showNotification('Аккаунт создан! Добро пожаловать.', 'success');
-        showProfile();
-
-    } catch (error) {
-        console.error('Ошибка регистрации:', error);
-        showNotification('Ошибка регистрации. Попробуйте снова.', 'error');
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Зарегистрироваться';
-    }
-});
-
-// ==================== СОХРАНЕНИЕ ДАННЫХ ПРОФИЛЯ ====================
-
-document.getElementById('personal-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const submitBtn = e.target.querySelector('.btn--primary');
-    const originalText = submitBtn.textContent;
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Сохранение...';
-
-    try {
-        // Обновляем данные пользователя в памяти и localStorage
-        currentUser.firstName = document.getElementById('input-firstname').value;
-        currentUser.lastName = document.getElementById('input-lastname').value;
-        localStorage.setItem('currentUser', JSON.stringify(currentUser));
-
-        // Обновляем отображение имени в шапке профиля
-        document.getElementById('user-name').textContent = `${currentUser.firstName} ${currentUser.lastName}`;
-
-        showNotification('Данные успешно сохранены', 'success');
-    } catch (error) {
-        console.error('Ошибка сохранения:', error);
-        showNotification('Не удалось сохранить данные', 'error');
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-    }
-});
-
-// ==================== СМЕНА ПАРОЛЯ ====================
-
-document.getElementById('settings-form')?.addEventListener('submit', async (e) => {
-    e.preventDefault();
-
-    const newPass = document.getElementById('input-new-password').value;
-    const confirm = document.getElementById('input-confirm-password').value;
-
-    // Валидация: пароли должны совпадать и быть не короче 6 символов
-    if (newPass !== confirm) {
-        showNotification('Пароли не совпадают', 'error');
-        return;
-    }
-    if (newPass.length < 6) {
-        showNotification('Пароль должен содержать минимум 6 символов', 'error');
-        return;
-    }
-
-    const submitBtn = e.target.querySelector('.btn--primary');
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Изменение...';
-
-    try {
-        // Имитация запроса к API
-        await new Promise(r => setTimeout(r, 600));
-
-        showNotification('Пароль успешно изменён', 'success');
-        e.target.reset(); // Очищаем форму
-    } catch (error) {
-        console.error('Ошибка смены пароля:', error);
-        showNotification('Ошибка при смене пароля', 'error');
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = 'Изменить пароль';
-    }
-});
-
-// ==================== ВЫХОД ИЗ АККАУНТА ====================
+//  ВЫХОД 
+function initLogout() {
+    document.getElementById('logout-btn-header')?.addEventListener('click', logout);
+}
 
 function logout() {
+    logoutUser();
     currentUser = null;
-    localStorage.removeItem('currentUser');
-    showNotification('Вы вышли из аккаунта', 'success');
+    
+    if (typeof showNotification === 'function') {
+        showNotification('Вы вышли из аккаунта', 'success');
+    }
+    
     showAuth();
 }
 
-document.getElementById('logout-btn-header')?.addEventListener('click', logout);
-
-// ==================== РЕНДЕРИНГ ЗАКАЗОВ ====================
-
-// Форматирует число в формат валюты (например, 439960 → "439 960 ₽")
+//  РЕНДЕРИНГ ЗАКАЗОВ (МОК) 
 function formatPrice(price) {
     return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';
 }
 
-// Возвращает текст и класс для статуса заказа
 function getStatusInfo(status) {
     const statuses = {
         delivered: { text: 'Доставлен', class: 'order-card__status--delivered' },
@@ -335,24 +399,21 @@ function getStatusInfo(status) {
     return statuses[status] || { text: 'Неизвестно', class: '' };
 }
 
-// Рендерит статистику по заказам (всего заказов и общая сумма)
 function renderOrdersStats() {
     const totalOrders = ORDERS_DATA.length;
     const totalSum = ORDERS_DATA.reduce((sum, order) => sum + order.total, 0);
-
+    
     document.getElementById('stat-total-orders').textContent = totalOrders;
     document.getElementById('stat-total-sum').textContent = formatPrice(totalSum);
 }
 
-// Рендерит список заказов из массива ORDERS_DATA
 function renderOrdersList() {
     const container = document.getElementById('orders-list');
     if (!container) return;
-
+    
     const ordersHTML = ORDERS_DATA.map(order => {
         const status = getStatusInfo(order.status);
-
-        // Генерируем HTML для списка товаров
+        
         const itemsHTML = order.items.map(item => `
             <div class="order-card__details-item">
                 <span>
@@ -362,7 +423,7 @@ function renderOrdersList() {
                 <span class="order-card__details-item-price">${formatPrice(item.price * item.qty)}</span>
             </div>
         `).join('');
-
+        
         return `
             <div class="order-card" data-order="${order.id}">
                 <div class="order-card__header">
@@ -372,8 +433,7 @@ function renderOrdersList() {
                     </div>
                     <span class="order-card__status ${status.class}">${status.text}</span>
                 </div>
-
-                <!-- Скрытые детали заказа (только состав) -->
+                
                 <div class="order-card__details">
                     <h4 style="font-size: 13px; font-weight: 600; margin-bottom: 10px; font-family: var(--font-header);">
                         Состав заказа:
@@ -381,36 +441,34 @@ function renderOrdersList() {
                     <div class="order-card__details-list">
                         ${itemsHTML}
                     </div>
-                    
                     <div class="order-card__details-total">
                         <span>Итого:</span>
                         <span>${formatPrice(order.total)}</span>
                     </div>
                 </div>
-
+                
                 <div class="order-card__actions">
                     <button class="btn btn--secondary" data-order-btn="${order.id}">Детали</button>
                 </div>
             </div>
         `;
     }).join('');
-
+    
     container.innerHTML = ordersHTML;
 }
 
-// Переключает видимость деталей заказа (раскрывает/скрывает)
 function toggleOrderDetails(orderId) {
     const card = document.querySelector(`[data-order="${orderId}"]`);
-    const details = card.querySelector('.order-card__details');
-    const btn = card.querySelector('.btn--secondary');
-
+    const details = card?.querySelector('.order-card__details');
+    const btn = card?.querySelector('.btn--secondary');
+    
+    if (!details || !btn) return;
+    
     if (details.classList.contains('order-card__details--visible')) {
-        // Если детали уже открыты — закрываем
         details.classList.remove('order-card__details--visible');
         details.style.maxHeight = '0';
         btn.textContent = 'Детали';
     } else {
-        // Закрываем все другие открытые заказы (опционально)
         document.querySelectorAll('.order-card__details--visible').forEach(detail => {
             detail.classList.remove('order-card__details--visible');
             detail.style.maxHeight = '0';
@@ -418,8 +476,7 @@ function toggleOrderDetails(orderId) {
         document.querySelectorAll('.order-card__actions .btn--secondary').forEach(b => {
             if (b !== btn) b.textContent = 'Детали';
         });
-
-        // Открываем текущий заказ
+        
         details.classList.add('order-card__details--visible');
         details.style.maxHeight = details.scrollHeight + 'px';
         btn.textContent = 'Скрыть';

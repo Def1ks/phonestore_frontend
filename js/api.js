@@ -1,6 +1,42 @@
+// js/api.js
 const API_BASE_URL = 'http://localhost:3000/api';
 
-// ТОВАРЫ
+// ================= ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ =================
+
+// Получает токен из localStorage
+function getToken() {
+    return localStorage.getItem('authToken');
+}
+
+// Хелпер для авторизованных запросов
+export async function apiRequest(url, options = {}) {
+    const token = getToken();
+    
+    const config = {
+        ...options,
+        headers: {
+            'Content-Type': 'application/json',
+            ...options.headers
+        }
+    };
+    
+    // Добавляем токен, если он есть и не передан свой заголовок Authorization
+    if (token && !config.headers.Authorization) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    
+    const response = await fetch(url, config);
+    
+    if (!response.ok) {
+        const error = await response.json().catch(() => ({}));
+        throw new Error(error.error || `HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
+}
+
+// ================= ТОВАРЫ =================
+
 export async function getProducts(params = {}) {
     const queryParams = new URLSearchParams(params).toString();
     const url = `${API_BASE_URL}/products${queryParams ? `?${queryParams}` : ''}`;
@@ -45,7 +81,8 @@ export async function getHitsProducts(limit = 3) {
     return data.products || [];
 }
 
-// КОРЗИНА
+// ================= КОРЗИНА =================
+
 export async function addToCartAPI(productId, data = {}) {
     const response = await fetch(`${API_BASE_URL}/cart`, {
         method: 'POST',
@@ -76,7 +113,8 @@ export async function getCart() {
     return await response.json();
 }
 
-// ОТЗЫВЫ О МАГАЗИНЕ
+// ================= ОТЗЫВЫ О МАГАЗИНЕ =================
+
 export async function getAllShopReviews() {
     const response = await fetch(`${API_BASE_URL}/shop-reviews`);
     
@@ -87,7 +125,8 @@ export async function getAllShopReviews() {
     return await response.json();
 }
 
-// === ФИЛЬТРЫ ===
+// ================= ФИЛЬТРЫ =================
+
 export async function getFilterOptions() {
     const response = await fetch(`${API_BASE_URL}/products/filters`);
     
@@ -96,4 +135,105 @@ export async function getFilterOptions() {
     }
     
     return await response.json();
+}
+
+// ================= АВТОРИЗАЦИЯ =================
+
+/**
+ * Регистрация нового пользователя
+ * @param {Object} data - { email, password, first_name, last_name }
+ */
+export async function registerUser(data) {
+    const response = await fetch(`${API_BASE_URL}/auth/register`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+    
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Ошибка регистрации');
+    }
+    
+    const result = await response.json();
+    
+    // Сохраняем токен и данные пользователя
+    if (result.token) {
+        localStorage.setItem('authToken', result.token);
+        localStorage.setItem('currentUser', JSON.stringify(result.user));
+    }
+    
+    return result;
+}
+
+/**
+ * Вход пользователя
+ * @param {Object} data - { email, password }
+ */
+export async function loginUser(data) {
+    const response = await fetch(`${API_BASE_URL}/auth/login`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    });
+    
+    if (!response.ok) {
+        const error = await response.json();
+        throw new Error(error.error || 'Ошибка входа');
+    }
+    
+    const result = await response.json();
+    
+    // Сохраняем токен и данные пользователя
+    if (result.token) {
+        localStorage.setItem('authToken', result.token);
+        localStorage.setItem('currentUser', JSON.stringify(result.user));
+    }
+    
+    return result;
+}
+
+/**
+ * Выход из аккаунта
+ */
+export function logoutUser() {
+    localStorage.removeItem('authToken');
+    localStorage.removeItem('currentUser');
+}
+
+/**
+ * Получить текущего авторизованного пользователя
+ */
+export async function getCurrentUser() {
+    return await apiRequest(`${API_BASE_URL}/auth/me`);
+}
+
+/**
+ * Обновить данные профиля (ИМЯ/ФАМИЛИЯ)
+ */
+export async function updateProfile(data) {
+    // Маппим поля фронтенда на бэкенд
+    const payload = {
+        first_name: data.first_name,
+        last_name: data.last_name
+    };
+    return await apiRequest(`${API_BASE_URL}/auth/profile`, {
+        method: 'PUT',
+        body: JSON.stringify(payload)
+    });
+}
+
+/**
+ * Сменить пароль
+ */
+export async function changePassword(data) {
+    // Маппим поля фронтенда на бэкенд
+    const payload = {
+        current_password: data.currentPassword,
+        new_password: data.newPassword
+    };
+    return await apiRequest(`${API_BASE_URL}/auth/password`, {
+        method: 'PUT',
+        body: JSON.stringify(payload)
+    });
 }
