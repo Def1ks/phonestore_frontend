@@ -2107,6 +2107,32 @@ body {
     transform: translateY(0);
 }
 
+.filters__reset-btn {
+    display: block;        
+    margin-top: 12px;      
+    margin-left: 0;
+    background-color: #f5f5f5; 
+    color: #111111;            
+    border: 1px solid #e0e0e0; 
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1.5;
+    padding: 6px 12px;      
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-family: var(--font-ui);
+}
+
+.filters__reset-btn:hover {
+    background-color: #e8e8e8; 
+    border-color: #cccccc;
+}
+
+.filters__reset-btn:active {
+    background-color: #dcdcdc;
+    transform: translateY(1px); 
+}
+
 .catalog__sort {
     margin-bottom: 30px;
     display: flex;

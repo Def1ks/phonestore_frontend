@@ -85,59 +85,58 @@
                         &times;
                     </button>
                     <div class="filters">
-                        <div class="filters__group">
+                        <!-- БРЕНД -->
+                        <div class="filters__group" data-type="brand">
                             <h3 class="filters__title">БРЕНД</h3>
                             <div class="filters__tags">
-                                <button class="filters__tag" type="button">Apple</button>
-                                <button class="filters__tag" type="button">Samsung</button>
-                                <button class="filters__tag" type="button">Google</button>
-                                <button class="filters__tag" type="button">Xiaomi</button>
-                                <button class="filters__tag" type="button">Honor</button>
-                                <button class="filters__tag" type="button">OnePlus</button>
                             </div>
                         </div>
-                        <div class="filters__group">
+                        <div class="filters__group" data-type="ram">
+                            <h3 class="filters__title">ОЗУ</h3>
+                            <div class="filters__tags">
+                            </div>
+                        </div>
+                        <div class="filters__group" data-type="storage">
                             <h3 class="filters__title">ПАМЯТЬ</h3>
                             <div class="filters__tags">
-                                <button class="filters__tag" type="button">128GB</button>
-                                <button class="filters__tag" type="button">256GB</button>
-                                <button class="filters__tag" type="button">512GB</button>
-                                <button class="filters__tag" type="button">1TB</button>
                             </div>
                         </div>
+                        <!-- ЦВЕТ -->
+                        <div class="filters__group" data-type="color">
+                            <h3 class="filters__title">ЦВЕТ</h3>
+                            <div class="filters__tags">
+                            </div>
+                        </div>
+                        <!-- ЦЕНА ( -->
                         <div class="filters__group">
                             <h3 class="filters__title">ЦЕНА, ₽</h3>
                             <div class="filters__price">
                                 <div class="filters__price-inputs">
                                     <div class="filters__price-field">
                                         <label class="filters__price-label">От</label>
-                                        <input type="number" class="filters__price-input" value="0" min="0"
-                                            max="100000000" inputmode="numeric" pattern="[0-9]*">
+                                        <input type="number" class="filters__price-input" value="0" min="0">
                                     </div>
                                     <div class="filters__price-field">
                                         <label class="filters__price-label">До</label>
-                                        <input type="number" class="filters__price-input" value="150000" min="0"
-                                            max="100000000" inputmode="numeric" pattern="[0-9]*">
+                                        <input type="number" class="filters__price-input" value="150000" min="0">
                                     </div>
                                 </div>
                             </div>
                         </div>
+
                         <div class="filters__actions">
                             <button class="filters__apply-btn" type="button">Применить фильтры</button>
                         </div>
                     </div>
                 </div>
-
                 <!-- Сортировочный список -->
                 <div class="catalog__sort">
                     <select class="catalog__select">
                         <option value="default">По умолчанию</option>
                         <option value="price-asc">Сначала дешевые</option>
                         <option value="price-desc">Сначала дорогие</option>
-                        <option value="rating">По рейтингу</option>
                     </select>
                 </div>
-                <!-- Products Grid -->
                 <div class="catalog__grid">
 
                 </div>

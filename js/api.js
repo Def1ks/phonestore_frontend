@@ -86,3 +86,14 @@ export async function getAllShopReviews() {
     
     return await response.json();
 }
+
+// === ФИЛЬТРЫ ===
+export async function getFilterOptions() {
+    const response = await fetch(`${API_BASE_URL}/products/filters`);
+    
+    if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    
+    return await response.json();
+}
