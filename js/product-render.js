@@ -3,8 +3,10 @@ export function renderProductCard(product) {
     const data = normalizeProductData(product);
     
     return `
-        <article class="product-card ${getCardModifiers(data)}" data-id="${data.id}">
-            <a href="product.html?id=${data.id}" class="product-card__link" aria-label="${data.name}"></a>
+        <article class="product-card ${getCardModifiers(data)}" 
+                 data-id="${data.productId}" 
+                 data-variant="${data.id}"> 
+            <a href="product.html?id=${data.productId}" class="product-card__link" aria-label="${data.name}"></a>
             ${getBadgeHTML(data)}
             <div class="product-card__image-wrapper">
                 <img src="${data.image}" 
@@ -93,7 +95,6 @@ export function getCardModifiers(product) {
 }
 
 export function getRatingHTML(product) {
-    // Если rating не передан или равен 0 — не показываем
     if (!product.rating || product.rating <= 0) return '';
     
     const reviews = product.reviews ?? 0;

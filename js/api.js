@@ -76,26 +76,34 @@ export async function getHitsProducts(limit = 3) {
 }
 
 //  КОРЗИНА 
-export async function addToCartAPI(productId, data = {}) {
+export async function addToCartAPI(variantId, options = {}) {
+    const token = localStorage.getItem('authToken');
+    
+    // === ПРОВЕРКА АВТОРИЗАЦИИ ===
+    if (!token) {
+        throw new Error('AUTH_REQUIRED');
+    }
+    // === КОНЕЦ ПРОВЕРКИ ===
+    
     const response = await fetch(`${API_BASE_URL}/cart`, {
         method: 'POST',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({
-            productId,
-            ...data
+            variantId,  
+            quantity: options.quantity || 1
         })
     });
     
     if (!response.ok) {
-        const error = await response.json();
+        const error = await response.json().catch(() => ({}));
         throw new Error(error.message || 'Не удалось добавить в корзину');
     }
     
     return await response.json();
 }
-
 export async function getCart() {
     const response = await fetch(`${API_BASE_URL}/cart`);
     

@@ -1,3 +1,4 @@
+// js/cart-buttons.js
 import { addToCartAPI } from "./api.js";
 
 export function initCartButtons() {
@@ -12,21 +13,19 @@ export function initCartButtons() {
                 e.preventDefault();
                 e.stopPropagation();
                 
-                let productId, variantId, productName;
+                let variantId, productName;
                 
                 if (newBtn.classList.contains('product-info__btn--cart')) {
-                    productId = newBtn.dataset.id;
                     variantId = newBtn.dataset.variant;
                     productName = newBtn.dataset.productName || 'Товар';
                 } else {
                     const card = newBtn.closest('.product-card');
-                    productId = card?.dataset.id;
-                    variantId = null; // На бэке возьмется дефолтный variant
+                    variantId = card?.dataset.variant; 
                     productName = card?.querySelector('.product-card__title')?.textContent?.trim();
                 }
                 
-                if (!productId) {
-                    showNotification('Ошибка: товар не идентифицирован', 'error');
+                if (!variantId) {
+                    showNotification('Выберите вариант товара', 'error');
                     return;
                 }
                 
@@ -34,17 +33,19 @@ export function initCartButtons() {
                     newBtn.classList.add('product-card__btn--loading');
                     newBtn.disabled = true;
                     
-                    await addToCartAPI(productId, {
-                        variantId: variantId,
-                        quantity: 1
-                    });
+                    await addToCartAPI(variantId, { quantity: 1 });
                     
                     showNotification(`${productName} добавлен в корзину`, 'success');
                     
                 } catch (error) {
                     console.error('Ошибка добавления в корзину:', error);
-                    newBtn.classList.add('product-card__btn--error');
                     
+                    if (error.message === 'AUTH_REQUIRED') {
+                        showNotification('Войдите, чтобы добавить товар в корзину', 'error');
+                        return;
+                    }
+                    
+                    newBtn.classList.add('product-card__btn--error');
                     setTimeout(() => {
                         newBtn.classList.remove('product-card__btn--error');
                     }, 1000);

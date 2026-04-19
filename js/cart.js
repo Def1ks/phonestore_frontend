@@ -3,7 +3,7 @@ import { apiRequest } from './api.js';
 
 let cartItems = [];
 
-// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
+// === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
 function formatPrice(price) {
     return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';
 }
@@ -78,7 +78,7 @@ function updateSummary(items) {
     if (totalElement) totalElement.textContent = formatPrice(totalSum);
 }
 
-// ==================== ЗАГРУЗКА КОРЗИНЫ ====================
+// === ЗАГРУЗКА КОРЗИНЫ ===
 async function loadCart() {
     try {
         const response = await apiRequest('http://localhost:3000/api/cart');
@@ -86,12 +86,18 @@ async function loadCart() {
         renderCart(cartItems);
     } catch (error) {
         console.error('Ошибка загрузки корзины:', error);
+        
+        if (error.message?.includes('401') || error.message?.includes('Нет токена')) {
+            renderCart([]); 
+            return;         
+        }
+        
         showNotification?.('Не удалось загрузить корзину', 'error');
         renderCart([]);
     }
 }
 
-// ==================== ОБРАБОТЧИКИ ДЕЙСТВИЙ ====================
+// === ОБРАБОТЧИКИ ДЕЙСТВИЙ ===
 async function handleQuantityChange(itemId, delta) {
     const itemEl = document.querySelector(`.cart__item[data-id="${itemId}"]`);
     const minusBtn = itemEl?.querySelector('.cart__btn-minus');
@@ -138,7 +144,32 @@ async function handleRemoveItem(itemId, btnElement) {
     }
 }
 
-// ==================== ИНИЦИАЛИЗАЦИЯ ====================
+//  ОЧИСТКА КОРЗИНЫ 
+document.getElementById('clear-cart-btn')?.addEventListener('click', async () => {
+    // Подтверждение действия
+    if (!confirm('Вы уверены, что хотите удалить все товары из корзины?')) return;
+
+    const btn = document.getElementById('clear-cart-btn');
+    const originalHTML = btn.innerHTML;
+    
+    btn.disabled = true;
+    btn.innerHTML = `<svg class="spin" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 2v2m0 8v2M2 8h2m8 0h2"/></svg> Очистка...`;
+
+    try {
+        await apiRequest('http://localhost:3000/api/cart', { method: 'DELETE' });
+        cartItems = [];
+        renderCart(cartItems);
+        showNotification('Корзина успешно очищена', 'success');
+    } catch (error) {
+        console.error('Ошибка очистки корзины:', error);
+        showNotification(error.message || 'Не удалось очистить корзину', 'error');
+    } finally {
+        btn.disabled = false;
+        btn.innerHTML = originalHTML;
+    }
+});
+
+// === ИНИЦИАЛИЗАЦИЯ ===
 document.addEventListener('click', (e) => {
     const quantityBtn = e.target.closest('.cart__btn-minus, .cart__btn-plus');
     if (quantityBtn) {
