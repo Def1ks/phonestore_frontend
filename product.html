@@ -101,9 +101,42 @@
                 </div>
                 <button class="product-reviews__load-more">Загрузить ещё отзывы</button>
             </section>
+            <div class="product-review-form">
+                <h3 class="product-review-form__title">Оставить отзыв о товаре</h3>
+                <div class="product-review-form__message" id="review-message"></div>
+                <form class="product-review-form__form" id="product-review-form">
+                    <div class="product-review-form__rating">
+                        <span class="product-review-form__label">Ваша оценка:</span>
+                        <div class="product-review-form__stars">
+                            <input type="radio" name="rating" value="5" id="p-star5"
+                                class="product-review-form__star-input">
+                            <label for="p-star5" class="product-review-form__star">★</label>
+                            <input type="radio" name="rating" value="4" id="p-star4"
+                                class="product-review-form__star-input">
+                            <label for="p-star4" class="product-review-form__star">★</label>
+                            <input type="radio" name="rating" value="3" id="p-star3"
+                                class="product-review-form__star-input">
+                            <label for="p-star3" class="product-review-form__star">★</label>
+                            <input type="radio" name="rating" value="2" id="p-star2"
+                                class="product-review-form__star-input">
+                            <label for="p-star2" class="product-review-form__star">★</label>
+                            <input type="radio" name="rating" value="1" id="p-star1"
+                                class="product-review-form__star-input">
+                            <label for="p-star1" class="product-review-form__star">★</label>
+                        </div>
+                    </div>
+                    <div class="product-review-form__group">
+                        <textarea class="product-review-form__textarea" id="product-review-comment"
+                            placeholder="Расскажите о вашем опыте использования этого товара..." rows="4"></textarea>
+                        <div class="product-review-form__counter" id="product-char-counter">0 / 500</div>
+                    </div>
+                    <button type="submit" class="product-review-form__submit" id="submit-product-review">
+                        Опубликовать отзыв
+                    </button>
+                </form>
+            </div>
         </div>
     </main>
-
     <footer class="footer">
         <div class="container">
             <div class="footer__content">

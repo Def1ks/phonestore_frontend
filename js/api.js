@@ -241,3 +241,15 @@ export async function createShopReview(rating, comment) {
         body: JSON.stringify({ rating, comment })
     });
 }
+
+//  ОТЗЫВЫ О ТОВАРЕ 
+export async function checkProductReviewEligibility(productId) {
+    return await apiRequest(`${API_BASE_URL}/products/${productId}/reviews/eligibility`);
+}
+
+export async function createProductReview(productId, rating, comment) {
+    return await apiRequest(`${API_BASE_URL}/products/${productId}/reviews`, {
+        method: 'POST',
+        body: JSON.stringify({ rating, comment })
+    });
+}

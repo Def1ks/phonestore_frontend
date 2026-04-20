@@ -1,10 +1,14 @@
+// js/product.js
 import { initCartButtons } from './cart-buttons.js';
 import { getBadgeHTML, getPriceHTML, getPluralForm } from './product-render.js';
-import { getProductByVariantId } from './api.js';
+import { getProductByVariantId, checkProductReviewEligibility, createProductReview } from './api.js';
 
 let loadedReviewsCount = 3;
 let allReviewsData = [];
 let isLoadingReviews = false;
+let currentVariantId = null;  
+let currentProductId = null;  
+let userEligibility = null; 
 
 //  РЕНДЕРИНГ СЕКЦИЙ 
 
@@ -177,7 +181,7 @@ function renderReviewsPage(reviews, isLoading = false) {
 
       try {
         const response = await fetchMoreReviews(
-          new URLSearchParams(window.location.search).get('id') || '1',
+          currentProductId,
           loadedReviewsCount,
           3
         );
@@ -202,14 +206,181 @@ function renderReviewsPage(reviews, isLoading = false) {
   }
 }
 
-//  ИНИЦИАЛИЗАЦИЯ 
+//  ПРОВЕРКА ВОЗМОЖНОСТИ ОСТАВИТЬ ОТЗЫВ 
+
+async function checkEligibility() {
+    const token = localStorage.getItem('authToken');
+    const messageEl = document.getElementById('review-message');
+    const formEl = document.getElementById('product-review-form');
+    const submitBtn = document.getElementById('submit-product-review');
+    const textarea = document.getElementById('product-review-comment');
+    const starInputs = document.querySelectorAll('.product-review-form__star-input');
+
+    if (!token) {
+        userEligibility = { allowed: false, reason: 'Войдите, чтобы оставить отзыв' };
+        showMessage(messageEl, 'Войдите, чтобы оставить отзыв', 'info');
+        disableForm(formEl, submitBtn, textarea, starInputs);
+        return;
+    }
+
+    try {
+        const response = await checkProductReviewEligibility(currentProductId);
+        userEligibility = response;
+
+        if (response.allowed) {
+            hideMessage(messageEl);
+            enableForm(formEl, submitBtn, textarea, starInputs);
+        } else {
+            showMessage(messageEl, response.reason, 'warning');
+            disableForm(formEl, submitBtn, textarea, starInputs);
+        }
+    } catch (error) {
+        console.error('Ошибка проверки возможности отзыва:', error);
+        showMessage(messageEl, 'Не удалось проверить возможность оставить отзыв', 'warning');
+        disableForm(formEl, submitBtn, textarea, starInputs);
+    }
+}
+
+//  УПРАВЛЕНИЕ ФОРМОЙ 
+
+function disableForm(form, submitBtn, textarea, starInputs) {
+    form.classList.add('product-review-form--disabled');
+    submitBtn.disabled = true;
+    textarea.disabled = true;
+    starInputs.forEach(input => input.disabled = true);
+}
+
+function enableForm(form, submitBtn, textarea, starInputs) {
+    form.classList.remove('product-review-form--disabled');
+    submitBtn.disabled = false;
+    textarea.disabled = false;
+    starInputs.forEach(input => input.disabled = false);
+}
+
+function showMessage(element, text, type) {
+    element.textContent = text;
+    element.className = `product-review-form__message product-review-form__message--visible product-review-form__message--${type}`;
+}
+
+function hideMessage(element) {
+    element.className = 'product-review-form__message';
+    element.textContent = '';
+}
+
+//  ОТПРАВКА ОТЗЫВА 
+
+async function submitReview(e) {
+    e.preventDefault();
+
+    const ratingInput = document.querySelector('input[name="rating"]:checked');
+    const commentInput = document.getElementById('product-review-comment');
+    const messageEl = document.getElementById('review-message');
+    const submitBtn = document.getElementById('submit-product-review');
+
+    const rating = ratingInput ? parseInt(ratingInput.value) : 0;
+    const comment = commentInput.value.trim();
+
+    // Валидация
+    if (!rating || rating < 1 || rating > 5) {
+        showMessage(messageEl, 'Пожалуйста, выберите оценку', 'warning');
+        return;
+    }
+
+    if (comment.length < 10) {
+        showMessage(messageEl, 'Отзыв должен содержать минимум 10 символов', 'warning');
+        return;
+    }
+
+    if (comment.length > 500) {
+        showMessage(messageEl, 'Отзыв не должен превышать 500 символов', 'warning');
+        return;
+    }
+
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Отправка...';
+    submitBtn.disabled = true;
+
+    try {
+        await createProductReview(currentProductId, rating, comment);
+
+        showMessage(messageEl, 'Спасибо за ваш отзыв!', 'info');
+        
+        document.getElementById('product-review-form').reset();
+        document.getElementById('product-char-counter').textContent = '0 / 500';
+        document.querySelectorAll('.product-review-form__star-input').forEach(i => i.checked = false);
+        
+        await loadReviews(currentVariantId);
+        
+        await checkEligibility();
+
+    } catch (error) {
+        console.error('Ошибка отправки отзыва:', error);
+        showMessage(messageEl, error.message || 'Не удалось отправить отзыв', 'warning');
+    } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+    }
+}
+
+//  ЗАГРУЗКА ОТЗЫВОВ 
+async function loadReviews(variantId) {  // ← переименовали параметр для ясности
+    try {
+        const data = await getProductByVariantId(variantId);  // загружаем по variantId
+        allReviewsData = data.reviews;
+        loadedReviewsCount = 3;
+        renderReviewsPage(allReviewsData);
+        updateReviewSummary(data.reviews);
+    } catch (error) {
+        console.error('Ошибка загрузки отзывов:', error);
+    }
+}
+
+function updateReviewSummary(reviews) {
+    const summaryEl = document.querySelector('.product-reviews__summary');
+    if (!summaryEl) return;
+
+    const plural = getPluralForm(reviews.total, ['отзыв', 'отзыва', 'отзывов']);
+    const avgStars = '★'.repeat(Math.round(reviews.average)) + '☆'.repeat(5 - Math.round(reviews.average));
+    const distributionHTML = renderReviewsDistribution(reviews.distribution, reviews.total);
+
+    summaryEl.innerHTML = `
+        <div class="product-reviews__average">
+            <div class="product-reviews__score">${reviews.average}</div>
+            <div class="product-reviews__stars">${avgStars}</div>
+            <div class="product-reviews__total">${reviews.total} ${plural}</div>
+        </div>
+        <div class="product-reviews__distribution">${distributionHTML}</div>
+    `;
+}
+
+//  СЧЁТЧИК СИМВОЛОВ 
+function initCharCounter() {
+    const textarea = document.getElementById('product-review-comment');
+    const counter = document.getElementById('product-char-counter');
+
+    if (!textarea || !counter) return;
+
+    textarea.addEventListener('input', () => {
+        const length = textarea.value.length;
+        counter.textContent = `${length} / 500`;
+        
+        if (length > 500) {
+            counter.style.color = '#ef4444';
+        } else if (length > 450) {
+            counter.style.color = '#f59e0b';
+        } else {
+            counter.style.color = '#6b7280';
+        }
+    });
+}
 
 async function initProductPage() {
   const params = new URLSearchParams(window.location.search);
-  const productId = params.get('id') || '1';
+  currentVariantId = params.get('id') || '1';
 
   try {
-    const data = await getProductByVariantId(productId);
+    const data = await getProductByVariantId(currentVariantId);
+    currentProductId = data.productId;
     const { id, brand, name, description, specs, variant, reviews } = data;
 
     allReviewsData = reviews;
@@ -232,7 +403,6 @@ async function initProductPage() {
 
     const reviewsSection = document.querySelector('.product-reviews');
     if (reviewsSection) {
-      // Если отзывов нет вообще
       if (reviews.total === 0) {
         reviewsSection.innerHTML = `
       <h2 class="product-reviews__title">Отзывы покупателей</h2>
@@ -243,14 +413,12 @@ async function initProductPage() {
         <p>Отзывов пока нет</p>
       </div>
     `;
-        return;
-      }
+      } else {
+        const plural = getPluralForm(reviews.total, ['отзыв', 'отзыва', 'отзывов']);
+        const avgStars = '★'.repeat(Math.round(reviews.average)) + '☆'.repeat(5 - Math.round(reviews.average));
+        const distributionHTML = renderReviewsDistribution(reviews.distribution, reviews.total);
 
-      const plural = getPluralForm(reviews.total, ['отзыв', 'отзыва', 'отзывов']);
-      const avgStars = '★'.repeat(Math.round(reviews.average)) + '☆'.repeat(5 - Math.round(reviews.average));
-      const distributionHTML = renderReviewsDistribution(reviews.distribution, reviews.total);
-
-      reviewsSection.innerHTML = `
+        reviewsSection.innerHTML = `
     <h2 class="product-reviews__title">Отзывы покупателей</h2>
     <div class="product-reviews__summary">
       <div class="product-reviews__average">
@@ -262,8 +430,16 @@ async function initProductPage() {
     </div>
     <div class="product-reviews__list"></div>
   `;
+        renderReviewsPage(reviews);
+      }
+    }
 
-      renderReviewsPage(reviews);
+    initCharCounter();
+    checkEligibility(); 
+
+    const form = document.getElementById('product-review-form');
+    if (form) {
+        form.addEventListener('submit', submitReview);
     }
 
     initCartButtons();
