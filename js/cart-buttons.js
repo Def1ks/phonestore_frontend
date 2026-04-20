@@ -15,7 +15,7 @@ export function initCartButtons() {
                 
                 let variantId, productName;
                 
-                if (newBtn.classList.contains('product-info__btn--cart')) {в
+                if (newBtn.classList.contains('product-info__btn--cart')) {
                     variantId = newBtn.dataset.variant;
                     productName = newBtn.dataset.productName || 'Товар';
                 } else {
