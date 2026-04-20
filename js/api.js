@@ -104,14 +104,9 @@ export async function addToCartAPI(variantId, options = {}) {
     
     return await response.json();
 }
+
 export async function getCart() {
-    const response = await fetch(`${API_BASE_URL}/cart`);
-    
-    if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    
-    return await response.json();
+    return await apiRequest(`${API_BASE_URL}/cart`);
 }
 
 //  ОТЗЫВЫ О МАГАЗИНЕ 
@@ -223,4 +218,15 @@ export async function getOrderById(orderId) {
 
 export async function clearOrdersCache() {
     return await apiRequest(`${API_BASE_URL}/orders/clear-cache`);
+}
+
+export async function getPickupPoints() {
+    return await apiRequest(`${API_BASE_URL}/orders/pickup-points`);
+}
+
+export async function createOrder(orderData) {
+    return await apiRequest(`${API_BASE_URL}/orders`, {
+        method: 'POST',
+        body: JSON.stringify(orderData)
+    });
 }
