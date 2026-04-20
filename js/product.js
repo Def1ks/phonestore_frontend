@@ -79,24 +79,39 @@ function renderSpecsTable(specs) {
 }
 
 function generateReviewHTML(review) {
-  const initials = `${review.user.first_name[0]}${review.user.last_name[0]}`.toUpperCase();
-  const rStars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
-  const date = new Date(review.created_at).toLocaleDateString('ru-RU', { day: 'numeric', month: 'long', year: 'numeric' });
+    const firstName = review.user?.first_name || 'Аноним';
+    const lastName = review.user?.last_name || '';
+    
+    const initials = lastName 
+        ? `${firstName[0]}${lastName[0]}`.toUpperCase()
+        : firstName[0].toUpperCase();
+    
+    const displayName = lastName 
+        ? `${firstName} ${lastName}`
+        : firstName;
+    
+    const rStars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
+    const date = new Date(review.created_at).toLocaleDateString('ru-RU', { 
+        day: 'numeric', 
+        month: 'long', 
+        year: 'numeric' 
+    });
 
-  return `
-    <article class="review-card">
-      <div class="review-card__header">
-        <div class="review-card__user">
-          <div class="review-card__avatar">${initials}</div>
-          <div class="review-card__user-info">
-            <div class="review-card__name">${review.user.first_name} ${review.user.last_name}</div>
-            <div class="review-card__date">${date}</div>
-          </div>
-        </div>
-        <div class="review-card__rating">${rStars}</div>
-      </div>
-      <p class="review-card__text">${review.comment}</p>
-    </article>`;
+    return `
+        <article class="review-card">
+            <div class="review-card__header">
+                <div class="review-card__user">
+                    <div class="review-card__avatar">${initials}</div>
+                    <div class="review-card__user-info">
+                        <div class="review-card__name">${displayName}</div>
+                        <div class="review-card__date">${date}</div>
+                    </div>
+                </div>
+                <div class="review-card__rating">${rStars}</div>
+            </div>
+            <p class="review-card__text">${review.comment}</p>
+        </article>
+    `;
 }
 
 function renderReviewsDistribution(distribution, total) {
