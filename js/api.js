@@ -230,3 +230,14 @@ export async function createOrder(orderData) {
         body: JSON.stringify(orderData)
     });
 }
+
+export async function checkShopReviewEligibility() {
+    return await apiRequest(`${API_BASE_URL}/shop-reviews/eligibility`);
+}
+
+export async function createShopReview(rating, comment) {
+    return await apiRequest(`${API_BASE_URL}/shop-reviews`, {
+        method: 'POST',
+        body: JSON.stringify({ rating, comment })
+    });
+}

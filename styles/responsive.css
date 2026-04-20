@@ -1171,6 +1171,15 @@
         padding: 10px 14px;
         font-size: 13px;
     }
+
+    .reviews__form-section { padding: 40px 0; }
+    .review-form { padding: 24px 16px; }
+    .review-form__title { 
+        font-family: var(--font-header);
+        font-size: 20px; 
+    }
+    .review-form__stars { gap: 2px; }
+    .review-form__star { font-size: 24px; }
 }
 
 /** Стили для очень маленьких телефонов **/

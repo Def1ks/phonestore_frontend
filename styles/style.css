@@ -1614,7 +1614,6 @@ body {
     transform: translateY(-2px);
 }
 
-/** ПЕРЕДЕЛАТЬ ПРИ ПОДКЛЮЧЕНИЕ К БД (НАЧАЛО)**/
 /*Стили страницы отзывы*/
 .reviews {
     padding: 100px 0;
@@ -1819,11 +1818,152 @@ body {
     }
 }
 
-/* Скрываем кнопку если отзывов нет */
 .reviews__load-more--hidden {
     display: none;
 }
 
+.reviews__form-section {
+    padding: 60px 0;
+    background-color: #ffffff; /* Белый фон */
+    /* Убрана border-top */
+}
+
+.review-form {
+    max-width: 720px;
+    margin: 0 auto;
+    background: #ffffff;
+    padding: 32px;
+    /* Убран border-radius */
+    box-shadow: none; /* Убрана тень */
+}
+
+.review-form__title {
+    font-family: var(--font-header); /* Используем переменную шрифта заголовков */
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 24px;
+    color: #111;
+    text-align: center;
+}
+
+.review-form__message {
+    padding: 14px 16px;
+    /* Убран border-radius */
+    margin-bottom: 20px;
+    font-family: var(--font-ui); /* Используем переменную шрифта UI */
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+    display: none;
+}
+
+.review-form__message--visible { display: block; }
+.review-form__message--info { background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+.review-form__message--warning { background-color: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+
+.review-form__rating {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.review-form__rating-label {
+    font-family: var(--font-ui);
+    font-size: 15px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.review-form__stars {
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 4px;
+}
+
+.review-form__star-input { display: none; }
+
+.review-form__star {
+    font-size: 28px;
+    color: #d1d5db;
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+    user-select: none;
+}
+
+.review-form__star:hover,
+.review-form__star:hover ~ .review-form__star,
+.review-form__star-input:checked ~ .review-form__star {
+    color: #f59e0b;
+}
+
+.review-form__star-input:checked ~ .review-form__star {
+    transform: scale(1.1);
+}
+
+.review-form__textarea {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1px solid #e5e7eb;
+    /* Убран border-radius */
+    font-family: var(--font-ui);
+    font-size: 15px;
+    resize: vertical;
+    min-height: 110px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.review-form__textarea:focus {
+    outline: none;
+    border-color: #111;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+.review-form__counter {
+    text-align: right;
+    font-family: var(--font-ui);
+    font-size: 12px;
+    color: #6b7280;
+    margin-top: 6px;
+    transition: color 0.2s ease;
+}
+
+.review-form__submit {
+    width: 100%;
+    padding: 14px;
+    background-color: #111;
+    color: #fff;
+    border: none;
+    /* Убран border-radius */
+    font-family: var(--font-ui);
+    font-size: 16px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    margin-top: 16px;
+}
+
+.review-form__submit:hover { background-color: #333; }
+.review-form__submit:active { transform: scale(0.98); }
+.review-form__submit:disabled { background-color: #9ca3af; cursor: not-allowed; transform: none; }
+
+/* Заблокированная форма */
+.review-form--disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
+.review-form__textarea:disabled,
+.review-form__star-input:disabled ~ .review-form__star {
+    cursor: not-allowed;
+    opacity: 0.5;
+}
+
+.review-form__submit:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+}
 /* СТРАНИЦА КАТАЛОГА - ОСНОВНЫЕ СТИЛИ */
 .catalog__empty {
     grid-column: 1 / -1;
@@ -3079,6 +3219,15 @@ body {
     background: #856404;
 }
 
+.order-card__status--cancelled {
+    background-color: #c5320d2d;
+    color: #b3472c;
+}
+
+.order-card__status--cancelled::before {
+    background: #b42f17;
+}
+
 .order-card__status--shipped {
     background-color: #d1ecf1;
     color: #0c5460;
@@ -3086,6 +3235,15 @@ body {
 
 .order-card__status--shipped::before {
     background: #0c5460;
+}
+
+.order-card__status--pending {
+    background-color: #fef3e2;
+    color: #b45309;
+}
+
+.order-card__status--pending::before {
+    background: #f59e0b;
 }
 
 .order-card__items {
@@ -4647,8 +4805,4 @@ body {
 /* Utility */
 .admin-hidden {
     display: none !important;
-}
-
-.checkout__summary-row {
-
 }
