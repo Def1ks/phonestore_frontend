@@ -4,9 +4,9 @@ export function renderProductCard(product) {
     
     return `
         <article class="product-card ${getCardModifiers(data)}" 
-                 data-id="${data.productId}" 
-                 data-variant="${data.id}"> 
-            <a href="product.html?id=${data.productId}" class="product-card__link" aria-label="${data.name}"></a>
+                 data-id="${data.id}" 
+                 data-product="${data.productId}">
+            <a href="product.html?id=${data.id}" class="product-card__link" aria-label="${data.name}"></a>
             ${getBadgeHTML(data)}
             <div class="product-card__image-wrapper">
                 <img src="${data.image}" 

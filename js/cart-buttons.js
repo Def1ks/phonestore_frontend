@@ -15,17 +15,17 @@ export function initCartButtons() {
                 
                 let variantId, productName;
                 
-                if (newBtn.classList.contains('product-info__btn--cart')) {
+                if (newBtn.classList.contains('product-info__btn--cart')) {в
                     variantId = newBtn.dataset.variant;
                     productName = newBtn.dataset.productName || 'Товар';
                 } else {
                     const card = newBtn.closest('.product-card');
-                    variantId = card?.dataset.variant; 
+                    variantId = card?.dataset.id;
                     productName = card?.querySelector('.product-card__title')?.textContent?.trim();
                 }
                 
                 if (!variantId) {
-                    showNotification('Выберите вариант товара', 'error');
+                    showNotification('Выберите вариант товара', 'warning');
                     return;
                 }
                 
@@ -40,8 +40,9 @@ export function initCartButtons() {
                 } catch (error) {
                     console.error('Ошибка добавления в корзину:', error);
                     
+                    // Обработка неавторизованного доступа
                     if (error.message === 'AUTH_REQUIRED') {
-                        showNotification('Войдите, чтобы добавить товар в корзину', 'error');
+                        showNotification('Войдите, чтобы добавить товар в корзину', 'warning');
                         return;
                     }
                     
