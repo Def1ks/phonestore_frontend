@@ -294,9 +294,20 @@ function validateForm() {
         if (!firstErrorField) firstErrorField = 'input-phone';
     }
 
-    // Email (опционально)
-    const email = document.getElementById('input-email')?.value.trim() || '';
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    // Email (ОБЯЗАТЕЛЬНО)
+    const emailInput = document.getElementById('input-email');
+    const email = emailInput?.value.trim() || '';
+    const emailErrorEl = document.getElementById('error-email');
+    
+    if (!email) {
+        // Поле пустое
+        if (emailErrorEl) emailErrorEl.textContent = 'E-mail обязателен для заполнения';
+        showFieldError('email');
+        isValid = false;
+        if (!firstErrorField) firstErrorField = 'input-email';
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        // Неверный формат
+        if (emailErrorEl) emailErrorEl.textContent = 'Введите корректный e-mail';
         showFieldError('email');
         isValid = false;
         if (!firstErrorField) firstErrorField = 'input-email';
@@ -405,7 +416,17 @@ function initFormSubmit() {
 
         } catch (error) {
             console.error('Order error:', error);
-            showNotification(error.message || 'Не удалось оформить заказ', 'error');
+            
+            // Определяем статус ошибки (поддержка разных форматов: fetch, axios, кастомный)
+            const statusCode = error?.status || error?.response?.status || error?.code;
+            
+            // Специальная обработка ошибки 400
+            if (statusCode === 400) {
+                showNotification('Пожалуйста, заполните все обязательные поля и проверьте корректность данных', 'error');
+            } else {
+                // Остальные ошибки показываем как есть или с дефолтным сообщением
+                showNotification(error.message || 'Не удалось оформить заказ', 'error');
+            }
         } finally {
             // Разблокируем кнопку
             btn.textContent = originalText;
