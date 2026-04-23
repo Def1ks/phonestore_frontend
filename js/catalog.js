@@ -12,7 +12,7 @@ const state = {
         storage: '',
         color: '',
         minPrice: 0,
-        maxPrice: 150000,
+        maxPrice: 350000,
         sortBy: 'price',
         sortOrder: 'desc'
     },
@@ -101,7 +101,7 @@ function initFiltersUI() {
     if (minInput && maxInput) {
         const syncPrice = () => {
             let min = parseInt(minInput.value) || 0;
-            let max = parseInt(maxInput.value) || 150000;
+            let max = parseInt(maxInput.value) || 350000;
             if (min > max) [min, max] = [max, max];
             state.filters.minPrice = min;
             state.filters.maxPrice = max;
@@ -154,13 +154,13 @@ function initFiltersUI() {
     resetBtn.addEventListener('click', () => {
         document.querySelectorAll('.filters__tag.is-active').forEach(t => t.classList.remove('is-active'));
         if (minInput) minInput.value = 0;
-        if (maxInput) maxInput.value = 150000;
+        if (maxInput) maxInput.value = 350000;
         if (sortSelect) sortSelect.value = 'default';
         
         state.filters = {
             page: 1, limit: 20,
             brand: '', ram: '', storage: '', color: '',
-            minPrice: 0, maxPrice: 150000,
+            minPrice: 0, maxPrice: 350000,
             sortBy: 'price', sortOrder: 'desc'
         };
         loadProducts();
