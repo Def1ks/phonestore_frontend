@@ -1824,7 +1824,8 @@ body {
 
 .reviews__form-section {
     padding: 60px 0;
-    background-color: #ffffff; /* Белый фон */
+    background-color: #ffffff;
+    /* Белый фон */
     /* Убрана border-top */
 }
 
@@ -1834,11 +1835,13 @@ body {
     background: #ffffff;
     padding: 32px;
     /* Убран border-radius */
-    box-shadow: none; /* Убрана тень */
+    box-shadow: none;
+    /* Убрана тень */
 }
 
 .review-form__title {
-    font-family: var(--font-header); /* Используем переменную шрифта заголовков */
+    font-family: var(--font-header);
+    /* Используем переменную шрифта заголовков */
     font-size: 22px;
     font-weight: 600;
     margin-bottom: 24px;
@@ -1850,16 +1853,29 @@ body {
     padding: 14px 16px;
     /* Убран border-radius */
     margin-bottom: 20px;
-    font-family: var(--font-ui); /* Используем переменную шрифта UI */
+    font-family: var(--font-ui);
+    /* Используем переменную шрифта UI */
     font-size: 14px;
     line-height: 1.5;
     text-align: center;
     display: none;
 }
 
-.review-form__message--visible { display: block; }
-.review-form__message--info { background-color: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
-.review-form__message--warning { background-color: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.review-form__message--visible {
+    display: block;
+}
+
+.review-form__message--info {
+    background-color: #eff6ff;
+    color: #1e40af;
+    border: 1px solid #bfdbfe;
+}
+
+.review-form__message--warning {
+    background-color: #fffbeb;
+    color: #92400e;
+    border: 1px solid #fde68a;
+}
 
 .review-form__rating {
     display: flex;
@@ -1882,7 +1898,9 @@ body {
     gap: 4px;
 }
 
-.review-form__star-input { display: none; }
+.review-form__star-input {
+    display: none;
+}
 
 .review-form__star {
     font-size: 28px;
@@ -1893,12 +1911,12 @@ body {
 }
 
 .review-form__star:hover,
-.review-form__star:hover ~ .review-form__star,
-.review-form__star-input:checked ~ .review-form__star {
+.review-form__star:hover~.review-form__star,
+.review-form__star-input:checked~.review-form__star {
     color: #f59e0b;
 }
 
-.review-form__star-input:checked ~ .review-form__star {
+.review-form__star-input:checked~.review-form__star {
     transform: scale(1.1);
 }
 
@@ -1944,9 +1962,19 @@ body {
     margin-top: 16px;
 }
 
-.review-form__submit:hover { background-color: #333; }
-.review-form__submit:active { transform: scale(0.98); }
-.review-form__submit:disabled { background-color: #9ca3af; cursor: not-allowed; transform: none; }
+.review-form__submit:hover {
+    background-color: #333;
+}
+
+.review-form__submit:active {
+    transform: scale(0.98);
+}
+
+.review-form__submit:disabled {
+    background-color: #9ca3af;
+    cursor: not-allowed;
+    transform: none;
+}
 
 /* Заблокированная форма */
 .review-form--disabled {
@@ -1955,7 +1983,7 @@ body {
 }
 
 .review-form__textarea:disabled,
-.review-form__star-input:disabled ~ .review-form__star {
+.review-form__star-input:disabled~.review-form__star {
     cursor: not-allowed;
     opacity: 0.5;
 }
@@ -1964,6 +1992,7 @@ body {
     background-color: #9ca3af;
     cursor: not-allowed;
 }
+
 /* СТРАНИЦА КАТАЛОГА - ОСНОВНЫЕ СТИЛИ */
 .catalog__empty {
     grid-column: 1 / -1;
@@ -3246,6 +3275,15 @@ body {
     background: #f59e0b;
 }
 
+.order-card__status--new {
+    background-color: #F0FDF4;
+    color: #166534;
+}
+
+.order-card__status--new::before {
+    background: #22C55E;
+}
+
 .order-card__items {
     margin-bottom: 12px;
 }
@@ -3314,7 +3352,7 @@ body {
     background: #fff;
     border: 1px solid #e9ecef;
     padding: 20px;
-    max-width: 520px;
+    width: 100%;
 }
 
 .profile-form__field {
@@ -4182,12 +4220,12 @@ body {
 }
 
 .product-review-form__star:hover,
-.product-review-form__star:hover ~ .product-review-form__star,
-.product-review-form__star-input:checked ~ .product-review-form__star {
+.product-review-form__star:hover~.product-review-form__star,
+.product-review-form__star-input:checked~.product-review-form__star {
     color: #f59e0b;
 }
 
-.product-review-form__star-input:checked ~ .product-review-form__star {
+.product-review-form__star-input:checked~.product-review-form__star {
     transform: scale(1.1);
 }
 
@@ -4265,11 +4303,11 @@ body {
     .product-review-form {
         padding: 24px 16px;
     }
-    
+
     .product-review-form__title {
         font-size: 18px;
     }
-    
+
     .product-review-form__star {
         font-size: 24px;
     }

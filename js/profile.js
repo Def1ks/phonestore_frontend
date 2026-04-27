@@ -302,6 +302,7 @@ function formatPrice(price) {
 // Статус заказа → текст + класс
 function getStatusInfo(status) {
     const statuses = {
+        new: { text: 'Новый', class: 'order-card__status--new' },
         delivered: { text: 'Доставлен', class: 'order-card__status--delivered' },
         shipped: { text: 'Доставляется', class: 'order-card__status--shipped' },
         processing: { text: 'Обрабатывается', class: 'order-card__status--processing' },

@@ -6,7 +6,7 @@ import { renderProductCard, getPluralForm } from './product-render.js';
 const state = {
     filters: {
         page: 1,
-        limit: 20,
+        limit: 1000,
         brand: '',
         ram: '',
         storage: '',

@@ -154,11 +154,11 @@ const DataManager = {
         const cached = this.cache.get(key);
 
         if (cached && (now - cached.timestamp < ttl)) {
-            console.log(`📦 Cache HIT: ${key}`);
+            console.log(`Cache HIT: ${key}`);
             return cached.data;
         }
 
-        console.log(`🌐 Fetching API: ${endpoint}`);
+        console.log(`Fetching API: ${endpoint}`);
 
         try {
             const token = AuthManager.getToken();
