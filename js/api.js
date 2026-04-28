@@ -79,11 +79,9 @@ export async function getHitsProducts(limit = 3) {
 export async function addToCartAPI(variantId, options = {}) {
     const token = localStorage.getItem('authToken');
     
-    // === ПРОВЕРКА АВТОРИЗАЦИИ ===
     if (!token) {
         throw new Error('AUTH_REQUIRED');
     }
-    // === КОНЕЦ ПРОВЕРКИ ===
     
     const response = await fetch(`${API_BASE_URL}/cart`, {
         method: 'POST',

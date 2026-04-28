@@ -1,4 +1,3 @@
-// js/cart-buttons.js
 import { addToCartAPI } from "./api.js";
 
 export function initCartButtons() {
@@ -40,7 +39,6 @@ export function initCartButtons() {
                 } catch (error) {
                     console.error('Ошибка добавления в корзину:', error);
                     
-                    // Обработка неавторизованного доступа
                     if (error.message === 'AUTH_REQUIRED') {
                         showNotification('Войдите, чтобы добавить товар в корзину', 'warning');
                         return;

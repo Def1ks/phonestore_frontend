@@ -30,7 +30,7 @@ if (burger && mobileMenu) {
         }
     });
 
-} // ← конец проверки
+} 
 
 // Уведомление
 function showNotification(message, type = 'success') {

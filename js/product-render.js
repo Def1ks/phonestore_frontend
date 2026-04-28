@@ -65,7 +65,6 @@ function normalizeProductData(product) {
 }
 
 //  ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ 
-
 export function getBadgeHTML(product) {
     const badge = product.badge || product.badge_type;
     if (!badge) return '';

@@ -1,9 +1,7 @@
-// js/cart.js
 import { apiRequest } from './api.js';
 
 let cartItems = [];
 
-// === ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ===
 function formatPrice(price) {
     return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';
 }
@@ -78,7 +76,7 @@ function updateSummary(items) {
     if (totalElement) totalElement.textContent = formatPrice(totalSum);
 }
 
-// === ЗАГРУЗКА КОРЗИНЫ ===
+// ЗАГРУЗКА КОРЗИНЫ 
 async function loadCart() {
     try {
         const response = await apiRequest('http://localhost:3000/api/cart');
@@ -97,7 +95,7 @@ async function loadCart() {
     }
 }
 
-// === ОБРАБОТЧИКИ ДЕЙСТВИЙ ===
+// ОБРАБОТЧИКИ ДЕЙСТВИЙ 
 async function handleQuantityChange(itemId, delta) {
     const itemEl = document.querySelector(`.cart__item[data-id="${itemId}"]`);
     const minusBtn = itemEl?.querySelector('.cart__btn-minus');
@@ -146,7 +144,6 @@ async function handleRemoveItem(itemId, btnElement) {
 
 //  ОЧИСТКА КОРЗИНЫ 
 document.getElementById('clear-cart-btn')?.addEventListener('click', async () => {
-    // Подтверждение действия
     if (!confirm('Вы уверены, что хотите удалить все товары из корзины?')) return;
 
     const btn = document.getElementById('clear-cart-btn');
@@ -169,7 +166,7 @@ document.getElementById('clear-cart-btn')?.addEventListener('click', async () =>
     }
 });
 
-// === ИНИЦИАЛИЗАЦИЯ ===
+// ИНИЦИАЛИЗАЦИЯ 
 document.addEventListener('click', (e) => {
     const quantityBtn = e.target.closest('.cart__btn-minus, .cart__btn-plus');
     if (quantityBtn) {

@@ -1,4 +1,3 @@
-// js/product.js
 import { initCartButtons } from './cart-buttons.js';
 import { getBadgeHTML, getPriceHTML, getPluralForm } from './product-render.js';
 import { getProductByVariantId, checkProductReviewEligibility, createProductReview } from './api.js';
@@ -11,7 +10,6 @@ let currentProductId = null;
 let userEligibility = null; 
 
 //  РЕНДЕРИНГ СЕКЦИЙ 
-
 function renderImageBlock(product, variant) {
   const badgeHTML = getBadgeHTML({ badge: variant.badge_type, oldPrice: variant.old_price });
   return `${badgeHTML}<img src="${variant.image_url}" alt="${product.name}" class="product-info__image" loading="lazy">`;
@@ -133,7 +131,6 @@ function renderReviewsDistribution(distribution, total) {
 }
 
 //  ЛОГИКА ОТЗЫВОВ С ЗАГРУЗКОЙ 
-
 async function fetchMoreReviews(productId, offset, limit) {
   const allItems = allReviewsData.items;
   const newItems = allItems.slice(offset, offset + limit);
@@ -207,7 +204,6 @@ function renderReviewsPage(reviews, isLoading = false) {
 }
 
 //  ПРОВЕРКА ВОЗМОЖНОСТИ ОСТАВИТЬ ОТЗЫВ 
-
 async function checkEligibility() {
     const token = localStorage.getItem('authToken');
     const messageEl = document.getElementById('review-message');
@@ -242,7 +238,6 @@ async function checkEligibility() {
 }
 
 //  УПРАВЛЕНИЕ ФОРМОЙ 
-
 function disableForm(form, submitBtn, textarea, starInputs) {
     form.classList.add('product-review-form--disabled');
     submitBtn.disabled = true;
@@ -268,7 +263,6 @@ function hideMessage(element) {
 }
 
 //  ОТПРАВКА ОТЗЫВА 
-
 async function submitReview(e) {
     e.preventDefault();
 
@@ -323,9 +317,9 @@ async function submitReview(e) {
 }
 
 //  ЗАГРУЗКА ОТЗЫВОВ 
-async function loadReviews(variantId) {  // ← переименовали параметр для ясности
+async function loadReviews(variantId) {  
     try {
-        const data = await getProductByVariantId(variantId);  // загружаем по variantId
+        const data = await getProductByVariantId(variantId);  
         allReviewsData = data.reviews;
         loadedReviewsCount = 3;
         renderReviewsPage(allReviewsData);

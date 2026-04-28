@@ -1,14 +1,14 @@
 // js/checkout.js
 import { getCart, getPickupPoints, createOrder, apiRequest } from './api.js';
 
-// ==================== ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ ====================
+//  ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ 
 let checkoutItems = [];
 let pickupPoints = [];
 let selectedPickupId = null;
 let deliveryType = 'pickup';
 let paymentType = 'online';
 
-// ==================== ИНИЦИАЛИЗАЦИЯ ====================
+//  ИНИЦИАЛИЗАЦИЯ 
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Проверяем авторизацию
     await checkAuth();
@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     updateSummary(checkoutItems);
 });
 
-// ==================== АВТОРИЗАЦИЯ ====================
+//  АВТОРИЗАЦИЯ 
 async function checkAuth() {
     const token = localStorage.getItem('authToken');
     if (!token) {
@@ -48,7 +48,7 @@ async function checkAuth() {
     }
 }
 
-// ==================== ЗАГРУЗКА КОРЗИНЫ ====================
+//  ЗАГРУЗКА КОРЗИНЫ 
 async function loadCartItems() {
     const container = document.querySelector('.cart__summary-list');
     if (container) {
@@ -74,7 +74,7 @@ async function loadCartItems() {
     }
 }
 
-// ==================== ЗАГРУЗКА ПУНКТОВ ВЫДАЧИ ====================
+//  ЗАГРУЗКА ПУНКТОВ ВЫДАЧИ 
 async function loadPickupPoints() {
     const pickupList = document.getElementById('pickup-list');
     if (!pickupList) return;
@@ -108,7 +108,7 @@ async function loadPickupPoints() {
     }
 }
 
-// ==================== ПЕРЕКЛЮЧЕНИЕ ДОСТАВКИ ====================
+//  ПЕРЕКЛЮЧЕНИЕ ДОСТАВКИ 
 function initDeliveryToggle() {
     const deliveryToggle = document.querySelector('[data-toggle="delivery"]');
     if (!deliveryToggle) return;
@@ -137,7 +137,7 @@ function initDeliveryToggle() {
     });
 }
 
-// ==================== ПЕРЕКЛЮЧЕНИЕ ОПЛАТЫ ====================
+//  ПЕРЕКЛЮЧЕНИЕ ОПЛАТЫ 
 function initPaymentToggle() {
     const paymentToggle = document.querySelector('[data-toggle="payment"]');
     if (!paymentToggle) return;
@@ -162,7 +162,7 @@ function initPaymentToggle() {
     });
 }
 
-// ==================== ВЫБОР ПУНКТА ВЫДАЧИ ====================
+//  ВЫБОР ПУНКТА ВЫДАЧИ 
 function initPickupSelection() {
     const pickupItems = document.querySelectorAll('[data-pickup]');
     pickupItems.forEach(item => {
@@ -180,7 +180,7 @@ function initPickupSelection() {
     }
 }
 
-// ==================== МАСКИ ВВОДА ====================
+//  МАСКИ ВВОДА 
 function initInputMasks() {
     // Телефон
     const phoneInput = document.getElementById('input-phone');
@@ -251,7 +251,7 @@ function initInputMasks() {
     });
 }
 
-// ==================== УПРАВЛЕНИЕ ОШИБКАМИ ====================
+//  УПРАВЛЕНИЕ ОШИБКАМИ 
 function showFieldError(fieldId) {
     const errorEl = document.getElementById('error-' + fieldId);
     const inputEl = document.getElementById('input-' + fieldId);
@@ -280,7 +280,7 @@ function clearErrors() {
     document.getElementById('error-banner')?.classList.remove('checkout__error-banner--visible');
 }
 
-// ==================== ВАЛИДАЦИЯ ФОРМЫ ====================
+//  ВАЛИДАЦИЯ ФОРМЫ 
 function validateForm() {
     clearErrors();
     let isValid = true;
@@ -294,19 +294,17 @@ function validateForm() {
         if (!firstErrorField) firstErrorField = 'input-phone';
     }
 
-    // Email (ОБЯЗАТЕЛЬНО)
+    // Email 
     const emailInput = document.getElementById('input-email');
     const email = emailInput?.value.trim() || '';
     const emailErrorEl = document.getElementById('error-email');
     
     if (!email) {
-        // Поле пустое
         if (emailErrorEl) emailErrorEl.textContent = 'E-mail обязателен для заполнения';
         showFieldError('email');
         isValid = false;
         if (!firstErrorField) firstErrorField = 'input-email';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-        // Неверный формат
         if (emailErrorEl) emailErrorEl.textContent = 'Введите корректный e-mail';
         showFieldError('email');
         isValid = false;
@@ -363,7 +361,7 @@ function validateForm() {
     return isValid;
 }
 
-// ==================== ОТПРАВКА ЗАКАЗА ====================
+//  ОТПРАВКА ЗАКАЗА 
 function initFormSubmit() {
     document.getElementById('submit-order')?.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -409,26 +407,21 @@ function initFormSubmit() {
 
             showNotification('Заказ успешно оформлен!', 'success');
 
-            // Перенаправление в профиль через 1.5 сек
             setTimeout(() => {
                 window.location.href = 'profile.html';
-            }, 1500);
+            }, 1000);
 
         } catch (error) {
             console.error('Order error:', error);
             
-            // Определяем статус ошибки (поддержка разных форматов: fetch, axios, кастомный)
             const statusCode = error?.status || error?.response?.status || error?.code;
             
-            // Специальная обработка ошибки 400
             if (statusCode === 400) {
                 showNotification('Пожалуйста, заполните все обязательные поля и проверьте корректность данных', 'error');
             } else {
-                // Остальные ошибки показываем как есть или с дефолтным сообщением
                 showNotification(error.message || 'Не удалось оформить заказ', 'error');
             }
         } finally {
-            // Разблокируем кнопку
             btn.textContent = originalText;
             btn.classList.remove('checkout__submit--disabled');
             btn.disabled = false;
@@ -436,7 +429,7 @@ function initFormSubmit() {
     });
 }
 
-// ==================== ОБНОВЛЕНИЕ ИТОГОВОЙ СУММЫ ====================
+//  ОБНОВЛЕНИЕ ИТОГОВОЙ СУММЫ 
 function updateSummary(items) {
     
     const summaryList = document.querySelector('.cart__summary-list');
@@ -478,7 +471,7 @@ function updateSummary(items) {
     }
 }
 
-// ==================== ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ====================
+//  ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ 
 function formatPrice(price) {
     if (typeof price !== 'number' || isNaN(price)) return '—';
     return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';

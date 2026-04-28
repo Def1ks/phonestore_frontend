@@ -1,27 +1,16 @@
-import { 
-    registerUser, 
-    loginUser, 
-    logoutUser, 
-    getCurrentUser, 
-    updateProfile, 
-    changePassword,
-    getUserOrders,
-    apiRequest 
+import {  registerUser,  loginUser,  logoutUser,  getCurrentUser, updateProfile, changePassword, getUserOrders, apiRequest 
 } from './api.js';
 import { initCartButtons } from './cart-buttons.js';
 import { renderProductCard, getPluralForm } from './product-render.js';
 
-//  ГЛОБАЛЬНЫЕ ПЕРЕМЕННЫЕ 
 let currentUser = null;
 
-//  ИНИЦИАЛИЗАЦИЯ 
 document.addEventListener('DOMContentLoaded', async () => {
     await checkAuth();
     initAuthTabs();
     initProfileTabs();
     initForms();
     
-    // Загружаем заказы только если пользователь авторизован
     if (currentUser) {
         await loadOrders();
     }
@@ -299,7 +288,6 @@ function formatPrice(price) {
     return new Intl.NumberFormat('ru-RU').format(price) + ' ₽';
 }
 
-// Статус заказа → текст + класс
 function getStatusInfo(status) {
     const statuses = {
         new: { text: 'Новый', class: 'order-card__status--new' },

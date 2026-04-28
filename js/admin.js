@@ -1,4 +1,4 @@
-// ==================== AUTH MANAGER ====================
+//  AUTH MANAGER 
 const AuthManager = {
     token: null,
     user: null,
@@ -143,7 +143,7 @@ const AuthManager = {
     getUser() { return this.user; }
 };
 
-// ==================== DATA MANAGER ====================
+//  DATA MANAGER 
 const DataManager = {
     cache: new Map(),
     DEFAULT_TTL: 5 * 60 * 1000,
@@ -244,7 +244,6 @@ const DataManager = {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`
-                // Content-Type НЕ указываем - браузер сам поставит multipart/form-data
             },
             body: formData
         });
@@ -276,7 +275,7 @@ const DataManager = {
     }
 };
 
-// ==================== ГЛОБАЛЬНОЕ СОСТОЯНИЕ ====================
+//  ГЛОБАЛЬНОЕ СОСТОЯНИЕ 
 let currentProductId = null;
 let currentBrandId = null;
 let currentColorId = null;
@@ -285,7 +284,7 @@ let currentMemoryId = null;
 let currentOrderId = null;
 let formHandlerAttached = false;
 
-// ==================== DOM ЭЛЕМЕНТЫ ====================
+//  DOM ЭЛЕМЕНТЫ 
 const els = {
     productList: document.querySelector('.admin-products-list'),
     productForm: document.querySelector('.admin-product-form'),
@@ -306,7 +305,7 @@ const els = {
     stubSubtitle: document.getElementById('stub-subtitle')
 };
 
-// ==================== РОУТЕР ====================
+//  РОУТЕР 
 const AdminRouter = {
     routes: {
         products: { title: 'ТОВАРЫ', subtitle: 'УПРАВЛЕНИЕ КАТАЛОГОМ', render: renderProductsPage },
@@ -365,7 +364,7 @@ const AdminRouter = {
     }
 };
 
-// ==================== РЕНДЕРИНГ СТРАНИЦ ====================
+//  РЕНДЕРИНГ СТРАНИЦ 
 function hideAllPages() {
     hideProductList(); hideProductForm();
     hideBrandsList(); hideBrandForm();
@@ -414,7 +413,7 @@ function updateVariantSelects() {
     });
 }
 
-// --- PRODUCTS ---
+// PRODUCTS
 function renderProductsPage(action, id) {
     hideAllPages();
     if (action === 'add' || (action === 'edit' && id)) {
@@ -511,8 +510,6 @@ function fillProductForm(product) {
         product.variants.forEach(v => {
             const card = document.createElement('div');
             card.className = 'admin-variant-card';
-
-            // ✅ СОХРАНЯЕМ ВСЕ ДАННЫЕ В DATASET
             card.dataset.variantId = v.id;
             card.dataset.imageUrl = v.imageUrl || '';
             card.dataset.colorId = v.idColor;
@@ -520,7 +517,6 @@ function fillProductForm(product) {
             card.dataset.storageId = v.idStorage;
             card.dataset.badgeType = v.badgeType || '';
 
-            // ✅ ПОКАЗЫВАЕМ СУЩЕСТВУЮЩУЮ КАРТИНКУ
             const existingImagePreview = v.imageUrl
                 ? `<div class="admin-variant-image-preview" style="margin-bottom: 12px;">
                      <img src="${v.imageUrl}" alt="Текущее фото" 
@@ -583,10 +579,8 @@ function fillProductForm(product) {
             els.variantsList.appendChild(card);
         });
 
-        // Сначала заполняем селекты опциями
         updateVariantSelects();
 
-        // ✅ ВЫБИРАЕМ ЗНАЧЕНИЯ В СЕЛЕКТАХ ПОСЛЕ ЗАГРУЗКИ ОПЦИЙ
         const variantCards = document.querySelectorAll('.admin-variant-card');
         product.variants.forEach((v, index) => {
             const card = variantCards[index];
@@ -610,51 +604,40 @@ async function saveProduct(formDataObj) {
     try {
         const formData = new FormData();
 
-        // 1. Основные текстовые поля
         formData.append('name', formDataObj.name.trim());
         formData.append('brandId', String(formDataObj.brandId));
         formData.append('description', formDataObj.description?.trim() || '');
-
-        // 2. Характеристики (объект → JSON строка)
         formData.append('specs', JSON.stringify(formDataObj.specs || {}));
 
-        // 3. Варианты (массив → JSON строка)
         const variantsPayload = formDataObj.variants.map(v => ({
-            // Для БД:
-            id: v.id,  // ✅ ДОБАВЬ ЭТУ СТРОКУ
+            id: v.id,
             colorId: Number(v.colorId),
             ramId: Number(v.ramId),
             storageId: Number(v.storageId),
             price: Number(v.price),
             oldPrice: v.oldPrice ? Number(v.oldPrice) : null,
             badgeType: v.badge || null,
-            // Для генерации имени файла:
             ram: v.ram,
             storage: v.storage,
             color: v.color
         }));
         formData.append('variants', JSON.stringify(variantsPayload));
 
-        // 4. Файлы картинок (по индексу)
         formDataObj.variants.forEach((variant, index) => {
             if (variant.image instanceof File) {
                 formData.append(`variant_${index}_image`, variant.image);
             }
         });
 
-        // 5. Отправка запроса
         let result;
         if (currentProductId) {
-            // Обновление существующего товара
             result = await DataManager.updateUpload(`/products/${currentProductId}`, formData);
             showNotification('Товар успешно обновлён', 'success');
         } else {
-            // Создание нового товара
             result = await DataManager.upload('/products', formData);
             showNotification('Товар успешно создан', 'success');
         }
 
-        // Очистка кэша и возврат к списку
         DataManager.invalidate('products');
         setTimeout(() => {
             AdminRouter.navigate('products');
@@ -724,7 +707,6 @@ function initFormHandlers() {
         }
     });
 
-    // 🆕 ДЕЛЕГИРОВАНИЕ ДЛЯ ТАБЛИЦЫ ТОВАРОВ (ИЗМЕНИТЬ / УДАЛИТЬ)
     document.querySelector('.admin-products-list tbody')?.addEventListener('click', (e) => {
         const editBtn = e.target.closest('[data-action="edit"]');
         const deleteBtn = e.target.closest('[data-action="delete"]');
@@ -744,10 +726,8 @@ function initFormHandlers() {
         e.preventDefault();
         console.log('[DEBUG] Form submitted!');
         if (!validateForm()) {
-            console.log('[DEBUG] Form validation failed');
             return;
         }
-        console.log('[DEBUG] Form validation passed');
 
         const btn = els.saveBtn;
         if (btn) {
@@ -836,14 +816,12 @@ function addVariantCard() {
         </div>`;
     els.variantsList.appendChild(card);
 
-    // Обновляем списки сразу после добавления
     updateVariantSelects();
 }
 
 function validateForm() {
     let valid = true;
 
-    // Проверка основных полей
     els.form?.querySelectorAll('[required]').forEach(input => {
         if (!input.value.trim()) {
             input.classList.add('admin-input--error');
@@ -853,18 +831,15 @@ function validateForm() {
         }
     });
 
-    // ← НОВАЯ ПРОВЕРКА: селекты в вариантах
     document.querySelectorAll('.admin-variant-card').forEach(card => {
         const colorSelect = card.querySelector('.variant-color');
         const ramSelect = card.querySelector('.variant-ram');
         const storageSelect = card.querySelector('.variant-storage');
         const priceInput = card.querySelector('.variant-price');
 
-        // Проверяем, что выбраны цвет, RAM и память
         if (!colorSelect?.value) {
             colorSelect?.classList.add('admin-input--error');
             valid = false;
-            console.log('[VALIDATION] Color not selected');
         } else {
             colorSelect?.classList.remove('admin-input--error');
         }
@@ -872,7 +847,6 @@ function validateForm() {
         if (!ramSelect?.value) {
             ramSelect?.classList.add('admin-input--error');
             valid = false;
-            console.log('[VALIDATION] RAM not selected');
         } else {
             ramSelect?.classList.remove('admin-input--error');
         }
@@ -880,7 +854,6 @@ function validateForm() {
         if (!storageSelect?.value) {
             storageSelect?.classList.add('admin-input--error');
             valid = false;
-            console.log('[VALIDATION] Storage not selected');
         } else {
             storageSelect?.classList.remove('admin-input--error');
         }
@@ -931,11 +904,9 @@ function collectFormData() {
             return;
         }
 
-        // ✅ ЧИТАЕМ ID ВАРИАНТА И СТАРУЮ КАРТИНКУ ИЗ DATASET
         const variantId = card.dataset.variantId ? Number(card.dataset.variantId) : null;
         const existingImageUrl = card.dataset.imageUrl || '';
 
-        // 🔍 ОТЛАДКА
         console.log(`[COLLECT] Variant ${index}:`, {
             datasetVariantId: card.dataset.variantId,
             datasetImageUrl: card.dataset.imageUrl,
@@ -945,8 +916,8 @@ function collectFormData() {
         });
 
         variants.push({
-            id: variantId,              // ✅ ID для UPDATE
-            imageUrl: existingImageUrl, // ✅ СТАРАЯ ССЫЛКА (если не загрузили новую)
+            id: variantId,
+            imageUrl: existingImageUrl,
             colorId: colorId,
             ramId: ramId,
             storageId: storageId,
@@ -977,15 +948,12 @@ function resetForm() {
     if (els.variantsList) els.variantsList.innerHTML = '';
     document.querySelectorAll('.admin-input--error').forEach(el => el.classList.remove('admin-input--error'));
 
-    // Добавляем пустые поля
     addCharacteristicRow();
     addVariantCard();
-
-    // Убеждаемся, что селекты заполнены данными
     updateVariantSelects();
 }
 
-// --- BRANDS ---
+// BRANDS 
 function renderBrandsPage(action, id) {
     hideAllPages();
     if (action === 'add' || (action === 'edit' && id)) {
@@ -1120,7 +1088,7 @@ function initBrandsPage() {
     });
 }
 
-// --- COLORS ---
+// COLORS 
 function renderColorsPage(action, id) {
     hideAllPages();
     if (action === 'add' || (action === 'edit' && id)) {
@@ -1177,9 +1145,55 @@ function renderColorsTable(colors) {
 
 function getColorHex(name) {
     const map = {
-        'Черный': '#1a1a1a', 'Белый': '#f5f5f5', 'Синий': '#3b82f6',
-        'Золотой': '#f59e0b', 'Серебристый': '#94a3b8', 'Зеленый': '#22c55e',
-        'Красный': '#ef4444', 'Натуральный титан': '#64748b'
+        'Black': '#000000',
+        'White': '#ffffff',
+        'Gray': '#6b7280',
+        'Grey': '#6b7280',
+        'Silver': '#c0c0c0',
+        'Blue': '#3b82f6',
+        'Navy': '#1e3a8a',
+        'Midnight Blue': '#1e1b4b',
+        'Sky Blue': '#0ea5e9',
+        'Light Blue': '#60a5fa',
+        'Dark Blue': '#1e40af',
+        'Royal Blue': '#2563eb',
+        'Green': '#22c55e',
+        'Dark Green': '#15803d',
+        'Light Green': '#84cc16',
+        'Olive': '#65a30d',
+        'Mint': '#6ee7b7',
+        'Emerald': '#10b981',
+        'Red': '#ef4444',
+        'Dark Red': '#b91c1c',
+        'Pink': '#ec4899',
+        'Rose': '#f43f5e',
+        'Coral': '#f87171',
+        'Yellow': '#eab308',
+        'Gold': '#fbbf24',
+        'Orange': '#f97316',
+        'Amber': '#f59e0b',
+        'Purple': '#a855f7',
+        'Violet': '#8b5cf6',
+        'Lavender': '#c084fc',
+        'Magenta': '#d946ef',
+        'Brown': '#78350f',
+        'Beige': '#f5f5dc',
+        'Tan': '#d4a373',
+        'Graphite': '#374151',
+        'Space Gray': '#4b5563',
+        'Starlight': '#fef3c7',
+        'Midnight': '#0f172a',
+        'Titanium': '#94a3b8',
+        'Natural Titanium': '#64748b',
+        'Alpine Green': '#3f6212',
+        'Sierra Blue': '#93c5fd',
+        'Product Red': '#dc2626',
+        'Pacific Blue': '#0284c7',
+        'Graphite': '#2d3748',
+        'Cyan': '#06b6d4',
+        'Teal': '#14b8a6',
+        'Indigo': '#6366f1',
+        'Cream': '#fef9c3'
     };
     return map[name] || '#e2e8f0';
 }
@@ -1264,7 +1278,7 @@ function initColorsPage() {
     });
 }
 
-// --- RAM ---
+// RAM 
 function renderRamPage(action, id) {
     hideAllPages();
     if (action === 'add' || (action === 'edit' && id)) {
@@ -1394,7 +1408,7 @@ function initRamPage() {
     });
 }
 
-// --- MEMORY (STORAGE) ---
+// MEMORY
 function renderMemoryPage(action, id) {
     hideAllPages();
     if (action === 'add' || (action === 'edit' && id)) {
@@ -1524,7 +1538,7 @@ function initMemoryPage() {
     });
 }
 
-// --- ORDERS ---
+// ORDERS 
 function renderOrdersPage(action, id) {
     hideAllPages();
     if (action === 'view' && id) {
@@ -1621,19 +1635,16 @@ async function loadOrderDetails(orderId) {
 }
 
 function renderOrderDetailsContent(order) {
-    // 1. УДАЛЯЕМ СТАРЫЙ БЛОК СМЕНЫ СТАТУСА (если есть)
     const existingSection = document.getElementById('admin-order-status-change-section');
     if (existingSection) {
         existingSection.remove();
     }
 
-    // Заголовок и статус
     document.getElementById('order-details-title').textContent = `ЗАКАЗ #${order.id_order}`;
     const statusDisplay = document.getElementById('order-status-display');
     statusDisplay.innerHTML = getOrderStatusBadge(order.status);
     document.getElementById('order-created-date').textContent = formatDate(order.created_at);
 
-    // 2. КЛИЕНТ
     let clientHTML = '';
     if (order.user && (order.user.first_name || order.user.last_name)) {
         const fullName = `${order.user.first_name} ${order.user.last_name}`.trim();
@@ -1650,7 +1661,6 @@ function renderOrderDetailsContent(order) {
     }
     document.getElementById('order-client-info').innerHTML = clientHTML;
 
-    // 3. ДОСТАВКА
     let deliveryHTML = '';
     if (order.delivery_type === 'pickup') {
         deliveryHTML = '<div style="margin-bottom: 8px;"><strong>Самовывоз</strong></div>';
@@ -1674,7 +1684,6 @@ function renderOrderDetailsContent(order) {
     }
     document.getElementById('order-delivery-info').innerHTML = deliveryHTML;
 
-    // 4. ТОВАРЫ
     let itemsHTML = '';
     if (order.items && order.items.length > 0) {
         order.items.forEach(item => {
@@ -1699,7 +1708,6 @@ function renderOrderDetailsContent(order) {
     document.getElementById('order-items-list').innerHTML = itemsHTML;
     document.getElementById('order-total-sum').textContent = formatPrice(order.total_amount);
 
-    // 5. БЛОК СМЕНЫ СТАТУСА (С ИСПРАВЛЕНИЕМ)
     const statusSection = document.createElement('div');
     statusSection.id = 'admin-order-status-change-section'; // Уникальный ID для поиска
     statusSection.style.cssText = 'margin-top: 24px; padding-top: 24px; border-top: 1px solid #e5e7eb;';
@@ -1733,7 +1741,6 @@ function renderOrderDetailsContent(order) {
         statusCard.appendChild(statusSection);
     }
 
-    // Обработчик кнопки
     const updateBtn = document.getElementById('update-status-btn');
     const statusSelect = document.getElementById('order-status-select');
 
@@ -1756,11 +1763,9 @@ function renderOrderDetailsContent(order) {
 
                 showNotification('Статус заказа обновлён', 'success');
 
-                // Обновляем локальный объект и UI
                 order.status = newStatus;
                 statusDisplay.innerHTML = getOrderStatusBadge(newStatus);
 
-                // Очищаем кэш
                 DataManager.invalidate('orders');
 
             } catch (error) {
@@ -1786,7 +1791,7 @@ function initOrdersPage() {
     });
 }
 
-// --- STATISTICS ---
+// STATISTICS 
 function renderStatisticsPage() {
     hideAllPages();
     const statsPage = document.getElementById('statistics-page');
@@ -1808,7 +1813,7 @@ async function loadStatistics() {
     }
 }
 
-// --- USERS ---
+// USERS 
 function renderUsersPage() {
     hideAllPages();
     const usersList = document.getElementById('users-list');
@@ -1852,7 +1857,6 @@ function renderUsersTable(users) {
     }).join('');
 }
 
-// ==================== ИНИЦИАЛИЗАЦИЯ ====================
 function init() {
     AuthManager.init();
     populateSelects();
@@ -1864,20 +1868,17 @@ function init() {
     initOrdersPage();
     AdminRouter.init();
 
-    // Предзагрузка справочников + обновление селектов после загрузки
     Promise.all([
         DataManager.get('colors', '/colors'),
         DataManager.get('ram', '/ram'),
         DataManager.get('memory', '/storage')
     ]).then(() => {
-        // Обновляем селекты если форма уже открыта
         if (els.variantsList?.querySelector('.variant-color')) {
             updateVariantSelects();
         }
     });
 }
 
-// ==================== НАВИГАЦИЯ ====================
 document.querySelectorAll('[data-admin-tab]').forEach(link => {
     link.addEventListener('click', (e) => {
         e.preventDefault();
@@ -1910,6 +1911,5 @@ document.getElementById('logout-btn')?.addEventListener('click', () => {
     }
 });
 
-// ==================== ЗАПУСК ====================
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
 else init();

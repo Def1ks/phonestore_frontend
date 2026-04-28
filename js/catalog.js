@@ -2,7 +2,6 @@ import { getProducts, getFilterOptions } from './api.js';
 import { initCartButtons } from './cart-buttons.js';
 import { renderProductCard, getPluralForm } from './product-render.js';
 
-//  СОСТОЯНИЕ 
 const state = {
     filters: {
         page: 1,
@@ -24,11 +23,10 @@ const state = {
     }
 };
 
-//  ИНИЦИАЛИЗАЦИЯ 
 document.addEventListener('DOMContentLoaded', async () => {
-    await loadFilterOptions();      
-    initFiltersUI();                
-    loadProducts();                 
+    await loadFilterOptions();
+    initFiltersUI();
+    loadProducts();
 });
 
 //  ЗАГРУЗКА ОПЦИЙ ФИЛЬТРОВ 
@@ -36,7 +34,7 @@ async function loadFilterOptions() {
     try {
         const options = await getFilterOptions();
         state.filterOptions = options;
-        
+
         renderFilterTags('brand', options.brands, 'id_brand', 'name');
         renderFilterTags('ram', options.ram, 'id_ram', 'size_gb', ' ГБ');
         renderFilterTags('storage', options.storage, 'id_storage', 'size_gb', ' ГБ');
@@ -52,7 +50,7 @@ async function loadFilterOptions() {
 function renderFilterTags(type, items, idField, labelField, suffix = '') {
     const container = document.querySelector(`.filters__group[data-type="${type}"] .filters__tags`);
     if (!container || !items?.length) return;
-    
+
     container.innerHTML = items.map(item => `
         <button class="filters__tag" 
                 type="button" 
@@ -66,11 +64,10 @@ function renderFilterTags(type, items, idField, labelField, suffix = '') {
 
 //  UI: ОБРАБОТЧИКИ 
 function initFiltersUI() {
-    // --- Панель фильтров (мобилка) ---
     const filtersToggle = document.querySelector('.catalog__filters-toggle');
     const filtersPanel = document.querySelector('.catalog__filters');
     const filtersClose = document.querySelector('.catalog__filters-close');
-    
+
     if (filtersToggle && filtersPanel) {
         const togglePanel = () => {
             const isActive = filtersPanel.classList.toggle('is-active');
@@ -86,17 +83,21 @@ function initFiltersUI() {
             document.body.style.overflow = '';
         });
     }
-    
-    // --- Делегирование кликов по тегам ---
+
     filtersPanel?.addEventListener('click', (e) => {
         const tag = e.target.closest('.filters__tag');
         if (tag) {
             tag.classList.toggle('is-active');
-            applyFilters(); // Авто-применение (уберите, если нужна кнопка)
+
         }
     });
-    
-    // --- Цена ---
+
+    const applyBtnFilter = document.querySelector('.filters__apply-btn');
+    applyBtnFilter?.addEventListener('click', () => {
+        applyFilters(); 
+    });
+
+
     const [minInput, maxInput] = document.querySelectorAll('.filters__price-input');
     if (minInput && maxInput) {
         const syncPrice = () => {
@@ -109,8 +110,7 @@ function initFiltersUI() {
         minInput.addEventListener('change', () => { syncPrice(); applyFilters(); });
         maxInput.addEventListener('change', () => { syncPrice(); applyFilters(); });
     }
-    
-    // --- Сортировка ---
+
     const sortSelect = document.querySelector('.catalog__select');
     if (sortSelect) {
         sortSelect.addEventListener('change', (e) => {
@@ -131,8 +131,7 @@ function initFiltersUI() {
             loadProducts();
         });
     }
-    
-    // --- Кнопка "Применить" ---
+
     const applyBtn = document.querySelector('.filters__apply-btn');
     if (applyBtn) {
         applyBtn.addEventListener('click', () => {
@@ -143,20 +142,19 @@ function initFiltersUI() {
             }
         });
     }
-    
-    // --- Сброс фильтров ---
+
     const resetBtn = document.createElement('button');
     resetBtn.className = 'filters__reset-btn';
     resetBtn.type = 'button';
     resetBtn.textContent = 'Сбросить';
     document.querySelector('.filters__actions')?.appendChild(resetBtn);
-    
+
     resetBtn.addEventListener('click', () => {
         document.querySelectorAll('.filters__tag.is-active').forEach(t => t.classList.remove('is-active'));
         if (minInput) minInput.value = 0;
         if (maxInput) maxInput.value = 350000;
         if (sortSelect) sortSelect.value = 'default';
-        
+
         state.filters = {
             page: 1, limit: 20,
             brand: '', ram: '', storage: '', color: '',
@@ -183,9 +181,8 @@ async function loadProducts() {
     if (grid) {
         grid.innerHTML = '<div class="catalog__loading"><div class="spinner"></div><p>Загрузка...</p></div>';
     }
-    
-    // Собираем параметры
-    const params = { 
+
+    const params = {
         page: state.filters.page,
         limit: state.filters.limit,
         minPrice: state.filters.minPrice,
@@ -193,18 +190,17 @@ async function loadProducts() {
         sortBy: state.filters.sortBy,
         sortOrder: state.filters.sortOrder
     };
-    
-    // Добавляем выбранные фильтры (МАССИВЫ!)
+
     const brands = getSelectedFilterIds('brand');
     const ram = getSelectedFilterIds('ram');
     const storage = getSelectedFilterIds('storage');
     const colors = getSelectedFilterIds('color');
-    
+
     if (brands.length > 0) params.brand = brands;
     if (ram.length > 0) params.ram = ram;
     if (storage.length > 0) params.storage = storage;
     if (colors.length > 0) params.color = colors;
-    
+
     try {
         const data = await getProducts(params);
         renderProducts(data.products);
@@ -220,12 +216,12 @@ async function loadProducts() {
 function renderProducts(products) {
     const grid = document.querySelector('.catalog__grid');
     if (!grid) return;
-    
+
     if (!products?.length) {
         grid.innerHTML = '<div class="catalog__empty"><p>Товары не найдены</p></div>';
         return;
     }
-    
+
     grid.innerHTML = products.map(renderProductCard).join('');
     initCartButtons();
 }
@@ -238,10 +234,9 @@ function updateProductsCount(count) {
     }
 }
 
-// Вызывается внутри loadFilterOptions() после рендера тегов
 function applyFiltersFromURL() {
     const params = new URLSearchParams(window.location.search);
-    
+
     const filterTypes = ['brand', 'ram', 'storage', 'color'];
     let hasFilters = false;
 

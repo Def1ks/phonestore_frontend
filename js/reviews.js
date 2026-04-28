@@ -1,4 +1,3 @@
-// js/reviews.js
 import { getAllShopReviews, checkShopReviewEligibility, createShopReview } from './api.js';
 
 const REVIEWS_CONFIG = {
@@ -9,9 +8,9 @@ const REVIEWS_CONFIG = {
 let allReviews = [];
 let displayedCount = 0;
 let isLoading = false;
-let userEligibility = null; // { allowed: boolean, reason: string }
+let userEligibility = null; 
 
-// ================= ЗАГРУЗКА ВСЕХ ОТЗЫВОВ =================
+//  ЗАГРУЗКА ВСЕХ ОТЗЫВОВ 
 async function loadAllReviews() {
     if (isLoading) return;
     isLoading = true;
@@ -39,7 +38,7 @@ async function loadAllReviews() {
     }
 }
 
-// ================= ПРОВЕРКА ВОЗМОЖНОСТИ ОСТАВИТЬ ОТЗЫВ =================
+//  ПРОВЕРКА ВОЗМОЖНОСТИ ОСТАВИТЬ ОТЗЫВ 
 async function checkEligibility() {
     const token = localStorage.getItem('authToken');
     const messageEl = document.getElementById('review-message');
@@ -61,11 +60,9 @@ async function checkEligibility() {
         userEligibility = response;
 
         if (response.allowed) {
-            // Можно оставить отзыв
             hideMessage(messageEl);
             enableForm(formEl, submitBtn, textarea, starInputs);
         } else {
-            // Нельзя оставить отзыв
             showMessage(messageEl, response.reason, 'warning');
             disableForm(formEl, submitBtn, textarea, starInputs);
         }
@@ -76,7 +73,7 @@ async function checkEligibility() {
     }
 }
 
-// ================= УПРАВЛЕНИЕ ФОРМОЙ =================
+//  УПРАВЛЕНИЕ ФОРМОЙ 
 function disableForm(form, submitBtn, textarea, starInputs) {
     form.classList.add('review-form--disabled');
     submitBtn.disabled = true;
@@ -101,7 +98,7 @@ function hideMessage(element) {
     element.textContent = '';
 }
 
-// ================= ОТПРАВКА ОТЗЫВА =================
+//  ОТПРАВКА ОТЗЫВА 
 async function submitReview(e) {
     e.preventDefault();
 
@@ -136,17 +133,9 @@ async function submitReview(e) {
 
     try {
         await createShopReview(rating, comment);
-
-        // Успех!
         showMessage(messageEl, 'Спасибо за ваш отзыв!', 'info');
-        
-        // Очищаем форму
         document.getElementById('shop-review-form').reset();
-        
-        // Обновляем список отзывов
         await loadAllReviews();
-        
-        // Проверяем возможность снова (теперь будет false)
         await checkEligibility();
 
     } catch (error) {
@@ -158,7 +147,7 @@ async function submitReview(e) {
     }
 }
 
-// ================= СЧЁТЧИК СИМВОЛОВ =================
+//  СЧЁТЧИК СИМВОЛОВ 
 function initCharCounter() {
     const textarea = document.getElementById('review-comment');
     const counter = document.getElementById('char-counter');
@@ -179,7 +168,7 @@ function initCharCounter() {
     });
 }
 
-// ================= РЕНДЕРИНГ СЛЕДУЮЩЕЙ ПОРЦИИ =================
+//  РЕНДЕРИНГ СЛЕДУЮЩЕЙ ПОРЦИИ 
 function renderNextBatch() {
     const grid = document.querySelector('.reviews__grid');
     if (!grid) return;
@@ -197,7 +186,7 @@ function renderNextBatch() {
     displayedCount += batch.length;
 }
 
-// ================= СОЗДАНИЕ КАРТОЧКИ =================
+//  СОЗДАНИЕ КАРТОЧКИ 
 function createReviewElement(review) {
     const stars = '★'.repeat(review.rating) + '☆'.repeat(5 - review.rating);
 
@@ -231,7 +220,7 @@ function createReviewElement(review) {
     return div;
 }
 
-// ================= ОБНОВЛЕНИЕ СТАТИСТИКИ =================
+//  ОБНОВЛЕНИЕ СТАТИСТИКИ 
 function updateRatingStats(data) {
     const ratingBlock = document.querySelector('.reviews__rating');
     if (!ratingBlock) return;
@@ -255,7 +244,7 @@ function getPluralForm(number, titles) {
     return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
 }
 
-// ================= КНОПКА "ЗАГРУЗИТЬ ЕЩЁ" =================
+//  КНОПКА "ЗАГРУЗИТЬ ЕЩЁ" 
 function updateLoadMoreButton() {
     const btn = document.getElementById('loadMoreBtn');
     const container = btn?.closest('.reviews__load-more');
@@ -275,10 +264,10 @@ function updateLoadMoreButton() {
     }
 }
 
-// ================= ИНИЦИАЛИЗАЦИЯ =================
+//  ИНИЦИАЛИЗАЦИЯ 
 document.addEventListener('DOMContentLoaded', () => {
     loadAllReviews();
-    checkEligibility(); // Проверяем возможность оставить отзыв
+    checkEligibility(); 
     initCharCounter();
 
     const loadMoreBtn = document.getElementById('loadMoreBtn');
