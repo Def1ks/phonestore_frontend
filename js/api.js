@@ -32,8 +32,20 @@ export async function apiRequest(url, options = {}) {
 
 //  ТОВАРЫ 
 export async function getProducts(params = {}) {
-    const queryParams = new URLSearchParams(params).toString();
-    const url = `${API_BASE_URL}/products${queryParams ? `?${queryParams}` : ''}`;
+    const queryParams = new URLSearchParams();
+    
+    Object.entries(params).forEach(([key, value]) => {
+        if (value === null || value === undefined || value === '') return;
+        
+        if (Array.isArray(value)) {
+            value.forEach(v => queryParams.append(key, v));
+        } else {
+            queryParams.append(key, value);
+        }
+    });
+    
+    const queryString = queryParams.toString();
+    const url = `${API_BASE_URL}/products${queryString ? `?${queryString}` : ''}`;
     
     const response = await fetch(url);
     
