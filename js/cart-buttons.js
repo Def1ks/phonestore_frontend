@@ -40,7 +40,7 @@ export function initCartButtons() {
                     console.error('Ошибка добавления в корзину:', error);
                     
                     if (error.message === 'AUTH_REQUIRED') {
-                        showNotification('Войдите, чтобы добавить товар в корзину', 'warning');
+                        showNotification('Войдите, чтобы добавить товар в корзину', 'error');
                         return;
                     }
                     

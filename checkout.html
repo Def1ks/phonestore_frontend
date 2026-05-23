@@ -10,14 +10,14 @@
     <link rel="stylesheet" href="styles/style.css">
     <link rel="stylesheet" href="styles/responsive.css">
     <script src="js/main.js" defer></script>
-    <script src="js/checkout.js" defer type ="module"></script>
+    <script src="js/checkout.js" defer type="module"></script>
     <style>
-        
+
     </style>
 </head>
 
 <body>
-    
+
     <main class="checkout">
         <a href="index.html" class="header__logo">
             PHONE<span>store</span>
@@ -41,7 +41,8 @@
                         <div class="form-group__error-text" id="error-phone">Введите корректный номер телефона</div>
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-group__input is-required" id="input-email" placeholder="E-mail" required>
+                        <input type="email" class="form-group__input is-required" id="input-email" placeholder="E-mail"
+                            required>
                         <div class="form-group__error-text" id="error-email">Введите корректный e-mail</div>
                     </div>
                 </section>
@@ -156,6 +157,18 @@
                         <div class="checkbox__error" id="error-agree">Необходимо дать согласие на обработку данных</div>
                     </div>
                     <button class="checkout__submit" id="submit-order">Подтвердить заказ</button>
+                    <div class="checkout__delivery-info">
+                        <p class="checkout__delivery-notice">
+                            <strong>Товары доступны под заказ.</strong> Мы не держим продукцию на складе — каждый товар
+                            заказывается
+                            индивидуально после оформления вашего заказа.
+                        </p>
+                        <p class="checkout__delivery-time">
+                            Срок доставки:
+                            <span class="checkout__delivery-time-item">7–14 рабочих дней в пункт выдачи</span>
+                            <span class="checkout__delivery-time-item">7–21 рабочий день курьером</span>
+                        </p>
+                    </div>
                 </section>
             </div>
             <aside class="cart__summary">

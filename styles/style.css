@@ -25,7 +25,6 @@ body {
     color: #fff;
 }
 
-
 /*Карточка товара*/
 .product-card {
     position: relative;
@@ -3019,6 +3018,38 @@ body {
 
 .checkout__error-banner--visible {
     display: block;
+}
+
+.checkout__delivery-info {
+  margin-top: 1.5rem;
+}
+
+.checkout__delivery-notice {
+  padding: 1rem 1.25rem;
+  background-color: #fff3cd;
+  border-left: 4px solid #ffc107;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #856404;
+  margin-bottom: 0.75rem;
+  font-family: var(--font-ui);
+}
+
+.checkout__delivery-notice strong {
+  font-weight: 600;
+}
+
+.checkout__delivery-time {
+  font-size: 0.875rem;
+  color: #666;
+  padding-left: 1rem;
+  font-family: var(--font-ui);
+}
+
+.checkout__delivery-time-item {
+  display: block;
+  margin: 0.25rem 0;
 }
 
 /*Страница профиля*/
